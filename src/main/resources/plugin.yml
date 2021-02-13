@@ -1,0 +1,10 @@
+main: me.lowlauch.Walo.Main
+name: Walo
+version: 1.2.1
+description: Simple Varo plugin
+author: lowlauch
+depend: [WorldEdit]
+commands:
+  walo:
+    description: default walo command
+    usage: /walo <args>
