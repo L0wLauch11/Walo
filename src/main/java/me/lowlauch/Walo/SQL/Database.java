@@ -34,16 +34,18 @@ public class Database
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        try {
+            PreparedStatement statement = MySQL.getConnection()
+                    .prepareStatement("ALTER TABLE " + MySQL.table + " ORDER BY KILLS DESC");
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void createPlayer(final UUID uuid, Player player) {
         try {
-            /*
-            PreparedStatement statement = MySQL.getConnection()
-                    .prepareStatement("SELECT * FROM " + MySQL.table + " WHERE UUID=?");
-            statement.setString(1, uuid.toString());
-            ResultSet results = statement.executeQuery();
-            results.next();*/
             if (!playerExists(uuid)) {
                 PreparedStatement insert = MySQL.getConnection()
                         .prepareStatement("INSERT INTO " + MySQL.table + " (UUID,NAME,KILLS) VALUES (?,?,?)");
