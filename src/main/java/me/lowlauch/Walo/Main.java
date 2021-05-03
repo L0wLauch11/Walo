@@ -1,14 +1,9 @@
 package me.lowlauch.Walo;
 
 import me.lowlauch.Walo.SQL.Database;
-import me.lowlauch.Walo.SQL.MySQLConnector;
+import me.lowlauch.Walo.SQL.MySQL;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.SQLException;
@@ -18,8 +13,8 @@ public class Main extends JavaPlugin
 {
     public static String prefix = "§f[§6Walo§f]§7 ";
     private static Main instance;
-    public MySQLConnector sql;
-    public Database db;
+    private MySQL sql = new MySQL();
+    public Database db = new Database();
 
     public static Main getInstance()
     {
@@ -29,16 +24,11 @@ public class Main extends JavaPlugin
     public void onEnable()
     {
         instance = this;
-        sql = new MySQLConnector();
-        db = new Database();
 
         Commands commands = new Commands();
 
         // Add all the commands
         Objects.requireNonNull(getCommand("walo")).setExecutor(commands);
-
-        // Add event listener
-        getServer().getPluginManager().registerEvents(new EventListener(), this);
 
         // Set the difficulty to peaceful until game starts
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "difficulty peaceful");
@@ -46,20 +36,12 @@ public class Main extends JavaPlugin
         // Config stuff
         saveDefaultConfig();
 
-        // Connecto to MySQL
-        try
-        {
-            sql.connect();
-        } catch (ClassNotFoundException | SQLException e)
-        {
-            getLogger().info(prefix + "Could not connect to database");
-        }
+        // Connect to MySQL
+        sql.setup();
+        db.createTable();
 
-        if(sql.isConnected())
-        {
-            getLogger().info(prefix + "Successfully connected to database");
-            db.createTable();
-        }
+        // Add event listener
+        getServer().getPluginManager().registerEvents(new EventListener(), this);
 
         // Info
         // Task that runs every tick after 3 hours
@@ -88,6 +70,13 @@ public class Main extends JavaPlugin
 
     public void onDisable()
     {
-        sql.disconnect();
+        try
+        {
+            MySQL.getConnection().close();
+        } catch (SQLException throwables)
+        {
+            throwables.printStackTrace();
+        }
+        sql = null;
     }
 }

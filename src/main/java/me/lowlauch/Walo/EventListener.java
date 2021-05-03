@@ -107,7 +107,7 @@ public class EventListener implements Listener
     {
         // SQL
         Player p = e.getPlayer();
-        Main.getInstance().db.createPlayer(p);
+        Main.getInstance().db.createPlayer(p.getUniqueId(), p);
 
         // Change name
         String customTag = Main.getInstance().getConfig().getString("tags." + p.getUniqueId().toString());
@@ -230,7 +230,7 @@ public class EventListener implements Listener
                 */
 
                 // Add kill to database
-                Main.getInstance().db.addKill(e.getEntity().getKiller().getUniqueId());
+                Main.getInstance().db.updateKills(e.getEntity().getKiller().getUniqueId());
             }
         }
     }
