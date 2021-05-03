@@ -47,16 +47,11 @@ public class Commands implements CommandExecutor
 
                     if(checkStatsPlayer != null)
                     {
-                        String path = "stats.kills." + checkStatsPlayer.getUniqueId().toString();
-                        String winsPath = "stats.wins." + checkStatsPlayer.getUniqueId().toString();
-
-                        int kills = Main.getInstance().getConfig().getInt(path);
-                        int wins = Main.getInstance().getConfig().getInt(winsPath);
+                        int kills = Main.getInstance().db.getKills(((Player) commandSender).getUniqueId());
 
                         // Send him the stats for this player
                         commandSender.sendMessage(Main.prefix + "Stats für: §a" + checkStatsPlayer.getName()
-                                + "\n§6Kills: §7" + kills
-                                /*+ "\n§e§lWins: §7" + wins);*/);
+                                + "\n§6Kills: §7" + kills);
                     } else
                         commandSender.sendMessage(Main.prefix + "Dieser Spieler ist nicht online, oder existiert nicht.");
 
