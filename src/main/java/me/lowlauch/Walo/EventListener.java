@@ -1,6 +1,7 @@
 package me.lowlauch.Walo;
 
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -48,28 +49,28 @@ public class EventListener implements Listener
                 // Make a protecting bedrock circle under the player
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
                     public void run() {
-                        boolean shouldBeDeopped = true;
-
-                        // Op the player shortly
-                        if (e.getPlayer().isOp())
-                            shouldBeDeopped = false;
-
-                        e.getPlayer().setOp(true);
-
                         for (int i = -rad; i < rad; i++)
                         {
                             for (int j = -rad; j < rad; j++)
                             {
+                                for(int k = -rad; k < rad; k++)
+                                {
+                                    Block blockAtCurrentPos = e.getTo().getWorld().getBlockAt(new Location(e.getTo().getWorld(), playerX + i, playerY + j, playerZ + k));
+
+                                    // Replace lava fire, and beds with nothing
+                                    if(blockAtCurrentPos.getType().equals(Material.LAVA) ||
+                                            blockAtCurrentPos.getType().equals(Material.STATIONARY_LAVA) ||
+                                            blockAtCurrentPos.getType().equals(Material.FIRE) ||
+                                            blockAtCurrentPos.getType().equals(Material.BED))
+                                    {
+                                        blockAtCurrentPos.setType(Material.AIR);
+                                    }
+                                }
+
+                                // Spawn a protecting bedrock floor under players feet
                                 e.getTo().getWorld().getBlockAt(new Location(e.getTo().getWorld(), playerX + i, playerY - 2, playerZ + j)).setType(Material.BEDROCK);
                             }
                         }
-
-                        // Replace lava fire, and beds with nothing
-                        Bukkit.dispatchCommand(e.getPlayer(), "/replacenear 20 lava,lava_flowing,fire,bed 0");
-
-                        // Deop him again
-                        if (shouldBeDeopped)
-                            e.getPlayer().setOp(false);
                     }
                 }, 10L);// 60 L == 3 sec, 20 ticks == 1 sec
             }
@@ -79,9 +80,10 @@ public class EventListener implements Listener
     @EventHandler
     public void onCraft(CraftItemEvent e)
     {
+        // Disable Golden OP Apples
         Material itemType = e.getRecipe().getResult().getType();
         byte itemData = e.getRecipe().getResult().getData().getData();
-        if(itemType==Material.ENDER_CHEST||itemType==Material.HOPPER||(itemType==Material.GOLDEN_APPLE&&itemData==1))
+        if(itemType == Material.ENDER_CHEST || itemType == Material.HOPPER || (itemType == Material.GOLDEN_APPLE && itemData==1))
         {
             e.getInventory().setResult(new ItemStack(Material.AIR));
             for(HumanEntity he:e.getViewers())

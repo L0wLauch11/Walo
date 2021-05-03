@@ -6,9 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +26,6 @@ public class Commands implements CommandExecutor
         // Normal commands
         if(commandLabel.equalsIgnoreCase("walo"))
         {
-            // TODO: replace this awful nest of if statements
             if (args.length >= 1)
             {
                 if(args[0].equalsIgnoreCase("stats"))
@@ -88,6 +84,7 @@ public class Commands implements CommandExecutor
                                     "§7/walo §6addmate <Spieler1> <Spieler2> §7- §aAdded einen Mate zu dem Team.\n" +
                                     "§7/walo §6teamtag <String> §7- §aSetzt einen Team-Tag Text.");
                         }
+                    break;
 
                     case "setupborder":
                         // Set worldborder to lobby
@@ -114,14 +111,14 @@ public class Commands implements CommandExecutor
                                     if(seconds-timer != 0)
                                     {
                                         for (Player p : Bukkit.getOnlinePlayers())
-                                            p.playSound(p.getLocation(), Sound.NOTE_PIANO, 10, 1);
+                                            p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
 
                                         Bukkit.broadcastMessage(Main.prefix + "Walo startet in §6" + (seconds - timer) + "§7 Sekunden!");
                                     }
 
                                     if(timer >= seconds)
                                     {
-                                        // TODO: replace this ugly ass code
+                                        // This code should be optimized
                                         // Warn the player 1 seconds before the timer runs out
                                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable()
                                         {
@@ -166,20 +163,6 @@ public class Commands implements CommandExecutor
                                                 Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 5 Sekunden!");
                                             }
                                         }, 11900L);
-
-
-                                        /*
-                                        Bukkit.getServer().getScheduler().runTaskTimer(Main.getInstance(), new Runnable()
-                                        {
-                                            public void run()
-                                            {
-                                                if(timer <= 0)
-                                                    return;
-
-                                                timer--;
-                                                Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in " + timer + " Sekunden!");
-                                            }
-                                        }, 11900L, 20L);*/
 
                                         // Warn the player 60 seconds before the timer runs out
                                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable()
@@ -404,52 +387,6 @@ public class Commands implements CommandExecutor
                         {
                             commandSender.sendMessage(Main.prefix + "Du musst: §c/walo addmate <Spieler> <Team-Mate>§7 machen");
                         }
-                        break;
-
-                    case "box":
-                        // Places a box for the player to be in before the game starts
-                        for (Player p : Bukkit.getOnlinePlayers())
-                        {
-                            double playerX = p.getLocation().getX();
-                            double playerY = p.getLocation().getY();
-                            double playerZ = p.getLocation().getZ();
-
-                            World world = Bukkit.getServer().getWorld("world");
-
-                            // Spawn a box for the player
-                            if(world != null)
-                            {
-                                // Teleport the player 1 block down
-                                p.teleport(new Location(world, playerX, playerY-1.0f, playerZ));
-
-                                // Remove block at player y
-                                world.getBlockAt(new Location(world, playerX, playerY-1.0f, playerZ)).setType(Material.AIR);
-
-                                // Reget the player position
-                                playerX = p.getLocation().getX();
-                                playerY = p.getLocation().getY();
-                                playerZ = p.getLocation().getZ();
-
-                                // Block under player to dirt
-                                world.getBlockAt(new Location(world, playerX, playerY-1.0f, playerZ)).setType(Material.DIRT);
-
-                                // Blocks on sides
-                                world.getBlockAt(new Location(world, playerX-1.0f, playerY, playerZ)).setType(Material.DIRT);
-                                world.getBlockAt(new Location(world, playerX+1.0f, playerY, playerZ)).setType(Material.DIRT);
-                                world.getBlockAt(new Location(world, playerX, playerY, playerZ-1.0f)).setType(Material.DIRT);
-                                world.getBlockAt(new Location(world, playerX, playerY, playerZ+1.0f)).setType(Material.DIRT);
-
-                                // Blocks above player on side
-                                world.getBlockAt(new Location(world, playerX-1.0f, playerY+1.0f, playerZ)).setType(Material.STEP);
-                                world.getBlockAt(new Location(world, playerX+1.0f, playerY+1.0f, playerZ)).setType(Material.STEP);
-                                world.getBlockAt(new Location(world, playerX, playerY+1.0f, playerZ-1.0f)).setType(Material.STEP);
-                                world.getBlockAt(new Location(world, playerX, playerY+1.0f, playerZ+1.0f)).setType(Material.STEP);
-                            }
-                            else
-                                commandSender.sendMessage(Main.prefix + "Bitte erstelle eine Welt namens \"world\" und teleportiere alle Spieler da hin");
-                        }
-
-                        Bukkit.getServer().broadcastMessage(Main.prefix + "§aAlle Spieler§7 wurden in eine Box gesetzt!\n§6§l         Es geht gleich los, mach dich bereit!");
                         break;
 
                     case "teamtag":
