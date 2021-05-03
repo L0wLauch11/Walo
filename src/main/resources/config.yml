@@ -1,3 +1,10 @@
+mysql:
+  host: ""
+  port: ""
+  database: ""
+  username: ""
+  password: ""
+
 worldborder:
   size: 600
   shrinksize: 200

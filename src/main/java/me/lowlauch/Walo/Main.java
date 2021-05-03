@@ -1,5 +1,6 @@
 package me.lowlauch.Walo;
 
+import me.lowlauch.Walo.SQL.MySQLConnector;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldBorder;
@@ -9,12 +10,14 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class Main extends JavaPlugin
 {
     public static String prefix = "§f[§6Walo§f]§7 ";
     private static Main instance;
+    public MySQLConnector sql;
 
     public static Main getInstance()
     {
@@ -24,6 +27,7 @@ public class Main extends JavaPlugin
     public void onEnable()
     {
         instance = this;
+        sql = new MySQLConnector();
 
         Commands commands = new Commands();
 
@@ -38,6 +42,20 @@ public class Main extends JavaPlugin
 
         // Config stuff
         saveDefaultConfig();
+
+        // Connecto to MySQL
+        try
+        {
+            sql.connect();
+        } catch (ClassNotFoundException | SQLException e)
+        {
+            getLogger().info(prefix + "Could not connect to database");
+        }
+
+        if(sql.isConnected())
+        {
+            getLogger().info(prefix + "Successfully connected to database");
+        }
 
         // Info
         // Task that runs every tick after 3 hours
@@ -62,5 +80,10 @@ public class Main extends JavaPlugin
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0L, 2000L);
+    }
+
+    public void onDisable()
+    {
+        sql.disconnect();
     }
 }
