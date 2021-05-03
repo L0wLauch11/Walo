@@ -18,9 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -108,19 +105,24 @@ public class EventListener implements Listener
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e)
     {
+        // SQL
+        Player p = e.getPlayer();
+        Main.getInstance().db.createPlayer(p);
+
         // Change name
-        String customTag = Main.getInstance().getConfig().getString("tags." + e.getPlayer().getUniqueId().toString());
-        e.getPlayer().setDisplayName(customTag);
+        String customTag = Main.getInstance().getConfig().getString("tags." + p.getUniqueId().toString());
+        p.setDisplayName(customTag);
 
         // Set the player tab name to display name
-        e.getPlayer().setPlayerListName(e.getPlayer().getDisplayName());
+        p.setPlayerListName(e.getPlayer().getDisplayName());
 
         // Set the player to gamemode 2 if game hasn't started
         if(!Commands.started)
-            e.getPlayer().setGameMode(GameMode.ADVENTURE);
+            p.setGameMode(GameMode.ADVENTURE);
 
-        if(e.getPlayer().isBanned())
-            e.getPlayer().kickPlayer("Du bist tot oder hast combat-logging betrieben.");
+        // Death message
+        if(p.isBanned())
+            p.kickPlayer("Du bist tot oder hast combat-logging betrieben.");
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -220,76 +222,16 @@ public class EventListener implements Listener
                 e.getEntity().getKiller().sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
             } else
             {
-                String path = "stats.kills." + e.getEntity().getKiller().getUniqueId().toString();
-                Main.getInstance().getConfig().set(path, Main.getInstance().getConfig().getInt(path) + 1);
+                /*  Old way of saving kills, without a database
+
+                    String path = "stats.kills." + e.getEntity().getKiller().getUniqueId().toString();
+                    Main.getInstance().getConfig().set(path, Main.getInstance().getConfig().getInt(path) + 1);
+
+                */
+
+                // Add kill to database
+                Main.getInstance().db.addKill(e.getEntity().getKiller().getUniqueId());
             }
-
-            // THIS DOES NOT WORK YET!
-            /*
-            * // Check if only one team is alive
-            if(Bukkit.getOnlinePlayers().size() == 1)
-            {
-                Player wonPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[0];
-
-                List<String> mates = Main.getInstance().getConfig().getStringList("mates." + wonPlayer.getUniqueId().toString());
-                int length = mates.size();
-                String winpath;
-
-                // Give all his mates a win in stats
-                for(int i = 0; i < length; i++)
-                {
-                    // Give the killer a kill in stats
-                    winpath = "stats.wins." + mates.get(i);
-                    Main.getInstance().getConfig().set(winpath, Main.getInstance().getConfig().getInt(winpath)+1);
-                }
-
-                // Give the last player alive a win
-                winpath = "stats.wins." + wonPlayer.getUniqueId().toString();
-                Main.getInstance().getConfig().set(winpath, Main.getInstance().getConfig().getInt(winpath)+1);
-
-                Bukkit.getServer().broadcastMessage(Main.prefix + "§6" + wonPlayer.getName() + " §7 und sein Team haben §eWalo§7 gewonnen!");
-            }
-
-            // Check if only one team is alive
-            for(Player p : Bukkit.getOnlinePlayers())
-            {
-                List<String> mates = Main.getInstance().getConfig().getStringList("mates." + p.getUniqueId().toString());
-
-                int length = mates.size();
-                int mateCount = 0;
-
-                // Check if he is team mate
-                for(int i = 0; i < length; i++)
-                {
-                    Player checkPlayer = (Player) Bukkit.getOnlinePlayers().toArray()[i];
-
-                    if(mates.get(i).contains(checkPlayer.getUniqueId().toString()))
-                        mateCount++;
-                }
-
-                // Someone won
-                if(mateCount >= Bukkit.getOnlinePlayers().toArray().length);
-                {
-                    String winpath;
-
-                    // Give all his mates a win in stats
-                    for(int i = 0; i < length; i++)
-                    {
-                        // Give the killer a kill in stats
-                        winpath = "stats.wins." + mates.get(i);
-                        Main.getInstance().getConfig().set(winpath, Main.getInstance().getConfig().getInt(winpath)+1);
-                    }
-
-                    // Give the last player alive a win
-                    winpath = "stats.wins." + p.getUniqueId().toString();
-                    Main.getInstance().getConfig().set(winpath, Main.getInstance().getConfig().getInt(winpath)+1);
-
-                    Bukkit.getServer().broadcastMessage(Main.prefix + "§6" + p.getName() + " §7 und sein Team haben §eWalo§7 gewonnen!");
-                }
-            }
-            * */
-
-            Main.getInstance().saveConfig();
         }
     }
 

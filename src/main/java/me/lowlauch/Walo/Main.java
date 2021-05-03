@@ -1,5 +1,6 @@
 package me.lowlauch.Walo;
 
+import me.lowlauch.Walo.SQL.Database;
 import me.lowlauch.Walo.SQL.MySQLConnector;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -18,6 +19,7 @@ public class Main extends JavaPlugin
     public static String prefix = "§f[§6Walo§f]§7 ";
     private static Main instance;
     public MySQLConnector sql;
+    public Database db;
 
     public static Main getInstance()
     {
@@ -28,6 +30,7 @@ public class Main extends JavaPlugin
     {
         instance = this;
         sql = new MySQLConnector();
+        db = new Database();
 
         Commands commands = new Commands();
 
@@ -55,6 +58,7 @@ public class Main extends JavaPlugin
         if(sql.isConnected())
         {
             getLogger().info(prefix + "Successfully connected to database");
+            db.createTable();
         }
 
         // Info
