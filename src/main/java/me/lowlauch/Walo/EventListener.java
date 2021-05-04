@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.UUID;
 
 public class EventListener implements Listener
 {
@@ -230,7 +231,8 @@ public class EventListener implements Listener
                 */
 
                 // Add kill to database
-                Main.getInstance().db.updateKills(e.getEntity().getKiller().getUniqueId());
+                UUID uuid = e.getEntity().getKiller().getUniqueId();
+                Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS")+1);
             }
         }
     }

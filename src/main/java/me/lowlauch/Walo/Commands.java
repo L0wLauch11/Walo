@@ -47,7 +47,7 @@ public class Commands implements CommandExecutor
 
                     if(checkStatsPlayer != null)
                     {
-                        int kills = Main.getInstance().db.getKills(checkStatsPlayer.getUniqueId());
+                        int kills = Main.getInstance().db.getInt(checkStatsPlayer.getUniqueId(), "KILLS");
 
                         // Send him the stats for this player
                         commandSender.sendMessage(Main.prefix + "Stats für: §a" + checkStatsPlayer.getName()
