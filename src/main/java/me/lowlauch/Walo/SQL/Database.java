@@ -37,11 +37,6 @@ public class Database
             PreparedStatement statement = MySQL.getConnection()
                     .prepareStatement("CREATE TABLE IF NOT EXISTS " + MySQL.table + " (UUID VARCHAR(100),NAME VARCHAR(100),KILLS INT(100))");
             statement.executeUpdate();
-
-            // Order table by highest kills
-            statement = MySQL.getConnection()
-                    .prepareStatement("ALTER TABLE " + MySQL.table + " ORDER BY KILLS DESC");
-            statement.executeUpdate();
         } catch (SQLException e)
         {
             e.printStackTrace();
@@ -98,5 +93,20 @@ public class Database
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public void orderBy(String key)
+    {
+        // Order table by highest kills
+        try
+        {
+            PreparedStatement statement = MySQL.getConnection()
+                    .prepareStatement("ALTER TABLE " + MySQL.table + " ORDER BY " + key + " DESC");
+            statement.executeUpdate();
+        } catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
     }
 }

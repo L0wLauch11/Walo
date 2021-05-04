@@ -233,6 +233,7 @@ public class EventListener implements Listener
                 // Add kill to database
                 UUID uuid = e.getEntity().getKiller().getUniqueId();
                 Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS")+1);
+                Main.getInstance().db.orderBy("KILLS");
             }
         }
     }
