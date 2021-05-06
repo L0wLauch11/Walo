@@ -9,13 +9,13 @@ import java.util.UUID;
 
 public class Database
 {
-    public boolean playerExists(UUID uuid)
+    public boolean exists(String key, String value)
     {
         try
         {
             PreparedStatement statement = MySQL.getConnection()
-                    .prepareStatement("SELECT * FROM " + MySQL.table + " WHERE UUID=?");
-            statement.setString(1, uuid.toString());
+                    .prepareStatement("SELECT * FROM " + MySQL.table + " WHERE " + key + "=?");
+            statement.setString(1, value);
 
             ResultSet results = statement.executeQuery();
             if (results.next()) {
@@ -29,13 +29,13 @@ public class Database
         return false;
     }
 
-    public void createTable()
+    public void createTable(String keys)
     {
         try
         {
-            // Create a playerdata table
+            // Create a table
             PreparedStatement statement = MySQL.getConnection()
-                    .prepareStatement("CREATE TABLE IF NOT EXISTS " + MySQL.table + " (UUID VARCHAR(100),NAME VARCHAR(100),KILLS INT(100))");
+                    .prepareStatement("CREATE TABLE IF NOT EXISTS " + MySQL.table + " (" + keys + ")");
             statement.executeUpdate();
         } catch (SQLException e)
         {
@@ -43,16 +43,16 @@ public class Database
         }
     }
 
-    public void createPlayer(final UUID uuid, Player player)
+    public void createPlayer(Player player, String keys, String values)
     {
         try
         {
             // If playerdata from player doesn't exists create it
-            if (!playerExists(uuid))
+            if (!exists("UUID", player.getUniqueId().toString()))
             {
                 PreparedStatement insert = MySQL.getConnection()
                         .prepareStatement("INSERT INTO " + MySQL.table + " (UUID,NAME,KILLS) VALUES (?,?,?)");
-                insert.setString(1, uuid.toString());
+                insert.setString(1, player.getUniqueId().toString());
                 insert.setString(2, player.getName());
                 insert.setInt(3, 0);
                 insert.executeUpdate();

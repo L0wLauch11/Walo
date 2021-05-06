@@ -1,5 +1,7 @@
 package me.lowlauch.Walo;
 
+import me.lowlauch.Walo.Commands.CommandVariables;
+import me.lowlauch.Walo.Commands.CommandsManager;
 import me.lowlauch.Walo.SQL.Database;
 import me.lowlauch.Walo.SQL.MySQL;
 import org.bukkit.Bukkit;
@@ -25,10 +27,10 @@ public class Main extends JavaPlugin
     {
         instance = this;
 
-        Commands commands = new Commands();
+        CommandsManager commandsManager = new CommandsManager();
 
         // Add all the commands
-        Objects.requireNonNull(getCommand("walo")).setExecutor(commands);
+        Objects.requireNonNull(getCommand("walo")).setExecutor(commandsManager);
 
         // Set the difficulty to peaceful until game starts
         Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "difficulty peaceful");
@@ -38,7 +40,7 @@ public class Main extends JavaPlugin
 
         // Connect to MySQL
         sql.setup();
-        db.createTable();
+        db.createTable("UUID VARCHAR(100),NAME VARCHAR(100),KILLS INT(100)");
 
         // Add event listener
         getServer().getPluginManager().registerEvents(new EventListener(), this);
@@ -50,7 +52,7 @@ public class Main extends JavaPlugin
             @Override
             public void run()
             {
-                if(!Commands.started)
+                if(!CommandVariables.started)
                 {
                     double val = getConfig().getDouble("worldborder.shrinkdelay")/20/60;
 

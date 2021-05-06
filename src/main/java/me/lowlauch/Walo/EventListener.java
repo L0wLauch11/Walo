@@ -28,7 +28,7 @@ public class EventListener implements Listener
     public void onPlayerTravel(final PlayerTeleportEvent e)
     {
         // If the nether is disabled then stop the event
-        if(!Commands.started && e.getTo().getWorld().getName().toLowerCase().contains("nether"))
+        if(!CommandsExecutor.started && e.getTo().getWorld().getName().toLowerCase().contains("nether"))
         {
             e.getPlayer().sendMessage(Main.prefix + "§c>:(");
 
@@ -108,7 +108,8 @@ public class EventListener implements Listener
     {
         // SQL
         Player p = e.getPlayer();
-        Main.getInstance().db.createPlayer(p.getUniqueId(), p);
+        Main.getInstance().db.createPlayer(p, "UUID,NAME,KILLS", String.format("%s,%s,%d",
+                e.getPlayer().getUniqueId(), e.getPlayer().getName(), 0));
 
         // Change name
         String customTag = Main.getInstance().getConfig().getString("tags." + p.getUniqueId().toString());
@@ -118,7 +119,7 @@ public class EventListener implements Listener
         p.setPlayerListName(e.getPlayer().getDisplayName());
 
         // Set the player to gamemode 2 if game hasn't started
-        if(!Commands.started)
+        if(!CommandsExecutor.started)
             p.setGameMode(GameMode.ADVENTURE);
 
         // Death message
@@ -130,7 +131,7 @@ public class EventListener implements Listener
     public void onPlayerDisconnect(PlayerQuitEvent e)
     {
         // Combat logging protection
-        if(e.getPlayer().getHealth() < 10.0f && e.getPlayer().getHealth() != 0.0f && Commands.started)
+        if(e.getPlayer().getHealth() < 10.0f && e.getPlayer().getHealth() != 0.0f && CommandsExecutor.started)
         {
             Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige leben hattest", null, "Tot");
             Bukkit.broadcastMessage(Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige leben hatte! §cAusgeschieden§7!");
@@ -140,7 +141,7 @@ public class EventListener implements Listener
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e)
     {
-        if(!Commands.started && e.getEntity() instanceof Player)
+        if(!CommandsExecutor.started && e.getEntity() instanceof Player)
         {
             e.setCancelled(true);
         }
@@ -149,7 +150,7 @@ public class EventListener implements Listener
     @EventHandler
     public void onPlayerDamageByEntity(EntityDamageByEntityEvent e)
     {
-        if(Commands.protection)
+        if(CommandsExecutor.protection)
         {
             if (e.getDamager() instanceof Player && e.getEntity() instanceof Player)
             {
@@ -160,7 +161,7 @@ public class EventListener implements Listener
         }
 
         // This only applies to players
-        if(Commands.started)
+        if(CommandsExecutor.started)
         {
             if(e.getEntity() instanceof Player && e.getDamager() instanceof Player)
             {
@@ -200,7 +201,7 @@ public class EventListener implements Listener
     public void onPlayerDie(PlayerDeathEvent e)
     {
         // Ban the player if he dies and the game has started
-        if(Commands.started)
+        if(CommandsExecutor.started)
         {
             // Change the message a bit
             String deathMessage;
@@ -218,7 +219,7 @@ public class EventListener implements Listener
             e.getEntity().kickPlayer(Main.prefix + "§cDu bist gestorben.");
 
             // Give the killer a kill in stats
-            if(Commands.statsDisabled)
+            if(CommandsExecutor.statsDisabled)
             {
                 e.getEntity().getKiller().sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
             } else
