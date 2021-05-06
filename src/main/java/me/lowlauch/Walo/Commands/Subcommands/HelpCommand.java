@@ -21,6 +21,9 @@ public class HelpCommand implements SubCommand
                     "§7/walo §6teamtag <Spieler> <String> §7- §aSetzt einen Team-Tag Text für alle " +
                     "Spieler in dem Team.\n" +
                     "§7/walo §bc <Nachricht> §7- Sendet eine Nachricht mit dem Walo Prefix an den ganzen Server");
+        } else
+        {
+            commandSender.sendMessage("§7/walo §6stats [Spieler] §7- §aZeigt die Stats eines Spielers an.");
         }
     }
 
