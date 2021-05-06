@@ -39,27 +39,27 @@ public class CommandsManager implements CommandExecutor
             for(SubCommand subCommand : subCommands)
             {
                 // Execute subcommand
-                if(!commandSender.isOp() && subCommand.needsOp())
-                {
-                    commandSender.sendMessage(Main.prefix + "Du hast keine Rechte für diesen Command!");
-                    return true;
-                }
-
-                if(!(commandSender instanceof Player) && subCommand.needsPlayer())
-                {
-                    commandSender.sendMessage(Main.prefix + "Du musst ein Spieler sein!");
-                    return true;
-                }
-
-                if(args.length < subCommand.neededArguments())
-                {
-                    commandSender.sendMessage(Main.prefix + "Nicht genug Argumente!");
-                    helpCommand.execute(commandSender, args);
-                    return true;
-                }
-
                 if(args[0].equalsIgnoreCase(subCommand.getName()))
                 {
+                    if(!commandSender.isOp() && subCommand.needsOp())
+                    {
+                        commandSender.sendMessage(Main.prefix + "Du hast keine Rechte für diesen Command!");
+                        return true;
+                    }
+
+                    if(!(commandSender instanceof Player) && subCommand.needsPlayer())
+                    {
+                        commandSender.sendMessage(Main.prefix + "Du musst ein Spieler sein!");
+                        return true;
+                    }
+
+                    if(args.length < subCommand.neededArguments())
+                    {
+                        commandSender.sendMessage(Main.prefix + "Nicht genug Argumente!");
+                        helpCommand.execute(commandSender, args);
+                        return true;
+                    }
+
                     subCommand.execute(commandSender, args);
                     return true;
                 }
