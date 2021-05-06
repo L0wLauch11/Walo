@@ -1,4 +1,5 @@
 target/
 .idea/
+.gradle/
 pom.xml
 Walo.iml
