@@ -3,6 +3,7 @@ package me.lowlauch.Walo;
 import me.lowlauch.Walo.Commands.CommandVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,10 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -25,6 +23,16 @@ import java.util.UUID;
 
 public class EventListener implements Listener
 {
+    @EventHandler
+    public void onPlayerDrop(PlayerDropItemEvent e)
+    {
+        // Disable dropping if game has not started
+        if(!CommandVariables.started)
+        {
+            e.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onPlayerTravel(final PlayerTeleportEvent e)
     {
@@ -81,8 +89,6 @@ public class EventListener implements Listener
     {
         // Disable Golden OP Apples
         ItemStack itemStack = e.getRecipe().getResult();
-        Material itemType = itemStack.getType();
-
         ItemStack enchantedGoldenApple = new ItemStack(Material.GOLDEN_APPLE, 1, (short)1);
 
         if(itemStack.equals(enchantedGoldenApple))
@@ -142,17 +148,46 @@ public class EventListener implements Listener
         // Combat logging protection
         if(p.getHealth() < 10.0f && p.getHealth() != 0.0f && CommandVariables.started)
         {
+            // Drop Inventory
+            for (ItemStack itemStack : p.getInventory())
+            {
+                if(itemStack != null && !itemStack.getType().equals(Material.AIR))
+                    p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+            }
+            p.getInventory().clear();
+
+            // Drop Armor Contents
+            ItemStack[] armorContents = p.getInventory().getArmorContents();
+            for(ItemStack itemStack : armorContents)
+            {
+                if(itemStack != null && !itemStack.getType().equals(Material.AIR))
+                    p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
+
+                p.getInventory().setArmorContents(null);
+            }
+
             // Count the kill towards the player that last damaged them
             if(damageCause instanceof EntityDamageByEntityEvent)
             {
                 // Ban the player if he dies and the game has started
                 // Change the message a bit
                 String deathMessage;
-                Player killer = (Player) ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
+                Entity killer = ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
+
+                if(!(killer instanceof Player))
+                {
+                    // Ban Player
+                    Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige leben hattest", null, "Tot");
+                    p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
+
+                    deathMessage = Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige leben hatte! §cAusgeschieden§7!";
+                    e.setQuitMessage(deathMessage);
+
+                    return;
+                }
 
                 deathMessage = Main.prefix + "§6" + p.getName() + "§4 hatte zu viel Angst vor §6" + killer.getName() + ".";
-
-                Bukkit.getServer().broadcastMessage(deathMessage);
+                e.setQuitMessage(deathMessage);
 
                 // Ban the player
                 Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), Main.prefix + "Du bist gestorben", null, "Tot");
@@ -174,6 +209,7 @@ public class EventListener implements Listener
             {
                 // Ban Player
                 Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige leben hattest", null, "Tot");
+                p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
                 Bukkit.broadcastMessage(Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige leben hatte! §cAusgeschieden§7!");
             }
         }
@@ -277,8 +313,14 @@ public class EventListener implements Listener
                     Main.getInstance().db.orderBy("KILLS");
                 }
             } else
+            {
                 // Normal death
                 deathMessage = Main.prefix + "§6" + p.getName() + "§4 ist gestorben.";
+
+                // Ban the player
+                Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), Main.prefix + "Du bist gestorben", null, "Tot");
+                p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
+            }
 
             // Change death message
             e.setDeathMessage(deathMessage);
