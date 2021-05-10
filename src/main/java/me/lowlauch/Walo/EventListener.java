@@ -80,12 +80,15 @@ public class EventListener implements Listener
     public void onCraft(CraftItemEvent e)
     {
         // Disable Golden OP Apples
-        Material itemType = e.getRecipe().getResult().getType();
-        byte itemData = e.getRecipe().getResult().getData().getData();
-        if(itemType == Material.ENDER_CHEST || itemType == Material.HOPPER || (itemType == Material.GOLDEN_APPLE && itemData==1))
+        ItemStack itemStack = e.getRecipe().getResult();
+        Material itemType = itemStack.getType();
+
+        ItemStack enchantedGoldenApple = new ItemStack(Material.GOLDEN_APPLE, 1, (short)1);
+
+        if(itemStack.equals(enchantedGoldenApple))
         {
             e.getInventory().setResult(new ItemStack(Material.AIR));
-            for(HumanEntity he:e.getViewers())
+            for(HumanEntity he : e.getViewers())
             {
                 if(he instanceof Player)
                 {
@@ -119,9 +122,11 @@ public class EventListener implements Listener
         // Set the player tab name to display name
         p.setPlayerListName(e.getPlayer().getDisplayName());
 
-        // Set the player to gamemode 2 if game hasn't started
+        // Set the player to the right gamemode
         if(!CommandVariables.started)
             p.setGameMode(GameMode.ADVENTURE);
+        else if(p.getGameMode().equals(GameMode.ADVENTURE))
+            p.setGameMode(GameMode.SURVIVAL);
 
         // Death message
         if(p.isBanned())
@@ -131,17 +136,53 @@ public class EventListener implements Listener
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDisconnect(PlayerQuitEvent e)
     {
+        Player p = e.getPlayer();
+        EntityDamageEvent damageCause = p.getLastDamageCause();
+
         // Combat logging protection
-        if(e.getPlayer().getHealth() < 10.0f && e.getPlayer().getHealth() != 0.0f && CommandVariables.started)
+        if(p.getHealth() < 10.0f && p.getHealth() != 0.0f && CommandVariables.started)
         {
-            Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige leben hattest", null, "Tot");
-            Bukkit.broadcastMessage(Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige leben hatte! §cAusgeschieden§7!");
+            // Count the kill towards the player that last damaged them
+            if(damageCause instanceof EntityDamageByEntityEvent)
+            {
+                // Ban the player if he dies and the game has started
+                // Change the message a bit
+                String deathMessage;
+                Player killer = (Player) ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
+
+                deathMessage = Main.prefix + "§6" + p.getName() + "§4 hatte zu viel Angst vor §6" + killer.getName() + ".";
+
+                Bukkit.getServer().broadcastMessage(deathMessage);
+
+                // Ban the player
+                Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), Main.prefix + "Du bist gestorben", null, "Tot");
+                p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
+
+                // Give the killer a kill in stats
+                if(CommandVariables.statsDisabled)
+                {
+                    killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
+                } else
+                {
+                    // Add kill to database
+                    UUID uuid = killer.getUniqueId();
+                    Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS")+1);
+                    Main.getInstance().db.orderBy("KILLS");
+                }
+
+            } else
+            {
+                // Ban Player
+                Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige leben hattest", null, "Tot");
+                Bukkit.broadcastMessage(Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige leben hatte! §cAusgeschieden§7!");
+            }
         }
     }
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent e)
     {
+        // Cancel damage before game has started
         if(!CommandVariables.started && e.getEntity() instanceof Player)
         {
             e.setCancelled(true);
@@ -204,39 +245,43 @@ public class EventListener implements Listener
         // Ban the player if he dies and the game has started
         if(CommandVariables.started)
         {
-            // Change the message a bit
+            Player p = e.getEntity();
             String deathMessage;
-            Player killer = e.getEntity().getKiller();
+            Player killer = p.getKiller();
 
+            // Player death
             if(killer != null)
-                deathMessage = Main.prefix + "§6" + e.getEntity().getName() + "§4 wurde von §6" + killer.getName() + "§4 getötet.";
-            else
-                deathMessage = Main.prefix + "§6" + e.getEntity().getName() + "§4 ist gestorben.";
-
-            e.setDeathMessage(deathMessage);
-
-            // Ban the player
-            Bukkit.getBanList(BanList.Type.NAME).addBan(e.getEntity().getName(), Main.prefix + "Du bist gestorben", null, "Tot");
-            e.getEntity().kickPlayer(Main.prefix + "§cDu bist gestorben.");
-
-            // Give the killer a kill in stats
-            if(CommandVariables.statsDisabled)
             {
-                e.getEntity().getKiller().sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
+                deathMessage = Main.prefix + "§6" + p.getName() + "§4 wurde von §6" + killer.getName() + "§4 getötet.";
+
+                // Ban the player
+                Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), Main.prefix + "Du bist gestorben", null, "Tot");
+                p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
+
+                // Give the killer a kill in stats
+                if(CommandVariables.statsDisabled)
+                {
+                    killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
+                } else
+                {
+                    /*  Old way of saving kills, without a database
+
+                        String path = "stats.kills." + e.getEntity().getKiller().getUniqueId().toString();
+                        Main.getInstance().getConfig().set(path, Main.getInstance().getConfig().getInt(path) + 1);
+
+                    */
+
+                    // Add kill to database
+                    UUID uuid = killer.getUniqueId();
+                    Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS")+1);
+                    Main.getInstance().db.orderBy("KILLS");
+                }
             } else
-            {
-                /*  Old way of saving kills, without a database
+                // Normal death
+                deathMessage = Main.prefix + "§6" + p.getName() + "§4 ist gestorben.";
 
-                    String path = "stats.kills." + e.getEntity().getKiller().getUniqueId().toString();
-                    Main.getInstance().getConfig().set(path, Main.getInstance().getConfig().getInt(path) + 1);
-
-                */
-
-                // Add kill to database
-                UUID uuid = e.getEntity().getKiller().getUniqueId();
-                Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS")+1);
-                Main.getInstance().db.orderBy("KILLS");
-            }
+            // Change death message
+            e.setDeathMessage(deathMessage);
         }
     }
 
