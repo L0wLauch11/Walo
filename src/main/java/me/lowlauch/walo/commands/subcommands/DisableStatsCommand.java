@@ -1,27 +1,25 @@
-package me.lowlauch.Walo.Commands.SubCommands;
+package me.lowlauch.walo.commands.subcommands;
 
-import me.lowlauch.Walo.Commands.SubCommand;
+import me.lowlauch.walo.commands.SubCommand;
+import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.WorldBorder;
 import org.bukkit.command.CommandSender;
 
-public class SetupBorderCommand implements SubCommand
-{
+import static me.lowlauch.walo.GlobalVariables.*;
 
+public class DisableStatsCommand implements SubCommand
+{
     @Override
     public void execute(CommandSender commandSender, String[] args)
     {
-        // Set worldborder to lobby
-        WorldBorder worldBorder = Bukkit.getWorld("world").getWorldBorder();
-
-        worldBorder.setCenter(0, 0);
-        worldBorder.setSize(25, 0);
+        statsDisabled = true;
+        Bukkit.getServer().broadcastMessage(Main.prefix + "In diesem Game werden §4§lkeine §7Stats aufgezeichnet!");
     }
 
     @Override
     public String getName()
     {
-        return "setupborder";
+        return "disablestats";
     }
 
     @Override

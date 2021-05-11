@@ -1,8 +1,8 @@
-package me.lowlauch.Walo;
+package me.lowlauch.walo;
 
-import me.lowlauch.Walo.Commands.CommandsManager;
-import me.lowlauch.Walo.SQL.Database;
-import me.lowlauch.Walo.SQL.MySQL;
+import me.lowlauch.walo.commands.CommandsManager;
+import me.lowlauch.walo.sql.Database;
+import me.lowlauch.walo.sql.MySQL;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 

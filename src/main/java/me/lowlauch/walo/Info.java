@@ -1,4 +1,4 @@
-package me.lowlauch.Walo;
+package me.lowlauch.walo;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

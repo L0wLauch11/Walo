@@ -1,7 +1,7 @@
-package me.lowlauch.Walo.SQL;
+package me.lowlauch.walo.sql;
 
 
-import me.lowlauch.Walo.Main;
+import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

@@ -1,6 +1,6 @@
-package me.lowlauch.Walo.Commands.SubCommands;
+package me.lowlauch.walo.commands.subcommands;
 
-import me.lowlauch.Walo.Commands.SubCommand;
+import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.command.CommandSender;
 
 public class HelpCommand implements SubCommand

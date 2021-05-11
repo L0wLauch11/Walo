@@ -1,18 +1,15 @@
-package me.lowlauch.Walo.Commands.SubCommands;
+package me.lowlauch.walo.commands.subcommands;
 
-import me.lowlauch.Walo.Commands.SubCommand;
-import me.lowlauch.Walo.Main;
+import me.lowlauch.walo.commands.SubCommand;
+import me.lowlauch.walo.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
-import static me.lowlauch.Walo.GlobalVariables.*;
+import static me.lowlauch.walo.GlobalVariables.*;
 
 public class StartCommand implements SubCommand
 {

@@ -1,4 +1,4 @@
-package me.lowlauch.Walo.Commands;
+package me.lowlauch.walo.commands;
 
 import org.bukkit.command.CommandSender;
 

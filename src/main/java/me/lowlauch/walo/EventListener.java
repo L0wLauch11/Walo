@@ -1,4 +1,4 @@
-package me.lowlauch.Walo;
+package me.lowlauch.walo;
 
 import org.bukkit.*;
 import org.bukkit.block.Block;

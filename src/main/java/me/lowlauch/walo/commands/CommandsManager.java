@@ -1,7 +1,7 @@
-package me.lowlauch.Walo.Commands;
+package me.lowlauch.walo.commands;
 
-import me.lowlauch.Walo.Commands.SubCommands.*;
-import me.lowlauch.Walo.Main;
+import me.lowlauch.walo.commands.subcommands.*;
+import me.lowlauch.walo.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

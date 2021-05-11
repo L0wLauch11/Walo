@@ -1,4 +1,4 @@
-package me.lowlauch.Walo.SQL;
+package me.lowlauch.walo.sql;
 
 import org.bukkit.entity.Player;
 
