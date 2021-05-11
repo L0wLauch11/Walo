@@ -1,4 +1,4 @@
-main: me.lowlauch.Walo.Main
+main: me.lowlauch.walo.Main
 name: Walo
 version: 1.4.0
 description: Simple Varo plugin
