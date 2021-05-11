@@ -1,29 +1,30 @@
-package me.lowlauch.Walo.Commands.Subcommands;
+package me.lowlauch.Walo.Commands.SubCommands;
 
 import me.lowlauch.Walo.Commands.SubCommand;
 import me.lowlauch.Walo.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-public class BroadcastCommand implements SubCommand
+import static me.lowlauch.Walo.Commands.CommandVariables.*;
+
+public class StopCommand implements SubCommand
 {
     @Override
     public void execute(CommandSender commandSender, String[] args)
     {
-        String message = "";
-        for(int i = 1; i < args.length; i++)
-        {
-            message += args[i] + " ";
-        }
-        message = message.replaceAll("&", "§");
+        for (Player p : Bukkit.getOnlinePlayers())
+            p.setGameMode(GameMode.ADVENTURE);
 
-        Bukkit.getServer().broadcastMessage(Main.prefix + message);
+        started = false;
+        Bukkit.broadcastMessage(Main.prefix + "Walo wurde §4gestoppt§7.");
     }
 
     @Override
     public String getName()
     {
-        return "bc";
+        return "stop";
     }
 
     @Override
@@ -41,6 +42,6 @@ public class BroadcastCommand implements SubCommand
     @Override
     public int neededArguments()
     {
-        return 1;
+        return 0;
     }
 }

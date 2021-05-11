@@ -1,4 +1,4 @@
-package me.lowlauch.Walo.Commands.Subcommands;
+package me.lowlauch.Walo.Commands.SubCommands;
 
 import me.lowlauch.Walo.Commands.SubCommand;
 import org.bukkit.Bukkit;

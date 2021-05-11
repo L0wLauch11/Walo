@@ -1,25 +1,29 @@
-package me.lowlauch.Walo.Commands.Subcommands;
+package me.lowlauch.Walo.Commands.SubCommands;
 
 import me.lowlauch.Walo.Commands.SubCommand;
 import me.lowlauch.Walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import static me.lowlauch.Walo.Commands.CommandVariables.*;
-
-public class DisableStatsCommand implements SubCommand
+public class BroadcastCommand implements SubCommand
 {
     @Override
     public void execute(CommandSender commandSender, String[] args)
     {
-        statsDisabled = true;
-        Bukkit.getServer().broadcastMessage(Main.prefix + "In diesem Game werden §4§lkeine §7Stats aufgezeichnet!");
+        String message = "";
+        for(int i = 1; i < args.length; i++)
+        {
+            message += args[i] + " ";
+        }
+        message = message.replaceAll("&", "§");
+
+        Bukkit.getServer().broadcastMessage(Main.prefix + message);
     }
 
     @Override
     public String getName()
     {
-        return "disablestats";
+        return "bc";
     }
 
     @Override
@@ -37,6 +41,6 @@ public class DisableStatsCommand implements SubCommand
     @Override
     public int neededArguments()
     {
-        return 0;
+        return 1;
     }
 }

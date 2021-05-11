@@ -1,30 +1,25 @@
-package me.lowlauch.Walo.Commands.Subcommands;
+package me.lowlauch.Walo.Commands.SubCommands;
 
 import me.lowlauch.Walo.Commands.SubCommand;
 import me.lowlauch.Walo.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import static me.lowlauch.Walo.Commands.CommandVariables.*;
 
-public class StopCommand implements SubCommand
+public class DisableStatsCommand implements SubCommand
 {
     @Override
     public void execute(CommandSender commandSender, String[] args)
     {
-        for (Player p : Bukkit.getOnlinePlayers())
-            p.setGameMode(GameMode.ADVENTURE);
-
-        started = false;
-        Bukkit.broadcastMessage(Main.prefix + "Walo wurde §4gestoppt§7.");
+        statsDisabled = true;
+        Bukkit.getServer().broadcastMessage(Main.prefix + "In diesem Game werden §4§lkeine §7Stats aufgezeichnet!");
     }
 
     @Override
     public String getName()
     {
-        return "stop";
+        return "disablestats";
     }
 
     @Override
