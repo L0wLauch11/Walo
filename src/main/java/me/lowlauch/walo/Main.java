@@ -4,6 +4,7 @@ import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.sql.Database;
 import me.lowlauch.walo.sql.MySQL;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.SQLException;
@@ -45,9 +46,6 @@ public class Main extends JavaPlugin
 
         // Info
         Info.runInfo();
-
-        // Scoreboard
-        ScoreboardHandler.updateScoreboard();
     }
 
     public void onDisable()
@@ -62,5 +60,10 @@ public class Main extends JavaPlugin
 
         if(sql != null)
             sql = null;
+
+        for(Player p : getServer().getOnlinePlayers())
+        {
+            p.setScoreboard(null);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
 import org.bukkit.*;
@@ -193,8 +194,11 @@ public class StartCommand implements SubCommand
 
                         started = true;
 
-                        long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20/60;
+                        long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;
                         borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds).toString();
+
+                        // Scoreboard
+                        ScoreboardHandler.updateScoreboard();
 
                         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
                     }

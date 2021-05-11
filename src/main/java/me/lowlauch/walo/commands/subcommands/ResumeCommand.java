@@ -1,5 +1,6 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
@@ -34,6 +35,9 @@ public class ResumeCommand implements SubCommand
 
         started = true;
         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6fortgesetzt§7.");
+
+        // Update scoreboard
+        ScoreboardHandler.updateScoreboard();
     }
 
     @Override

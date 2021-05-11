@@ -120,6 +120,12 @@ public class EventListener implements Listener
         Main.getInstance().db.createPlayer(p, "UUID,NAME,KILLS", String.format("%s,%s,%d",
                 e.getPlayer().getUniqueId(), e.getPlayer().getName(), 0));
 
+        // Scoreboard
+        ScoreboardHandler.updateScoreboard();
+
+        if(p.hasMetadata("no-scoreboard") && p.getScoreboard() != null)
+            p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+
         // Change name
         String customTag = Main.getInstance().getConfig().getString("tags." + p.getUniqueId().toString());
         p.setDisplayName(customTag);

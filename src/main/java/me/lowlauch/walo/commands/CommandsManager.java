@@ -29,6 +29,7 @@ public class CommandsManager implements CommandExecutor
         subCommands.add(new StartCommand());
         subCommands.add(new StopCommand());
         subCommands.add(new TeamTagCommand());
+        subCommands.add(new ToggleScoreboardCommand());
     }
 
     @Override
