@@ -8,7 +8,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.lowlauch.Walo.Commands.CommandVariables.*;
+import static me.lowlauch.Walo.GlobalVariables.*;
 
 public class ResumeCommand implements SubCommand
 {

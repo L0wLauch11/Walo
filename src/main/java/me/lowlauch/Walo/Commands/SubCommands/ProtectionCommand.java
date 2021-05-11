@@ -5,7 +5,7 @@ import me.lowlauch.Walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import static me.lowlauch.Walo.Commands.CommandVariables.*;
+import static me.lowlauch.Walo.GlobalVariables.*;
 
 public class ProtectionCommand implements SubCommand
 {

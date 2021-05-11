@@ -1,6 +1,5 @@
 package me.lowlauch.Walo;
 
-import me.lowlauch.Walo.Commands.CommandVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -27,7 +26,7 @@ public class EventListener implements Listener
     public void onPlayerDrop(PlayerDropItemEvent e)
     {
         // Disable dropping if game has not started
-        if(!CommandVariables.started)
+        if(!GlobalVariables.started)
         {
             e.setCancelled(true);
         }
@@ -37,7 +36,7 @@ public class EventListener implements Listener
     public void onPlayerTravel(final PlayerTeleportEvent e)
     {
         // If the nether is disabled then stop the event
-        if(!CommandVariables.started && e.getTo().getWorld().getName().toLowerCase().contains("nether"))
+        if(!GlobalVariables.started && e.getTo().getWorld().getName().toLowerCase().contains("nether"))
         {
             e.getPlayer().sendMessage(Main.prefix + "§c>:(");
 
@@ -129,7 +128,7 @@ public class EventListener implements Listener
         p.setPlayerListName(e.getPlayer().getDisplayName());
 
         // Set the player to the right gamemode
-        if(!CommandVariables.started)
+        if(!GlobalVariables.started)
             p.setGameMode(GameMode.ADVENTURE);
         else if(p.getGameMode().equals(GameMode.ADVENTURE))
             p.setGameMode(GameMode.SURVIVAL);
@@ -146,7 +145,7 @@ public class EventListener implements Listener
         EntityDamageEvent damageCause = p.getLastDamageCause();
 
         // Combat logging protection
-        if(p.getHealth() < 10.0f && p.getHealth() != 0.0f && CommandVariables.started)
+        if(p.getHealth() < 10.0f && p.getHealth() != 0.0f && GlobalVariables.started)
         {
             // Drop Inventory
             for (ItemStack itemStack : p.getInventory())
@@ -194,7 +193,7 @@ public class EventListener implements Listener
                 p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
 
                 // Give the killer a kill in stats
-                if(CommandVariables.statsDisabled)
+                if(GlobalVariables.statsDisabled)
                 {
                     killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
                 } else
@@ -219,7 +218,7 @@ public class EventListener implements Listener
     public void onPlayerDamage(EntityDamageEvent e)
     {
         // Cancel damage before game has started
-        if(!CommandVariables.started && e.getEntity() instanceof Player)
+        if(!GlobalVariables.started && e.getEntity() instanceof Player)
         {
             e.setCancelled(true);
         }
@@ -228,7 +227,7 @@ public class EventListener implements Listener
     @EventHandler
     public void onPlayerDamageByEntity(EntityDamageByEntityEvent e)
     {
-        if(CommandVariables.protection)
+        if(GlobalVariables.protection)
         {
             if (e.getDamager() instanceof Player && e.getEntity() instanceof Player)
             {
@@ -239,7 +238,7 @@ public class EventListener implements Listener
         }
 
         // This only applies to players
-        if(CommandVariables.started)
+        if(GlobalVariables.started)
         {
             if(e.getEntity() instanceof Player && e.getDamager() instanceof Player)
             {
@@ -279,7 +278,7 @@ public class EventListener implements Listener
     public void onPlayerDie(PlayerDeathEvent e)
     {
         // Ban the player if he dies and the game has started
-        if(CommandVariables.started)
+        if(GlobalVariables.started)
         {
             Player p = e.getEntity();
             String deathMessage;
@@ -295,7 +294,7 @@ public class EventListener implements Listener
                 p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
 
                 // Give the killer a kill in stats
-                if(CommandVariables.statsDisabled)
+                if(GlobalVariables.statsDisabled)
                 {
                     killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
                 } else

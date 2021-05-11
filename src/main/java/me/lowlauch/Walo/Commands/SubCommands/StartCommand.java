@@ -7,7 +7,12 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.lowlauch.Walo.Commands.CommandVariables.*;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import static me.lowlauch.Walo.GlobalVariables.*;
 
 public class StartCommand implements SubCommand
 {
@@ -190,6 +195,10 @@ public class StartCommand implements SubCommand
                         Bukkit.dispatchCommand(comSender, "worldborder set " + Main.getInstance().getConfig().getInt("worldborder.size") + " 0");
 
                         started = true;
+
+                        long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20/60;
+                        borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds).toString();
+
                         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
                     }
                 }
