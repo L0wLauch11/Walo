@@ -63,7 +63,7 @@ public class Main extends JavaPlugin
 
         for(Player p : getServer().getOnlinePlayers())
         {
-            p.setScoreboard(null);
+            p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         }
     }
 }
