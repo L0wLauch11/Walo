@@ -31,7 +31,7 @@ public class ScoreboardHandler
         p.setScoreboard(scoreboard);
     }
 
-    public static void updateScoreboard(boolean updateMinutes)
+    public static void updateScoreboard()
     {
         if(task != null)
             task.cancel();
@@ -46,8 +46,7 @@ public class ScoreboardHandler
                     updatePlayerScoreboard(p);
             }
 
-            if(updateMinutes)
-                minutesTimer++;
+            minutesTimer++;
         }, 0, 1200);
     }
 

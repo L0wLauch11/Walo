@@ -37,7 +37,7 @@ public class ResumeCommand implements SubCommand
         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6fortgesetzt§7.");
 
         // Update scoreboard
-        ScoreboardHandler.updateScoreboard(true);
+        ScoreboardHandler.updateScoreboard();
     }
 
     @Override

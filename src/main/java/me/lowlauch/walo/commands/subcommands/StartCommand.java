@@ -208,7 +208,7 @@ public class StartCommand implements SubCommand
                         borderTime = LocalTime.now().plusSeconds(time).toString();
 
                         // Scoreboard
-                        ScoreboardHandler.updateScoreboard(true);
+                        ScoreboardHandler.updateScoreboard();
 
                         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
                     }
