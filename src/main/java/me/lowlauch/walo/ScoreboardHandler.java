@@ -37,17 +37,17 @@ public class ScoreboardHandler
             task.cancel();
 
         task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+            playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L);
+
             for(Player p : Bukkit.getOnlinePlayers())
             {
                 // Update
-                playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L);
-
                 if(!p.hasMetadata("no-scoreboard"))
                     updatePlayerScoreboard(p);
-
-                if(updateMinutes)
-                    minutesTimer++;
             }
+
+            if(updateMinutes)
+                minutesTimer++;
         }, 0, 1200);
     }
 
