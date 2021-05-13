@@ -2,6 +2,7 @@ package me.lowlauch.walo;
 
 import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.misc.Info;
+import me.lowlauch.walo.misc.Lag;
 import me.lowlauch.walo.sql.Database;
 import me.lowlauch.walo.sql.MySQL;
 import org.bukkit.Bukkit;
@@ -44,6 +45,8 @@ public class Main extends JavaPlugin
 
         // Add event listener
         getServer().getPluginManager().registerEvents(new EventListener(), this);
+
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Lag(), 100L, 1L);
 
         // Info
         Info.runInfo();

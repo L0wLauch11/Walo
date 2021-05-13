@@ -1,6 +1,7 @@
 package me.lowlauch.walo;
 
 import me.lowlauch.walo.misc.GlobalVariables;
+import me.lowlauch.walo.misc.Lag;
 import me.lowlauch.walo.misc.Ping;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -61,12 +62,12 @@ public class ScoreboardHandler
             int shrinkSize = Main.getInstance().getConfig().getInt("worldborder.shrinksize")/2;
             String[] scores = {
 
-                    String.valueOf(Ping.getPing(p)), "§aPing", " ",
+                    "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int)Math.ceil(Lag.getTPS()), " ",
                     GlobalVariables.protection ? minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an" : "§caus", "§aSchutzzeit: ", "  ",
-                    "+" + shrinkSize + "; -" + shrinkSize, "§aBordergröße:", "   ",
+                    "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
                     GlobalVariables.borderTime.split("\\.")[0] + " Uhr", "§aBorder verkleinert:", "    ",
                     "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ",
-                    String.valueOf(playTime), "§aSpielzeit:", "      "
+                    "§aSpielzeit: §f" + playTime
 
             };
 
@@ -82,7 +83,7 @@ public class ScoreboardHandler
             String[] scores = {
 
                     "10 Minuten", "§aSchutzzeit: ", " ",
-                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "  "
+                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:"
 
             };
 
