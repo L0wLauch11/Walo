@@ -180,18 +180,26 @@ public class StartCommand implements SubCommand
                             p.setWalkSpeed(0.2f);
                             p.setLevel(0);
                             p.setExp(0);
+                            p.getInventory().clear();
+                            p.updateInventory();
 
                             p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
                         }
 
-                        // Some properties change
-                        Bukkit.dispatchCommand(comSender, "weather clear");
-                        Bukkit.dispatchCommand(comSender, "difficulty normal");
-                        Bukkit.dispatchCommand(comSender, "time set day");
-                        Bukkit.dispatchCommand(comSender, "walo protection true");
-                        Bukkit.dispatchCommand(comSender, "clear @a");
-                        Bukkit.dispatchCommand(comSender, "worldborder set " + Main.getInstance().getConfig().getInt("worldborder.size") + " 0");
+                        Player playerComSender = (Player) comSender;
+                        World world = playerComSender.getWorld();
 
+                        // Some properties change
+                        world.setThundering(false);
+                        world.setStorm(false);
+                        world.setDifficulty(Difficulty.NORMAL);
+                        world.setTime(0);
+
+                        WorldBorder worldBorder = world.getWorldBorder();
+                        worldBorder.setCenter(0, 0);
+                        worldBorder.setSize(Main.getInstance().getConfig().getInt("worldborder.size"), 0);
+
+                        protection = true;
                         started = true;
 
                         long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;

@@ -37,7 +37,7 @@ public class ScoreboardHandler
             for(Player p : Bukkit.getOnlinePlayers())
             {
                 // Update
-                playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L + Main.getInstance().getConfig().getInt("timeoffset"));
+                playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L);
 
                 if(!p.hasMetadata("no-scoreboard"))
                     updatePlayerScoreboard(p);
