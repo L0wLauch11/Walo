@@ -1,5 +1,6 @@
 package me.lowlauch.walo;
 
+import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;

@@ -1,5 +1,7 @@
 package me.lowlauch.walo;
 
+import me.lowlauch.walo.misc.GlobalVariables;
+import me.lowlauch.walo.misc.Ping;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
@@ -56,49 +58,39 @@ public class ScoreboardHandler
         if(GlobalVariables.started)
         {
             // Set scoreboard values
-            objective.getScore("§aSpielzeit:").setScore(14);
-            objective.getScore(String.valueOf(playTime)).setScore(13);
-
-            objective.getScore("    ").setScore(12);
-
-            objective.getScore("§aBordergröße:").setScore(11);
-            objective.getScore("+" + borderSize + "; -" + borderSize).setScore(10);
-
-            objective.getScore("   ").setScore(9);
-
-            objective.getScore("§aBorder verkleinert:").setScore(8);
-            objective.getScore(GlobalVariables.borderTime.split("\\.")[0] + " Uhr").setScore(7);
-
-            objective.getScore("  ").setScore(6);
-
             int shrinkSize = Main.getInstance().getConfig().getInt("worldborder.shrinksize")/2;
-            objective.getScore("§aVerkleinerung auf:").setScore(5);
-            objective.getScore("+" + shrinkSize + "; -" + shrinkSize).setScore(4);
+            String[] scores = {
 
-            objective.getScore(" ").setScore(3);
+                    String.valueOf(Ping.getPing(p)), "§aPing", " ",
+                    GlobalVariables.protection ? minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an" : "§caus", "§aSchutzzeit: ", "  ",
+                    "+" + shrinkSize + "; -" + shrinkSize, "§aBordergröße:", "   ",
+                    GlobalVariables.borderTime.split("\\.")[0] + " Uhr", "§aBorder verkleinert:", "    ",
+                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ",
+                    String.valueOf(playTime), "§aSpielzeit:", "      "
 
-            objective.getScore("§aSchutzzeit: ").setScore(2);
+            };
 
-            if(GlobalVariables.protection)
+            int i = 0;
+            for(String score : scores)
             {
-                if(minutesTimer < 10)
-                    objective.getScore((10 - minutesTimer) + " Minuten").setScore(1);
-                else
-                    objective.getScore("an").setScore(1);
-            } else
-            {
-                objective.getScore("§caus!").setScore(1);
+                objective.getScore(score).setScore(++i);
             }
+
         } else
         {
             // Set scoreboard values
-            objective.getScore("§aBordergröße:").setScore(5);
-            objective.getScore("+" + borderSize + "; -" + borderSize).setScore(4);
+            String[] scores = {
 
-            objective.getScore(" ").setScore(3);
+                    "10 Minuten", "§aSchutzzeit: ", " ",
+                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "  "
 
-            objective.getScore("§aSchutzzeit: ").setScore(2);
-            objective.getScore("10 Minuten").setScore(1);
+            };
+
+            int i = 0;
+            for(String score : scores)
+            {
+                objective.getScore(score).setScore(++i);
+            }
         }
 
         p.setScoreboard(scoreboard);

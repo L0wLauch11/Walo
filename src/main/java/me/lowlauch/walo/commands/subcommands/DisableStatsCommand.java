@@ -5,7 +5,7 @@ import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-import static me.lowlauch.walo.GlobalVariables.*;
+import static me.lowlauch.walo.misc.GlobalVariables.*;
 
 public class DisableStatsCommand implements SubCommand
 {

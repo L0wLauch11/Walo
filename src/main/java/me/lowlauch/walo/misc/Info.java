@@ -1,5 +1,6 @@
-package me.lowlauch.walo;
+package me.lowlauch.walo.misc;
 
+import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.scheduler.BukkitRunnable;

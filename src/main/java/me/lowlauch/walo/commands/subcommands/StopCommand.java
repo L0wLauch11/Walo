@@ -7,7 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.lowlauch.walo.GlobalVariables.*;
+import static me.lowlauch.walo.misc.GlobalVariables.*;
 
 public class StopCommand implements SubCommand
 {

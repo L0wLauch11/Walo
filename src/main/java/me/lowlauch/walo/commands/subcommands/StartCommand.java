@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 import java.time.LocalTime;
 
-import static me.lowlauch.walo.GlobalVariables.*;
+import static me.lowlauch.walo.misc.GlobalVariables.*;
 
 public class StartCommand implements SubCommand
 {
@@ -202,8 +202,10 @@ public class StartCommand implements SubCommand
                         protection = true;
                         started = true;
 
+                        // Calculate border time
                         long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;
-                        borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds).toString();
+                        long time = borderTimeInSeconds + Main.getInstance().getConfig().getLong("timeoffset");
+                        borderTime = LocalTime.now().plusSeconds(time).toString();
 
                         // Scoreboard
                         ScoreboardHandler.updateScoreboard(true);

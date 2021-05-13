@@ -1,6 +1,7 @@
 package me.lowlauch.walo;
 
 import me.lowlauch.walo.commands.CommandsManager;
+import me.lowlauch.walo.misc.Info;
 import me.lowlauch.walo.sql.Database;
 import me.lowlauch.walo.sql.MySQL;
 import org.bukkit.Bukkit;
