@@ -15,6 +15,7 @@ public class ScoreboardHandler
     private static Objective objective;
     private static Scoreboard scoreboard;
     private static BukkitTask task;
+    private static LocalTime playTime;
 
     public static void setScoreboard(Player p)
     {
@@ -27,16 +28,24 @@ public class ScoreboardHandler
         p.setScoreboard(scoreboard);
     }
 
-    public static void updateScoreboard()
+    public static void updateScoreboard(boolean updateMinutes)
     {
-        if(task == null)
-            task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
-                for(Player p : Bukkit.getOnlinePlayers())
-                {
-                    if(!p.hasMetadata("no-scoreboard"))
-                        updatePlayerScoreboard(p);
-                }
-            }, 0, 1200);
+        if(task != null)
+            task.cancel();
+
+        task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+            for(Player p : Bukkit.getOnlinePlayers())
+            {
+                // Update
+                playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L + Main.getInstance().getConfig().getInt("timeoffset"));
+
+                if(!p.hasMetadata("no-scoreboard"))
+                    updatePlayerScoreboard(p);
+
+                if(updateMinutes)
+                    minutesTimer++;
+            }
+        }, 0, 1200);
     }
 
     public static void updatePlayerScoreboard(Player p)
@@ -46,13 +55,9 @@ public class ScoreboardHandler
         int borderSize = Main.getInstance().getConfig().getInt("worldborder.size")/2;
         if(GlobalVariables.started)
         {
-            // Update timer
-            minutesTimer++;
-            LocalTime timeOfDay = LocalTime.ofSecondOfDay(minutesTimer * 60L);
-
             // Set scoreboard values
             objective.getScore("§aSpielzeit:").setScore(14);
-            objective.getScore(String.valueOf(timeOfDay)).setScore(13);
+            objective.getScore(String.valueOf(playTime)).setScore(13);
 
             objective.getScore("    ").setScore(12);
 
@@ -73,7 +78,6 @@ public class ScoreboardHandler
             objective.getScore(" ").setScore(3);
 
             objective.getScore("§aSchutzzeit: ").setScore(2);
-
 
             if(GlobalVariables.protection)
             {

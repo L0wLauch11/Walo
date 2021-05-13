@@ -121,7 +121,7 @@ public class EventListener implements Listener
                 e.getPlayer().getUniqueId(), e.getPlayer().getName(), 0));
 
         // Scoreboard
-        ScoreboardHandler.updateScoreboard();
+        ScoreboardHandler.updateScoreboard(false);
 
         if(p.hasMetadata("no-scoreboard") && p.getScoreboard() != null)
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());

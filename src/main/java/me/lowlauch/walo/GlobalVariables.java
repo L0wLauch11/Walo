@@ -15,5 +15,5 @@ public class GlobalVariables
     public static int seconds;
 
     private static final long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;
-    public static String borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds).toString();
+    public static String borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds + Main.getInstance().getConfig().getInt("timeoffset")).toString();
 }

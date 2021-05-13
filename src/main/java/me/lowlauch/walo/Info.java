@@ -17,7 +17,7 @@ public class Info
             {
                 if(!GlobalVariables.started)
                 {
-                    double val = Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20/60;
+                    double val = config.getDouble("worldborder.shrinkdelay")/20/60;
 
                     // Broadcast some info
                     Bukkit.getServer().broadcastMessage(

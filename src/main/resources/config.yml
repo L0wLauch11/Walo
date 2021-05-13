@@ -10,4 +10,7 @@ worldborder:
   shrinksize: 200
   shrinkdelay: 216
 
+timeoffset: 7200
+
 mates:
+
