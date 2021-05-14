@@ -111,7 +111,7 @@ public class StartCommand implements SubCommand
                             {
                                 Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "walo protection false");
                             }
-                        }, 12000L);
+                        }, 11999L);
 
                         //// DEACTIVATE NETHER AND SHRINK BORDER
                         // Warn player about border shrink

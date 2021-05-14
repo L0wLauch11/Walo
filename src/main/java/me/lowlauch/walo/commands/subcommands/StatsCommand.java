@@ -13,7 +13,7 @@ public class StatsCommand implements SubCommand
     {
         Main.getInstance().reloadConfig();
 
-        Player checkStatsPlayer = null;
+        Player checkStatsPlayer;
 
         if(args.length != 1)
         {

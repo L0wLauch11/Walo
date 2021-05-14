@@ -1,6 +1,7 @@
 package me.lowlauch.walo.commands.subcommands;
 
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,7 @@ public class ToggleScoreboardCommand implements SubCommand
         if(p.hasMetadata("no-scoreboard"))
         {
             p.removeMetadata("no-scoreboard", Main.getInstance());
+            ScoreboardHandler.updatePlayerScoreboard(p);
             p.sendMessage(Main.prefix + "Das Scoreboard wurde aktiviert.");
         } else
         {

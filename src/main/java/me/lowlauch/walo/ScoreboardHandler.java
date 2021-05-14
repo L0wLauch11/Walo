@@ -14,7 +14,7 @@ import java.time.LocalTime;
 
 public class ScoreboardHandler
 {
-    private static int minutesTimer = 0;
+    private static int minutesTimer = -1;
     private static Objective objective;
     private static Scoreboard scoreboard;
     private static BukkitTask task;
@@ -37,6 +37,7 @@ public class ScoreboardHandler
             task.cancel();
 
         task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
+            minutesTimer++;
             playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L);
 
             for(Player p : Bukkit.getOnlinePlayers())
@@ -45,8 +46,6 @@ public class ScoreboardHandler
                 if(!p.hasMetadata("no-scoreboard"))
                     updatePlayerScoreboard(p);
             }
-
-            minutesTimer++;
         }, 0, 1200);
     }
 
@@ -62,7 +61,7 @@ public class ScoreboardHandler
             String[] scores = {
 
                     "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int)Math.ceil(Lag.getTPS()), " ",
-                    GlobalVariables.protection ? minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an" : "§caus", "§aSchutzzeit: ", "  ",
+                    GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
                     "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
                     GlobalVariables.borderTime.split("\\.")[0] + " Uhr", "§aBorder verkleinert:", "    ",
                     "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ",
