@@ -1,5 +1,6 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
@@ -23,18 +24,15 @@ public class AddMateCommand implements SubCommand
             assert destinationPlayer != null;
             if(!player.getName().equals(destinationPlayer.getName()))
             {
-                // Set the argument as mate in both the lists
-                String path = "mates." + player.getUniqueId().toString();
-                List<String> mates = Main.getInstance().getConfig().getStringList(path);
-
-                String pathDestinationPlayer = "mates." + destinationPlayer.getUniqueId().toString();
-                List<String> matesDestinationPlayer = Main.getInstance().getConfig().getStringList(pathDestinationPlayer);
+                // Add these players as mates for eachother
+                List<String> mates = WaloConfig.getPlayerMates(player);
+                List<String> matesDestinationPlayer = WaloConfig.getPlayerMates(destinationPlayer);
 
                 mates.add(destinationPlayer.getUniqueId().toString());
                 matesDestinationPlayer.add(player.getUniqueId().toString());
 
-                Main.getInstance().getConfig().set(pathDestinationPlayer, matesDestinationPlayer);
-                Main.getInstance().getConfig().set(path, mates);
+                WaloConfig.setPlayerMates(player, mates);
+                WaloConfig.setPlayerMates(destinationPlayer, matesDestinationPlayer);
 
                 // Inform both players that they are now mates
                 commandSender.sendMessage(Main.prefix + "Zu §6" + player.getName() + "§7 seinen Mates wurde §6" + destinationPlayer.getName() + "§7 hinzugefügt.");
@@ -43,8 +41,7 @@ public class AddMateCommand implements SubCommand
                 destinationPlayer.sendMessage(Main.prefix + "§6" + player.getName() + "§7 ist jetzt einer deiner Mates.");
 
                 // Save the config
-                Main.getInstance().saveConfig();
-                Main.getInstance().reloadConfig();
+                WaloConfig.save();
             } else
             {
                 commandSender.sendMessage(Main.prefix + "Du kannst dich nicht selber als Mate adden!");

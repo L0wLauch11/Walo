@@ -15,8 +15,8 @@ public class GlobalVariables
     public static CommandSender comSender;
     public static int seconds;
 
-    private static final long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;
-    private static final Calendar calendar = Calendar.getInstance();
+    //private static final long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;
+    //private static final Calendar calendar = Calendar.getInstance();
     public static String borderTime;
 
 }

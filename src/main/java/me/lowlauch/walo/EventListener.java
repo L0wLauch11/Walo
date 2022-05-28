@@ -128,7 +128,7 @@ public class EventListener implements Listener
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         // Change name
-        String customTag = Main.getInstance().getConfig().getString("tags." + p.getUniqueId().toString());
+        String customTag = WaloConfig.getPlayerTeamTag(p);
         p.setDisplayName(customTag);
 
         // Set the player tab name to display name
@@ -249,7 +249,7 @@ public class EventListener implements Listener
         {
             if(e.getEntity() instanceof Player && e.getDamager() instanceof Player)
             {
-                Main.getInstance().reloadConfig();
+                WaloConfig.reload();
 
                 // Stop team mates from damaging each other
                 Player victim = (Player) e.getEntity();
@@ -258,8 +258,8 @@ public class EventListener implements Listener
                 List<String> victimMates;
                 List<String> damagerMates;
 
-                victimMates = Main.getInstance().getConfig().getStringList("mates." + victim.getUniqueId().toString());
-                damagerMates = Main.getInstance().getConfig().getStringList("mates." + damager.getUniqueId().toString());
+                victimMates = WaloConfig.getPlayerMates(victim);
+                damagerMates = WaloConfig.getPlayerMates(damager);
 
                 int length = Math.max(victimMates.size(), damagerMates.size());
 

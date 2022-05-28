@@ -1,5 +1,6 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
@@ -23,7 +24,7 @@ public class TeamTagCommand implements SubCommand
         // Sets a custom tag for a player and mates
         Player p = Bukkit.getPlayer(args[1]);
 
-        List<String> playerMates = Main.getInstance().getConfig().getStringList("mates." + p.getUniqueId().toString());
+        List<String> playerMates = WaloConfig.getPlayerMates(p);
 
         int length = playerMates.size();
 
@@ -31,7 +32,7 @@ public class TeamTagCommand implements SubCommand
 
         p.setDisplayName(finalName);
         p.setPlayerListName(finalName);
-        Main.getInstance().getConfig().set("tags." + p.getUniqueId().toString(), finalName);
+        WaloConfig.setPlayerTeamTag(p, finalName);
 
         p.sendMessage(Main.prefix + "Euer Team-Tag ist jetzt: " + customTag);
 
@@ -44,7 +45,7 @@ public class TeamTagCommand implements SubCommand
                 finalName = customTag + " §r" + changeTagPlayer.getName();
 
                 // Save tag under config
-                Main.getInstance().getConfig().set("tags." + changeTagPlayer.getUniqueId().toString(), finalName);
+                WaloConfig.setPlayerTeamTag(changeTagPlayer, finalName);
 
                 changeTagPlayer.setDisplayName(finalName);
                 changeTagPlayer.setPlayerListName(finalName);
@@ -52,8 +53,8 @@ public class TeamTagCommand implements SubCommand
                 changeTagPlayer.sendMessage(Main.prefix + "Euer Team-Tag ist jetzt: " + customTag);
             }
 
-            Main.getInstance().saveConfig();
-            Main.getInstance().reloadConfig();
+            WaloConfig.save();
+            WaloConfig.reload();
         } else
         {
             p.setDisplayName(p.getName());
@@ -61,9 +62,8 @@ public class TeamTagCommand implements SubCommand
 
             p.sendMessage(Main.prefix + "Euer Team-Tag ist jetzt resettet worden :(");
 
-            // Save tag under config
-            Main.getInstance().getConfig().set("tags." + p.getUniqueId().toString(), p.getName());
-
+            // Reset tag
+            WaloConfig.setPlayerTeamTag(p, p.getName());
 
             for(String playerMate : playerMates)
             {
@@ -71,14 +71,14 @@ public class TeamTagCommand implements SubCommand
                 changeTagPlayer.setDisplayName(changeTagPlayer.getName());
                 changeTagPlayer.setPlayerListName(changeTagPlayer.getName());
 
-                // Save tag under config
-                Main.getInstance().getConfig().set("tags." + changeTagPlayer.getUniqueId().toString(), changeTagPlayer.getName());
+                // Reset tag for mates as well
+                WaloConfig.setPlayerTeamTag(changeTagPlayer, changeTagPlayer.getName());
 
                 changeTagPlayer.sendMessage(Main.prefix + "Euer Team-Tag ist jetzt resettet worden :(");
             }
 
-            Main.getInstance().saveConfig();
-            Main.getInstance().reloadConfig();
+            WaloConfig.save();
+            WaloConfig.reload();
         }
     }
 

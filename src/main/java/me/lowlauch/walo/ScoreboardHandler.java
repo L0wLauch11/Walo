@@ -53,11 +53,11 @@ public class ScoreboardHandler
     {
         setScoreboard(p);
 
-        int borderSize = Main.getInstance().getConfig().getInt("worldborder.size")/2;
+        int borderSize = WaloConfig.getWorldBorderSize()/2;
         if(GlobalVariables.started)
         {
             // Set scoreboard values
-            int shrinkSize = Main.getInstance().getConfig().getInt("worldborder.shrinksize")/2;
+            int shrinkSize = WaloConfig.getWorldBorderShrinkSize()/2;
             String[] scores = {
 
                     "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int)Math.ceil(Lag.getTPS()), " ",

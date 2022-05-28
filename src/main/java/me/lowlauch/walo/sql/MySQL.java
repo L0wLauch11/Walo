@@ -2,6 +2,7 @@ package me.lowlauch.walo.sql;
 
 
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.WaloConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -17,13 +18,11 @@ public class MySQL
 
     public void setup()
     {
-        FileConfiguration config = Main.getInstance().getConfig();
-
-        String host = config.getString("mysql.host");
-        int port = config.getInt("mysql.port");
-        String database = config.getString("mysql.database");
-        String username = config.getString("mysql.username");
-        String password = config.getString("mysql.password");
+        String host = WaloConfig.getMySQLHost();
+        int port = WaloConfig.getMySQLPort();
+        String database = WaloConfig.getMySQLDatabase();
+        String username = WaloConfig.getMySQLUsername();
+        String password = WaloConfig.getMySQLPassword();
 
         try
         {

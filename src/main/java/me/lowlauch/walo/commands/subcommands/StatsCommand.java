@@ -1,5 +1,6 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
@@ -11,7 +12,7 @@ public class StatsCommand implements SubCommand
     @Override
     public void execute(CommandSender commandSender, String[] args)
     {
-        Main.getInstance().reloadConfig();
+        WaloConfig.reload();
 
         Player checkStatsPlayer;
 

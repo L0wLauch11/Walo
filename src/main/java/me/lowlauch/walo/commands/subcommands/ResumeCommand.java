@@ -3,9 +3,7 @@ package me.lowlauch.walo.commands.subcommands;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -31,7 +29,11 @@ public class ResumeCommand implements SubCommand
         }
 
         // Some properties change
-        Bukkit.dispatchCommand(comSender, "difficulty normal");
+        // Bukkit.dispatchCommand(comSender, "difficulty normal");
+        for (World w : Bukkit.getServer().getWorlds())
+        {
+            w.setDifficulty(Difficulty.NORMAL);
+        }
 
         started = true;
         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6fortgesetzt§7.");

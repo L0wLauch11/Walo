@@ -6,6 +6,8 @@ import me.lowlauch.walo.misc.Lag;
 import me.lowlauch.walo.sql.Database;
 import me.lowlauch.walo.sql.MySQL;
 import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -34,7 +36,11 @@ public class Main extends JavaPlugin
         Objects.requireNonNull(getCommand("walo")).setExecutor(commandsManager);
 
         // Set the difficulty to peaceful until game starts
-        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "difficulty peaceful");
+        //Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "difficulty peaceful");
+        for (World w : Bukkit.getServer().getWorlds())
+        {
+            w.setDifficulty(Difficulty.PEACEFUL);
+        }
 
         // Config stuff
         saveDefaultConfig();
