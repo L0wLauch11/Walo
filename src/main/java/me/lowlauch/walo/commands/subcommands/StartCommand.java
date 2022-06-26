@@ -42,7 +42,7 @@ public class StartCommand implements SubCommand
 
                     if(timer >= seconds)
                     {
-                        // This code should be optimized
+                        // we don't talk about this
                         // Warn the player 1 seconds before the timer runs out
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 1 Sekunde!"), 11980L);
 
@@ -149,8 +149,8 @@ public class StartCommand implements SubCommand
                         started = true;
 
                         // Calculate border time
-                        long borderTimeInSeconds = WaloConfig.getWorldBorderShinkDelay();
-                        long time = borderTimeInSeconds + WaloConfig.getWorldBorderShrinkDuration();
+                        long borderTimeInSeconds = WaloConfig.getWorldBorderShinkDelay()/20;
+                        long time = borderTimeInSeconds + WaloConfig.getWorldBorderShrinkDuration()/20;
                         borderTime = LocalTime.now().plusSeconds(time).toString();
 
                         // Scoreboard
@@ -170,19 +170,19 @@ public class StartCommand implements SubCommand
     }
 
     @Override
-    public boolean needsOp()
+    public boolean requiresOp()
     {
         return true;
     }
 
     @Override
-    public boolean needsPlayer()
+    public boolean requiresPlayer()
     {
         return true;
     }
 
     @Override
-    public int neededArguments()
+    public int requiredArguments()
     {
         return 0;
     }

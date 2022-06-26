@@ -65,7 +65,7 @@ public class WaloConfig
 
     public static long getWorldBorderShrinkDuration() // How long it takes to shrink to the shrink size
     {
-        return mainConfig.getLong("timeoffset");
+        return mainConfig.getLong("worldborder.shrinkduration");
     }
 
     public static String getMySQLHost()

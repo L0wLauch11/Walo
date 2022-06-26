@@ -42,19 +42,19 @@ public class CommandsManager implements CommandExecutor
                 // Execute subcommand
                 if(args[0].equalsIgnoreCase(subCommand.getName()))
                 {
-                    if(!commandSender.isOp() && subCommand.needsOp())
+                    if(!commandSender.isOp() && subCommand.requiresOp())
                     {
                         commandSender.sendMessage(Main.prefix + "Du hast keine Rechte für diesen Command!");
                         return true;
                     }
 
-                    if(!(commandSender instanceof Player) && subCommand.needsPlayer())
+                    if(!(commandSender instanceof Player) && subCommand.requiresPlayer())
                     {
                         commandSender.sendMessage(Main.prefix + "Du musst ein Spieler sein!");
                         return true;
                     }
 
-                    if(args.length < subCommand.neededArguments())
+                    if(args.length < subCommand.requiredArguments())
                     {
                         commandSender.sendMessage(Main.prefix + "Nicht genug Argumente!");
                         helpCommand.execute(commandSender, args);

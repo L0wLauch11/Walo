@@ -28,19 +28,19 @@ public class StopCommand implements SubCommand
     }
 
     @Override
-    public boolean needsOp()
+    public boolean requiresOp()
     {
         return true;
     }
 
     @Override
-    public boolean needsPlayer()
+    public boolean requiresPlayer()
     {
         return false;
     }
 
     @Override
-    public int neededArguments()
+    public int requiredArguments()
     {
         return 0;
     }

@@ -49,19 +49,19 @@ public class ResumeCommand implements SubCommand
     }
 
     @Override
-    public boolean needsOp()
+    public boolean requiresOp()
     {
         return true;
     }
 
     @Override
-    public boolean needsPlayer()
+    public boolean requiresPlayer()
     {
         return true;
     }
 
     @Override
-    public int neededArguments()
+    public int requiredArguments()
     {
         return 0;
     }
