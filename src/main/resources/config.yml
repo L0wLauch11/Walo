@@ -6,9 +6,10 @@ mysql:
   password: ""
 
 worldborder:
-  size: 600
+  size: 1400
   shrinksize: 200
-  shrinkdelay: 216
+  shrinkdelay: 144000
+  shrinkduration: 7200
 
 timeoffset: 7200
 
