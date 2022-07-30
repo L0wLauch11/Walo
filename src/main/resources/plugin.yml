@@ -1,7 +1,7 @@
 main: me.lowlauch.walo.Main
 name: Walo
-version: 1.4.3
-description: Simple Varo plugin
+version: 1.4.4
+description: Varo clone but shorter rounds
 author: lowlauch
 commands:
   walo:

@@ -8,21 +8,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
-public class ToggleScoreboardCommand implements SubCommand
-{
+public class ToggleScoreboardCommand implements SubCommand {
 
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         Player p = (Player) commandSender;
 
-        if(p.hasMetadata("no-scoreboard"))
-        {
+        if (p.hasMetadata("no-scoreboard")) {
             p.removeMetadata("no-scoreboard", Main.getInstance());
             ScoreboardHandler.updatePlayerScoreboard(p);
             p.sendMessage(Main.prefix + "Das Scoreboard wurde aktiviert.");
-        } else
-        {
+        } else {
             p.setMetadata("no-scoreboard", new FixedMetadataValue(Main.getInstance(), "a"));
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
             p.sendMessage(Main.prefix + "Das Scoreboard wurde deaktiviert.");
@@ -30,26 +26,22 @@ public class ToggleScoreboardCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "scoreboard";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return false;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return false;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 0;
     }
 }

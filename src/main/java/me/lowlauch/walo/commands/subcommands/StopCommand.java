@@ -1,19 +1,17 @@
 package me.lowlauch.walo.commands.subcommands;
 
-import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.lowlauch.walo.misc.GlobalVariables.*;
+import static me.lowlauch.walo.misc.GlobalVariables.started;
 
-public class StopCommand implements SubCommand
-{
+public class StopCommand implements SubCommand {
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         for (Player p : Bukkit.getOnlinePlayers())
             p.setGameMode(GameMode.ADVENTURE);
 
@@ -22,26 +20,22 @@ public class StopCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "stop";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return false;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 0;
     }
 }

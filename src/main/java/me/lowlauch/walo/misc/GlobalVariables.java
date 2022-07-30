@@ -1,12 +1,8 @@
 package me.lowlauch.walo.misc;
 
-import me.lowlauch.walo.Main;
 import org.bukkit.command.CommandSender;
 
-import java.util.Calendar;
-
-public class GlobalVariables
-{
+public class GlobalVariables {
     public static boolean started = false;
     public static boolean protection = false;
     public static boolean statsDisabled = false;

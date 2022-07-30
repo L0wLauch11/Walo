@@ -5,12 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.WorldBorder;
 import org.bukkit.command.CommandSender;
 
-public class SetupBorderCommand implements SubCommand
-{
+public class SetupBorderCommand implements SubCommand {
 
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         // Set worldborder to lobby
         WorldBorder worldBorder = Bukkit.getWorld("world").getWorldBorder();
 
@@ -19,26 +17,22 @@ public class SetupBorderCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "setupborder";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return false;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 0;
     }
 }

@@ -1,29 +1,25 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
-import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class AddMateCommand implements SubCommand
-{
+public class AddMateCommand implements SubCommand {
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
-        if(args.length == 3)
-        {
+    public void execute(CommandSender commandSender, String[] args) {
+        if (args.length == 3) {
             Player player = Bukkit.getServer().getPlayer(args[1]);
             Player destinationPlayer = Bukkit.getServer().getPlayer(args[2]);
 
             // Don't let the player add himself as mate
             assert player != null;
             assert destinationPlayer != null;
-            if(!player.getName().equals(destinationPlayer.getName()))
-            {
+            if (!player.getName().equals(destinationPlayer.getName())) {
                 // Add these players as mates for eachother
                 List<String> mates = WaloConfig.getPlayerMates(player);
                 List<String> matesDestinationPlayer = WaloConfig.getPlayerMates(destinationPlayer);
@@ -42,37 +38,31 @@ public class AddMateCommand implements SubCommand
 
                 // Save the config
                 WaloConfig.save();
-            } else
-            {
+            } else {
                 commandSender.sendMessage(Main.prefix + "Du kannst dich nicht selber als Mate adden!");
             }
-        } else
-        {
+        } else {
             commandSender.sendMessage(Main.prefix + "Du musst: §c/walo addmate <Spieler> <Team-Mate>§7 machen");
         }
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "addmate";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return false;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 0;
     }
 }

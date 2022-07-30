@@ -1,8 +1,8 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
-import me.lowlauch.walo.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -10,11 +10,9 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.UUID;
 
-public class TeamTagCommand implements SubCommand
-{
+public class TeamTagCommand implements SubCommand {
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         // Save custom tag under variable
         String customTag = args[2];
 
@@ -36,11 +34,9 @@ public class TeamTagCommand implements SubCommand
 
         p.sendMessage(Main.prefix + "Euer Team-Tag ist jetzt: " + customTag);
 
-        if(!customTag.equals("reset"))
-        {
+        if (!customTag.equals("reset")) {
             // Loop through all mates and change their tag
-            for (String playerMate : playerMates)
-            {
+            for (String playerMate : playerMates) {
                 Player changeTagPlayer = Bukkit.getPlayer(UUID.fromString(playerMate));
                 finalName = customTag + " §r" + changeTagPlayer.getName();
 
@@ -55,8 +51,7 @@ public class TeamTagCommand implements SubCommand
 
             WaloConfig.save();
             WaloConfig.reload();
-        } else
-        {
+        } else {
             p.setDisplayName(p.getName());
             p.setPlayerListName(p.getName());
 
@@ -65,8 +60,7 @@ public class TeamTagCommand implements SubCommand
             // Reset tag
             WaloConfig.setPlayerTeamTag(p, p.getName());
 
-            for(String playerMate : playerMates)
-            {
+            for (String playerMate : playerMates) {
                 Player changeTagPlayer = Bukkit.getPlayer(UUID.fromString(playerMate));
                 changeTagPlayer.setDisplayName(changeTagPlayer.getName());
                 changeTagPlayer.setPlayerListName(changeTagPlayer.getName());
@@ -83,26 +77,22 @@ public class TeamTagCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "teamtag";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return false;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 2;
     }
 }

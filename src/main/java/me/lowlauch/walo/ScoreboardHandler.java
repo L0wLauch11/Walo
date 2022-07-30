@@ -12,16 +12,14 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import java.time.LocalTime;
 
-public class ScoreboardHandler
-{
+public class ScoreboardHandler {
     private static int minutesTimer = -1;
     private static Objective objective;
     private static Scoreboard scoreboard;
     private static BukkitTask task;
     private static LocalTime playTime;
 
-    public static void setScoreboard(Player p)
-    {
+    public static void setScoreboard(Player p) {
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         objective = scoreboard.registerNewObjective("walo", "dummy");
 
@@ -31,36 +29,32 @@ public class ScoreboardHandler
         p.setScoreboard(scoreboard);
     }
 
-    public static void updateScoreboard()
-    {
-        if(task != null)
+    public static void updateScoreboard() {
+        if (task != null)
             task.cancel();
 
         task = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), () -> {
             minutesTimer++;
             playTime = LocalTime.ofSecondOfDay(minutesTimer * 60L);
 
-            for(Player p : Bukkit.getOnlinePlayers())
-            {
+            for (Player p : Bukkit.getOnlinePlayers()) {
                 // Update
-                if(!p.hasMetadata("no-scoreboard"))
+                if (!p.hasMetadata("no-scoreboard"))
                     updatePlayerScoreboard(p);
             }
         }, 0, 1200);
     }
 
-    public static void updatePlayerScoreboard(Player p)
-    {
+    public static void updatePlayerScoreboard(Player p) {
         setScoreboard(p);
 
-        int borderSize = WaloConfig.getWorldBorderSize()/2;
-        if(GlobalVariables.started)
-        {
+        int borderSize = WaloConfig.getWorldBorderSize() / 2;
+        if (GlobalVariables.started) {
             // Set scoreboard values
-            int shrinkSize = WaloConfig.getWorldBorderShrinkSize()/2;
+            int shrinkSize = WaloConfig.getWorldBorderShrinkSize() / 2;
             String[] scores = {
 
-                    "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int)Math.ceil(Lag.getTPS()), " ",
+                    "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(Lag.getTPS()), " ",
                     GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
                     "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
                     GlobalVariables.borderTime.split("\\.")[0] + " Uhr", "§aBorder verkleinert:", "    ",
@@ -70,13 +64,11 @@ public class ScoreboardHandler
             };
 
             int i = 0;
-            for(String score : scores)
-            {
+            for (String score : scores) {
                 objective.getScore(score).setScore(++i);
             }
 
-        } else
-        {
+        } else {
             // Set scoreboard values
             String[] scores = {
 
@@ -86,8 +78,7 @@ public class ScoreboardHandler
             };
 
             int i = 0;
-            for(String score : scores)
-            {
+            for (String score : scores) {
                 objective.getScore(score).setScore(++i);
             }
         }

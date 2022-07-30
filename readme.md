@@ -6,4 +6,5 @@ Ein eigener Spin für das beliebe Minecraft Projekt Varo. Funktioniert nur auf S
 wobei man mit wenig Aufwand es auch auf neuere Versionen bringen könnte.\
 \
 Commands: /walo help
-  - Zeigt alle möglichen Commands an
+
+- Zeigt alle möglichen Commands an

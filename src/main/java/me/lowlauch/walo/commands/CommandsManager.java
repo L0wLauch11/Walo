@@ -1,7 +1,7 @@
 package me.lowlauch.walo.commands;
 
-import me.lowlauch.walo.commands.subcommands.*;
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.commands.subcommands.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,14 +9,12 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
-public class CommandsManager implements CommandExecutor
-{
+public class CommandsManager implements CommandExecutor {
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
 
     HelpCommand helpCommand = new HelpCommand();
 
-    public CommandsManager()
-    {
+    public CommandsManager() {
         // Register all subcommands
         subCommands.add(new AddMateCommand());
         subCommands.add(new BroadcastCommand());
@@ -33,29 +31,22 @@ public class CommandsManager implements CommandExecutor
     }
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String commandLabel, String[] args)
-    {
-        if(commandLabel.equalsIgnoreCase("walo"))
-        {
-            for(SubCommand subCommand : subCommands)
-            {
+    public boolean onCommand(CommandSender commandSender, Command command, String commandLabel, String[] args) {
+        if (commandLabel.equalsIgnoreCase("walo")) {
+            for (SubCommand subCommand : subCommands) {
                 // Execute subcommand
-                if(args[0].equalsIgnoreCase(subCommand.getName()))
-                {
-                    if(!commandSender.isOp() && subCommand.requiresOp())
-                    {
+                if (args[0].equalsIgnoreCase(subCommand.getName())) {
+                    if (!commandSender.isOp() && subCommand.requiresOp()) {
                         commandSender.sendMessage(Main.prefix + "Du hast keine Rechte für diesen Command!");
                         return true;
                     }
 
-                    if(!(commandSender instanceof Player) && subCommand.requiresPlayer())
-                    {
+                    if (!(commandSender instanceof Player) && subCommand.requiresPlayer()) {
                         commandSender.sendMessage(Main.prefix + "Du musst ein Spieler sein!");
                         return true;
                     }
 
-                    if(args.length < subCommand.requiredArguments())
-                    {
+                    if (args.length < subCommand.requiredArguments()) {
                         commandSender.sendMessage(Main.prefix + "Nicht genug Argumente!");
                         helpCommand.execute(commandSender, args);
                         return true;

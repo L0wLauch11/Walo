@@ -1,10 +1,9 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
-import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.commands.SubCommand;
-import me.lowlauch.walo.Main;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -14,11 +13,9 @@ import java.time.LocalTime;
 
 import static me.lowlauch.walo.misc.GlobalVariables.*;
 
-public class StartCommand implements SubCommand
-{
+public class StartCommand implements SubCommand {
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         comSender = commandSender;
         timer = -1;
 
@@ -26,22 +23,19 @@ public class StartCommand implements SubCommand
 
         // Adds a routine that gets executed every second and stops until the timer exceeds the seconds
         // amount and then starts the game
-        for(int i = 0; i <= seconds*20; i += 20)
-        {
+        for (int i = 0; i <= seconds * 20; i += 20) {
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
                 public void run() {
                     timer++;
 
-                    if(seconds-timer != 0)
-                    {
+                    if (seconds - timer != 0) {
                         for (Player p : Bukkit.getOnlinePlayers())
                             p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
 
                         Bukkit.broadcastMessage(Main.prefix + "Walo startet in §6" + (seconds - timer) + "§7 Sekunden!");
                     }
 
-                    if(timer >= seconds)
-                    {
+                    if (timer >= seconds) {
                         // we don't talk about this
                         // Warn the player 1 seconds before the timer runs out
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 1 Sekunde!"), 11980L);
@@ -92,22 +86,21 @@ public class StartCommand implements SubCommand
                             netherBorder.setSize(0, 400L);
 
                             // set 0, 0 to lava
-                            for(int i1 = 0; i1 < 255; i1++)
-                            {
+                            for (int i1 = 0; i1 < 255; i1++) {
                                 Block block = nether.getBlockAt(0, i1, 0);
-                                if(block.getType() != Material.AIR)
+                                if (block.getType() != Material.AIR)
                                     block.setType(Material.LAVA);
 
                                 block = nether.getBlockAt(1, i1, 0);
-                                if(block.getType() != Material.AIR)
+                                if (block.getType() != Material.AIR)
                                     block.setType(Material.LAVA);
 
                                 block = nether.getBlockAt(-1, i1, -1);
-                                if(block.getType() == Material.AIR)
+                                if (block.getType() == Material.AIR)
                                     block.setType(Material.LAVA);
 
                                 block = nether.getBlockAt(0, i1, -1);
-                                if(block.getType() != Material.AIR)
+                                if (block.getType() != Material.AIR)
                                     block.setType(Material.LAVA);
                             }
 
@@ -117,8 +110,7 @@ public class StartCommand implements SubCommand
 
                         // Start Walo
                         // Loop through all players and heal them and all that other stuff
-                        for (Player p : Bukkit.getOnlinePlayers())
-                        {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
                             p.setHealth(20.0f);
                             p.setSaturation(20.0f);
                             p.setFoodLevel(20);
@@ -149,8 +141,8 @@ public class StartCommand implements SubCommand
                         started = true;
 
                         // Calculate border time
-                        long borderTimeInSeconds = WaloConfig.getWorldBorderShinkDelay()/20;
-                        long time = borderTimeInSeconds + WaloConfig.getWorldBorderShrinkDuration()/20;
+                        long borderTimeInSeconds = WaloConfig.getWorldBorderShinkDelay() / 20;
+                        long time = borderTimeInSeconds + WaloConfig.getWorldBorderShrinkDuration() / 20;
                         borderTime = LocalTime.now().plusSeconds(time).toString();
 
                         // Scoreboard
@@ -164,26 +156,22 @@ public class StartCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "start";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return true;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 0;
     }
 }

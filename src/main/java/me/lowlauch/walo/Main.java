@@ -14,20 +14,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.sql.SQLException;
 import java.util.Objects;
 
-public class Main extends JavaPlugin
-{
+public class Main extends JavaPlugin {
     public static String prefix = "§f[§6Walo§f]§7 ";
     private static Main instance;
     private MySQL sql = new MySQL();
     public Database db = new Database();
 
-    public static Main getInstance()
-    {
+    public static Main getInstance() {
         return instance;
     }
 
-    public void onEnable()
-    {
+    public void onEnable() {
         instance = this;
 
         CommandsManager commandsManager = new CommandsManager();
@@ -37,8 +34,7 @@ public class Main extends JavaPlugin
 
         // Set the difficulty to peaceful until game starts
         //Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "difficulty peaceful");
-        for (World w : Bukkit.getServer().getWorlds())
-        {
+        for (World w : Bukkit.getServer().getWorlds()) {
             w.setDifficulty(Difficulty.PEACEFUL);
         }
 
@@ -58,21 +54,17 @@ public class Main extends JavaPlugin
         Info.runInfo();
     }
 
-    public void onDisable()
-    {
-        try
-        {
+    public void onDisable() {
+        try {
             MySQL.getConnection().close();
-        } catch (SQLException throwables)
-        {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        if(sql != null)
+        if (sql != null)
             sql = null;
 
-        for(Player p : getServer().getOnlinePlayers())
-        {
+        for (Player p : getServer().getOnlinePlayers()) {
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
         }
     }

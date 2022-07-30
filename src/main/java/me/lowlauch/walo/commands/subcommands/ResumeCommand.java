@@ -1,24 +1,22 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.commands.SubCommand;
-import me.lowlauch.walo.Main;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static me.lowlauch.walo.misc.GlobalVariables.*;
+import static me.lowlauch.walo.misc.GlobalVariables.comSender;
+import static me.lowlauch.walo.misc.GlobalVariables.started;
 
-public class ResumeCommand implements SubCommand
-{
+public class ResumeCommand implements SubCommand {
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         comSender = commandSender;
 
         // Loop through all players and heal them and all that other stuff
-        for (Player p : Bukkit.getOnlinePlayers())
-        {
+        for (Player p : Bukkit.getOnlinePlayers()) {
             p.setHealth(20.0f);
             p.setSaturation(20.0f);
             p.setFoodLevel(20);
@@ -30,8 +28,7 @@ public class ResumeCommand implements SubCommand
 
         // Some properties change
         // Bukkit.dispatchCommand(comSender, "difficulty normal");
-        for (World w : Bukkit.getServer().getWorlds())
-        {
+        for (World w : Bukkit.getServer().getWorlds()) {
             w.setDifficulty(Difficulty.NORMAL);
         }
 
@@ -43,26 +40,22 @@ public class ResumeCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "resume";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return true;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 0;
     }
 }

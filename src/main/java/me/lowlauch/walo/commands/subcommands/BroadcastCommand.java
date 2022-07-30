@@ -1,18 +1,15 @@
 package me.lowlauch.walo.commands.subcommands;
 
-import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
-public class BroadcastCommand implements SubCommand
-{
+public class BroadcastCommand implements SubCommand {
     @Override
-    public void execute(CommandSender commandSender, String[] args)
-    {
+    public void execute(CommandSender commandSender, String[] args) {
         String message = "";
-        for(int i = 1; i < args.length; i++)
-        {
+        for (int i = 1; i < args.length; i++) {
             message += args[i] + " ";
         }
         message = message.replaceAll("&", "§");
@@ -21,26 +18,22 @@ public class BroadcastCommand implements SubCommand
     }
 
     @Override
-    public String getName()
-    {
+    public String getName() {
         return "bc";
     }
 
     @Override
-    public boolean requiresOp()
-    {
+    public boolean requiresOp() {
         return true;
     }
 
     @Override
-    public boolean requiresPlayer()
-    {
+    public boolean requiresPlayer() {
         return false;
     }
 
     @Override
-    public int requiredArguments()
-    {
+    public int requiredArguments() {
         return 1;
     }
 }
