@@ -33,6 +33,11 @@ public class CommandsManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String commandLabel, String[] args) {
         if (commandLabel.equalsIgnoreCase("walo")) {
+            if (args.length < 1) {
+                commandSender.sendMessage(Main.prefix + "Gib einen Befehl ein!");
+                return true;
+            }
+
             for (SubCommand subCommand : subCommands) {
                 // Execute subcommand
                 if (args[0].equalsIgnoreCase(subCommand.getName())) {
