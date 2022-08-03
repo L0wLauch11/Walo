@@ -50,6 +50,9 @@ public class ScoreboardHandler {
 
         int borderSize = WaloConfig.getWorldBorderSize() / 2;
         if (GlobalVariables.started) {
+            long borderTimeInMinutes = WaloConfig.getWorldBorderShinkDelay() / 20 / 60;
+            GlobalVariables.borderTime = String.valueOf(borderTimeInMinutes - playTime.getMinute());
+            
             // Set scoreboard values
             int shrinkSize = WaloConfig.getWorldBorderShrinkSize() / 2;
             String[] scores = {
@@ -57,7 +60,7 @@ public class ScoreboardHandler {
                     "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(Lag.getTPS()), " ",
                     GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
                     "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
-                    GlobalVariables.borderTime.split("\\.")[0] + " Uhr", "§aBorder verkleinert:", "    ",
+                    "in " + GlobalVariables.borderTime + " Minuten", "§aBorder verkleinert:", "    ",
                     "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ",
                     "§aSpielzeit: §f" + playTime
 

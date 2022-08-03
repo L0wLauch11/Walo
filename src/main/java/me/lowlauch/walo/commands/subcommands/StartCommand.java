@@ -10,6 +10,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import static me.lowlauch.walo.misc.GlobalVariables.*;
 
@@ -141,8 +142,8 @@ public class StartCommand implements SubCommand {
                         started = true;
 
                         // Calculate border time
-                        long borderTimeInSeconds = WaloConfig.getWorldBorderShinkDelay() / 20;
-                        borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds).toString();
+                        long borderTimeInMinutes = WaloConfig.getWorldBorderShinkDelay() / 20 / 60;
+                        borderTime = Long.toString(borderTimeInMinutes);
 
                         // Scoreboard
                         ScoreboardHandler.updateScoreboard();

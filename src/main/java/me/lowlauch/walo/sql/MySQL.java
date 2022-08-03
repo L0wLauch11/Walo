@@ -26,13 +26,12 @@ public class MySQL {
                     return;
                 }
 
-                Class.forName("com.mysql.jdbc.Driver");
                 setConnection(DriverManager.getConnection("jdbc:mysql://" + host + ":"
                         + port + "/" + database, username, password));
 
                 Bukkit.getLogger().info(ChatColor.GREEN + "MYSQL CONNECTED");
             }
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

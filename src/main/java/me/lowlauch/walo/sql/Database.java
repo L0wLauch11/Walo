@@ -11,8 +11,9 @@ public class Database {
     public boolean exists(String key, String value) {
         try {
             PreparedStatement statement = MySQL.getConnection()
-                    .prepareStatement("SELECT * FROM " + MySQL.table + " WHERE " + key + "=?");
-            statement.setString(1, value);
+                    .prepareStatement("SELECT * FROM " + MySQL.table + " WHERE ?=?");
+            statement.setString(1, key);
+            statement.setString(2, value);
 
             ResultSet results = statement.executeQuery();
             if (results.next()) {
@@ -36,9 +37,9 @@ public class Database {
         }
     }
 
-    public void createPlayer(Player player, String keys, String values) {
+    public void createPlayer(Player player) {
         try {
-            // If playerdata from player doesn't exists create it
+            // If playerdata from player doesn't exist create it
             if (!exists("UUID", player.getUniqueId().toString())) {
                 PreparedStatement insert = MySQL.getConnection()
                         .prepareStatement("INSERT INTO " + MySQL.table + " (UUID,NAME,KILLS) VALUES (?,?,?)");

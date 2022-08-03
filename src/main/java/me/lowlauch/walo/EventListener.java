@@ -114,8 +114,7 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         // SQL
         Player p = e.getPlayer();
-        Main.getInstance().db.createPlayer(p, "UUID,NAME,KILLS", String.format("%s,%s,%d",
-                e.getPlayer().getUniqueId(), e.getPlayer().getName(), 0));
+        Main.getInstance().db.createPlayer( p);
 
         // Scoreboard
         ScoreboardHandler.updatePlayerScoreboard(p);
