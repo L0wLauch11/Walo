@@ -261,7 +261,7 @@ public class EventListener implements Listener {
 
     @EventHandler
     public void onPlayerDie(PlayerDeathEvent e) {
-        if (GlobalVariables.started)
+        if (!GlobalVariables.started)
             return;
 
         // Ban the player if he dies and the game has started

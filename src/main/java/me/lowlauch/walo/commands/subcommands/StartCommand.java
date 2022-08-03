@@ -142,8 +142,7 @@ public class StartCommand implements SubCommand {
 
                         // Calculate border time
                         long borderTimeInSeconds = WaloConfig.getWorldBorderShinkDelay() / 20;
-                        long time = borderTimeInSeconds + WaloConfig.getWorldBorderShrinkDuration() / 20;
-                        borderTime = LocalTime.now().plusSeconds(time).toString();
+                        borderTime = LocalTime.now().plusSeconds(borderTimeInSeconds).toString();
 
                         // Scoreboard
                         ScoreboardHandler.updateScoreboard();

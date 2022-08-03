@@ -34,7 +34,7 @@ public class CommandsManager implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String commandLabel, String[] args) {
         if (commandLabel.equalsIgnoreCase("walo")) {
             if (args.length < 1) {
-                commandSender.sendMessage(Main.prefix + "Gib einen Befehl ein!");
+                helpCommand.execute(commandSender, args);
                 return true;
             }
 
