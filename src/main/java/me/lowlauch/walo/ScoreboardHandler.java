@@ -1,5 +1,6 @@
 package me.lowlauch.walo;
 
+import jdk.nashorn.internal.objects.Global;
 import me.lowlauch.walo.misc.GlobalVariables;
 import me.lowlauch.walo.misc.Lag;
 import me.lowlauch.walo.misc.Ping;
@@ -51,7 +52,13 @@ public class ScoreboardHandler {
         int borderSize = WaloConfig.getWorldBorderSize() / 2;
         if (GlobalVariables.started) {
             long borderTimeInMinutes = WaloConfig.getWorldBorderShinkDelay() / 20 / 60;
-            GlobalVariables.borderTime = String.valueOf(borderTimeInMinutes - playTime.getMinute());
+            GlobalVariables.borderTime = String.valueOf(borderTimeInMinutes - minutesTimer);
+
+            String borderShrinkString = "in " + GlobalVariables.borderTime + " Minuten";
+
+            if (Long.parseLong(GlobalVariables.borderTime) <= 0) {
+                borderShrinkString = "jetzt";
+            }
             
             // Set scoreboard values
             int shrinkSize = WaloConfig.getWorldBorderShrinkSize() / 2;
@@ -60,7 +67,7 @@ public class ScoreboardHandler {
                     "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(Lag.getTPS()), " ",
                     GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
                     "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
-                    "in " + GlobalVariables.borderTime + " Minuten", "§aBorder verkleinert:", "    ",
+                    borderShrinkString, "§aBorder verkleinert:", "    ",
                     "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ",
                     "§aSpielzeit: §f" + playTime
 

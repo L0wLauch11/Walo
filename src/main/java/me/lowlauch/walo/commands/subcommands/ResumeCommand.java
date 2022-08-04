@@ -6,15 +6,11 @@ import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import static me.lowlauch.walo.misc.GlobalVariables.comSender;
 import static me.lowlauch.walo.misc.GlobalVariables.started;
 
 public class ResumeCommand implements SubCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        comSender = commandSender;
-
         // Loop through all players and heal them and all that other stuff
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.setHealth(20.0f);

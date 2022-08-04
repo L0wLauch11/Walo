@@ -17,7 +17,6 @@ import static me.lowlauch.walo.misc.GlobalVariables.*;
 public class StartCommand implements SubCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        comSender = commandSender;
         timer = -1;
 
         seconds = 10;
@@ -125,7 +124,7 @@ public class StartCommand implements SubCommand {
                             p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
                         }
 
-                        Player playerComSender = (Player) comSender;
+                        Player playerComSender = (Player) commandSender;
                         World world = playerComSender.getWorld();
 
                         // Some properties change
