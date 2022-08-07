@@ -4,6 +4,8 @@ import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
+import me.lowlauch.walo.database.WaloDatabase;
+import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -122,6 +124,11 @@ public class StartCommand implements SubCommand {
                             p.updateInventory();
 
                             p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
+
+                            // Database stuff
+                            if (!statsDisabled) {
+                                WaloDatabase.addPlayerPlaycount(p);
+                            }
                         }
 
                         Player playerComSender = (Player) commandSender;

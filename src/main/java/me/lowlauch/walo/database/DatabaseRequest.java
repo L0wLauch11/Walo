@@ -11,23 +11,29 @@ import java.net.URLConnection;
 public class DatabaseRequest  {
     private static final String databaseAPIUrl = WaloConfig.getDatabaseAPIUrl();
 
-    public static String request(String arguments) throws IOException {
-        URL url = new URL(databaseAPIUrl + "?" + arguments);
+    public static String request(String arguments) {
+        try {
+            URL url = new URL(databaseAPIUrl + "?" + arguments);
 
-        URLConnection urlConnection = url.openConnection();
+            URLConnection urlConnection = url.openConnection();
 
-        BufferedReader input = new BufferedReader(
-                new InputStreamReader(
-                        urlConnection.getInputStream()));
-        String inputLine;
+            BufferedReader input = new BufferedReader(
+                    new InputStreamReader(
+                            urlConnection.getInputStream()));
+            String inputLine;
 
-        String returnString = "";
-        while ((inputLine = input.readLine()) != null) {
-            returnString += inputLine;
+            String returnString = "";
+            while ((inputLine = input.readLine()) != null) {
+                returnString += inputLine;
+            }
+
+            input.close();
+
+            return returnString;
+        } catch (IOException ignored) {
+
         }
 
-        input.close();
-
-        return returnString;
+        return "";
     }
 }

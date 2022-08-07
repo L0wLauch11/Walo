@@ -9,46 +9,34 @@ public class WaloDatabase {
     static String securityString = WaloConfig.getDatabaseSecurityString();
 
     public static void initWaloTable() {
-        try {
-            DatabaseRequest.request("secret=" + securityString + "&operation=inittable&uuid=foo&name=bar");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        DatabaseRequest.request("secret=" + securityString + "&operation=inittable&uuid=foo&name=bar");
     }
 
     public static void createPlayer(Player p) {
         String playerUUID = p.getUniqueId().toString();
         String playerName = p.getName();
 
-        try {
-            DatabaseRequest.request("secret=" + securityString + "&operation=createplayer&uuid=" + playerUUID + "&name=" + playerName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        DatabaseRequest.request("secret=" + securityString + "&operation=createplayer&uuid=" + playerUUID + "&name=" + playerName);
     }
 
     public static void addPlayerKill(Player p) {
         String playerUUID = p.getUniqueId().toString();
         String playerName = p.getName();
 
-        try {
-            DatabaseRequest.request("secret=" + securityString + "&operation=addkill&uuid=" + playerUUID + "&name=" + playerName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        DatabaseRequest.request("secret=" + securityString + "&operation=addkill&uuid=" + playerUUID + "&name=" + playerName);
     }
 
     public static String getPlayerKills(Player p) {
         String playerUUID = p.getUniqueId().toString();
         String playerName = p.getName();
 
-        String kills;
-        try {
-            kills = DatabaseRequest.request("secret=" + securityString + "&operation=getkills&uuid=" + playerUUID + "&name=" + playerName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return DatabaseRequest.request("secret=" + securityString + "&operation=getkills&uuid=" + playerUUID + "&name=" + playerName);
+    }
 
-        return kills;
+    public static String addPlayerPlaycount(Player p) {
+        String playerUUID = p.getUniqueId().toString();
+        String playerName = p.getName();
+
+        return DatabaseRequest.request("secret=" + securityString + "&operation=addplaycount&uuid=" + playerUUID + "&name=" + playerName);
     }
 }
