@@ -76,14 +76,14 @@ public class StartCommand implements SubCommand {
                             World world = Bukkit.getWorld("world");
                             WorldBorder worldBorder = world.getWorldBorder();
                             worldBorder.setCenter(0, 0);
-                            worldBorder.setSize(WaloConfig.getWorldBorderShrinkSize(), 400L);
+                            worldBorder.setSize(WaloConfig.getWorldBorderShrinkSize(), WaloConfig.getWorldBorderShrinkDuration());
 
                             // Set worldborder in nether
                             World nether = Bukkit.getWorld("world_nether");
                             WorldBorder netherBorder = nether.getWorldBorder();
                             netherBorder.setCenter(0, 0);
                             netherBorder.setSize(worldBorder.getSize());
-                            netherBorder.setSize(0, 400L);
+                            netherBorder.setSize(0, WaloConfig.getWorldBorderShrinkDuration());
 
                             // set 0, 0 to lava
                             for (int i1 = 0; i1 < 255; i1++) {

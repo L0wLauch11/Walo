@@ -1,5 +1,6 @@
 package me.lowlauch.walo;
 
+import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -114,7 +115,7 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent e) {
         // SQL
         Player p = e.getPlayer();
-        Main.getInstance().db.createPlayer( p);
+        WaloDatabase.createPlayer(p);
 
         // Scoreboard
         ScoreboardHandler.updatePlayerScoreboard(p);
@@ -194,9 +195,7 @@ public class EventListener implements Listener {
                 killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
             } else {
                 // Add kill to database
-                UUID uuid = killer.getUniqueId();
-                Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS") + 1);
-                Main.getInstance().db.orderBy("KILLS");
+                WaloDatabase.addPlayerKill((Player) killer);
             }
 
         } else {
@@ -288,9 +287,7 @@ public class EventListener implements Listener {
                 */
 
                 // Add kill to database
-                UUID uuid = killer.getUniqueId();
-                Main.getInstance().db.setInt(uuid, "KILLS", Main.getInstance().db.getInt(uuid, "KILLS") + 1);
-                Main.getInstance().db.orderBy("KILLS");
+                WaloDatabase.addPlayerKill(killer);
             }
         } else {
             // Normal death

@@ -3,6 +3,7 @@ package me.lowlauch.walo.commands.subcommands;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
+import me.lowlauch.walo.database.WaloDatabase;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,7 +24,7 @@ public class StatsCommand implements SubCommand {
         }
 
         if (checkStatsPlayer != null) {
-            int kills = Main.getInstance().db.getInt(checkStatsPlayer.getUniqueId(), "KILLS");
+            String kills = WaloDatabase.getPlayerKills(checkStatsPlayer);
 
             // Send him the stats for this player
             commandSender.sendMessage(Main.prefix + "Stats für: §a" + checkStatsPlayer.getName()

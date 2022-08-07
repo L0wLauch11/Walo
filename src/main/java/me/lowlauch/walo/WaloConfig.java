@@ -58,23 +58,11 @@ public class WaloConfig {
         return mainConfig.getLong("worldborder.shrinkduration");
     }
 
-    public static String getMySQLHost() {
-        return mainConfig.getString("mysql.host");
+    public static String getDatabaseAPIUrl() {
+        return mainConfig.getString("web-database-api.url");
     }
 
-    public static int getMySQLPort() {
-        return mainConfig.getInt("mysql.port");
-    }
-
-    public static String getMySQLDatabase() {
-        return mainConfig.getString("mysql.database");
-    }
-
-    public static String getMySQLUsername() {
-        return mainConfig.getString("mysql.username");
-    }
-
-    public static String getMySQLPassword() {
-        return mainConfig.getString("mysql.password");
+    public static String getDatabaseSecurityString() {
+        return mainConfig.getString("web-database-api.security-string");
     }
 }

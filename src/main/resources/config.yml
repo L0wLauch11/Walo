@@ -1,17 +1,22 @@
-mysql:
-  host: ""
-  port: ""
-  database: ""
-  username: ""
-  password: ""
+web-database-api:
+  # The Web Address of the API that will be used to access the database
+  # You will need to host this on a webserver yourself
+  url: https://walo.gay/database.php
+
+  # Prevents unauthorized access
+  security-string: 43uJB2rX7O9kOwkz
 
 worldborder:
+  # Worldborder diameter
   size: 1400
-  shrinksize: 200
-  shrinkdelay: 144000
-  shrinkduration: 7200
 
-timeoffset: 7200
+  # How far it will shrink after the shrinkdelay is over
+  shrinksize: 200
+
+  # When the border will start shrinking in minecraft ticks
+  shrinkdelay: 144000
+
+  # How long it will take to shrink to the shrinksize after the shrinkdelay in seconds
+  shrinkduration: 400
 
 mates:
-
