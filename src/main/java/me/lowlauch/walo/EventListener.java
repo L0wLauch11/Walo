@@ -1,5 +1,6 @@
 package me.lowlauch.walo;
 
+import me.lowlauch.callable_di_disabler.DisableDamageIndicator;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.*;
@@ -18,9 +19,12 @@ import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 import java.util.UUID;
+
+import static me.lowlauch.walo.misc.GlobalVariables.damageIndicatorDisabler;
 
 public class EventListener implements Listener {
     @EventHandler
@@ -119,6 +123,11 @@ public class EventListener implements Listener {
 
         // Scoreboard
         ScoreboardHandler.updatePlayerScoreboard(p);
+
+        // Schedule damage indicator disable
+        if (damageIndicatorDisabler) {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> DisableDamageIndicator.sendDisable(p), 600L);
+        }
 
         if (p.hasMetadata("no-scoreboard") && p.getScoreboard() != null)
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());

@@ -1,5 +1,6 @@
 package me.lowlauch.walo.misc;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
 public class GlobalVariables {
@@ -9,9 +10,7 @@ public class GlobalVariables {
 
     public static int timer = -1;
     public static int seconds;
-
-    //private static final long borderTimeInSeconds = (long) Main.getInstance().getConfig().getDouble("worldborder.shrinkdelay")/20;
-    //private static final Calendar calendar = Calendar.getInstance();
     public static String borderTime;
+    public static boolean damageIndicatorDisabler = (Bukkit.getServer().getPluginManager().getPlugin("callable_di_disabler") != null);
 
 }

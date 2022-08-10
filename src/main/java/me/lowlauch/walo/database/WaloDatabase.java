@@ -3,8 +3,6 @@ package me.lowlauch.walo.database;
 import me.lowlauch.walo.WaloConfig;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
-
 public class WaloDatabase {
     static String securityString = WaloConfig.getDatabaseSecurityString();
 
@@ -33,10 +31,10 @@ public class WaloDatabase {
         return DatabaseRequest.request("secret=" + securityString + "&operation=getkills&uuid=" + playerUUID + "&name=" + playerName);
     }
 
-    public static String addPlayerPlaycount(Player p) {
+    public static void addPlayerPlaycount(Player p) {
         String playerUUID = p.getUniqueId().toString();
         String playerName = p.getName();
 
-        return DatabaseRequest.request("secret=" + securityString + "&operation=addplaycount&uuid=" + playerUUID + "&name=" + playerName);
+        DatabaseRequest.request("secret=" + securityString + "&operation=addplaycount&uuid=" + playerUUID + "&name=" + playerName);
     }
 }

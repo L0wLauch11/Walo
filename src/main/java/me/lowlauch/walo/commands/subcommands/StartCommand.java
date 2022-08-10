@@ -1,5 +1,6 @@
 package me.lowlauch.walo.commands.subcommands;
 
+import me.lowlauch.callable_di_disabler.DisableDamageIndicator;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
@@ -20,8 +21,13 @@ public class StartCommand implements SubCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         timer = -1;
-
         seconds = 10;
+
+        if (damageIndicatorDisabler) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                DisableDamageIndicator.sendDisable(p);
+            }
+        }
 
         // Adds a routine that gets executed every second and stops until the timer exceeds the seconds
         // amount and then starts the game
