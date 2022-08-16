@@ -18,6 +18,12 @@ public class Teams {
 
     public static void invitePlayer(Player teamOwner, Player invitedPlayer) {
         String playerTeam = getTeamOfPlayer(invitedPlayer);
+        String ownerTeam = getTeamOfPlayer(teamOwner);
+
+        if (!getTeamMembers(ownerTeam).contains(teamOwner.getUniqueId().toString())) {
+            teamOwner.sendMessage(Main.prefix + "Du bist in keinem Team!");
+            return;
+        }
 
         if (getTeamMembers(playerTeam).contains(invitedPlayer.getUniqueId().toString())) {
             teamOwner.sendMessage(Main.prefix + ChatColor.GOLD + invitedPlayer.getName() + ChatColor.GRAY + " ist bereits in einem Team!");
@@ -27,7 +33,7 @@ public class Teams {
         teamOwner.sendMessage(Main.prefix + ChatColor.GOLD + invitedPlayer.getName() + ChatColor.GRAY + " wurde erfolgreich eingeladen!");
 
         String msg = Main.prefix + "Du wurdest von " + ChatColor.GOLD + teamOwner.getName() + ChatColor.GRAY + " in sein/ihr/* Team eingeladen! \n" +
-                "§cDrücke auf diese Nachricht um anzunehmen!";
+                "§dDrücke auf diese Nachricht um anzunehmen!";
         TextComponent component = new TextComponent(TextComponent.fromLegacyText(msg));
         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/walo acceptinvite " + teamOwner.getName()));
         invitedPlayer.spigot().sendMessage(component);

@@ -16,28 +16,11 @@ public class WaloConfig {
         Main.getInstance().saveConfig();
     }
 
-    public static void setValue(String path, Object value) {
-        mainConfig.set(path, value);
-    }
-
     public static List<String> getPlayerMates(Player player) {
         String path = "mates." + player.getUniqueId().toString();
         List<String> mates = mainConfig.getStringList(path);
 
         return mates;
-    }
-
-    public static void setPlayerMates(Player player, List<String> matesUUIDStringList) {
-        String path = "mates." + player.getUniqueId().toString();
-        setValue(path, matesUUIDStringList);
-    }
-
-    public static String getPlayerTeamTag(Player player) {
-        return mainConfig.getString("tags." + player.getUniqueId().toString());
-    }
-
-    public static void setPlayerTeamTag(Player player, String teamTag) {
-        mainConfig.set("tags." + player.getUniqueId().toString(), teamTag);
     }
 
     public static int getWorldBorderSize() {
@@ -75,6 +58,7 @@ public class WaloConfig {
 
     public static void setTeamName(String playerUUID, String newTeamName) {
         mainConfig.set("teams." + playerUUID + ".name", newTeamName);
+        save();
     }
 
     public static String getTeamName(String playerUUID) {
@@ -97,11 +81,13 @@ public class WaloConfig {
         List<String> members = mainConfig.getStringList("teams." + teamID + ".members");
         members.add(playerUUID);
         mainConfig.set("teams." + teamID + ".members", members);
+        save();
     }
 
     public static void removeTeamMember(String teamID, String playerUUID) {
         List<String> members = mainConfig.getStringList("teams." + teamID + ".members");
         members.remove(playerUUID);
         mainConfig.set("teams." + teamID + ".members", members);
+        save();
     }
 }

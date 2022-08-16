@@ -14,8 +14,6 @@ public class LeaveTeamItem implements TeamItem {
 
         Player p = (Player) e.getWhoClicked();
         Teams.leaveTeam(p);
-
-        WaloConfig.save();
     }
 
     @Override

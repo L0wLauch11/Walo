@@ -18,8 +18,6 @@ public class InviteTeamMemberItem implements TeamItem {
         Teams.playersWhoWantToInviteSomeone.add(p.getUniqueId());
         p.sendMessage(Main.prefix + ChatColor.BOLD + "Wen möchtest du einladen?:");
         p.closeInventory();
-
-        WaloConfig.save();
     }
 
     @Override

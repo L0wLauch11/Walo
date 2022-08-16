@@ -18,8 +18,6 @@ public class RenameTeamItem implements TeamItem {
         Teams.playersWhoWantToRenameTheirTeam.add(p.getUniqueId());
         p.sendMessage(Main.prefix + ChatColor.BOLD + "Bitte gib einen Team-Namen ein:");
         p.closeInventory();
-
-        WaloConfig.save();
     }
 
     @Override

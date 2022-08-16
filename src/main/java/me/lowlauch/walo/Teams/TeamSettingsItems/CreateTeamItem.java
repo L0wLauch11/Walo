@@ -17,8 +17,6 @@ public class CreateTeamItem implements TeamItem {
         Player p = (Player) e.getWhoClicked();
         Teams.createTeamFor(p);
         p.closeInventory();
-
-        WaloConfig.save();
     }
 
     @Override
