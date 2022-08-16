@@ -1,5 +1,6 @@
 package me.lowlauch.walo;
 
+import me.lowlauch.walo.EventListening.EventListenersManager;
 import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.Info;
@@ -40,7 +41,7 @@ public class Main extends JavaPlugin {
         WaloDatabase.initWaloTable();
 
         // Add event listener
-        getServer().getPluginManager().registerEvents(new EventListener(), this);
+        EventListenersManager.registerEvents();
 
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Lag(), 100L, 1L);
 
