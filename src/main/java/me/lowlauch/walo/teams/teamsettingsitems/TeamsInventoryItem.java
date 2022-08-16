@@ -1,4 +1,4 @@
-package me.lowlauch.walo.Teams.TeamSettingsItems;
+package me.lowlauch.walo.teams.teamsettingsitems;
 
 import me.lowlauch.walo.misc.ItemUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;

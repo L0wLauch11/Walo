@@ -1,4 +1,4 @@
-package me.lowlauch.walo.EventListening.Events;
+package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.entity.Player;

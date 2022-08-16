@@ -1,7 +1,7 @@
 package me.lowlauch.walo.commands.subcommands;
 
 import me.lowlauch.walo.Main;
-import me.lowlauch.walo.Teams.Teams;
+import me.lowlauch.walo.teams.Teams;
 import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

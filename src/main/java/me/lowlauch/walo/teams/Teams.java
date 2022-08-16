@@ -1,4 +1,4 @@
-package me.lowlauch.walo.Teams;
+package me.lowlauch.walo.teams;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;

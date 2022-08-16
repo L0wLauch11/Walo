@@ -1,4 +1,4 @@
-package me.lowlauch.walo.EventListening.Events;
+package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
 import org.bukkit.Material;

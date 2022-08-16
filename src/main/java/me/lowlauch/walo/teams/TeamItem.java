@@ -1,4 +1,4 @@
-package me.lowlauch.walo.Teams;
+package me.lowlauch.walo.teams;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 

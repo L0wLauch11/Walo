@@ -1,8 +1,7 @@
-package me.lowlauch.walo.EventListening.Events;
+package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
-import me.lowlauch.walo.Teams.Teams;
-import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.teams.Teams;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -10,7 +9,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class OnPlayerChat implements Listener {

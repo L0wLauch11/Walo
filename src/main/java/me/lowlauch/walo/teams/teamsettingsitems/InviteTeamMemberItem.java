@@ -1,9 +1,8 @@
-package me.lowlauch.walo.Teams.TeamSettingsItems;
+package me.lowlauch.walo.teams.teamsettingsitems;
 
 import me.lowlauch.walo.Main;
-import me.lowlauch.walo.Teams.TeamItem;
-import me.lowlauch.walo.Teams.Teams;
-import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.teams.TeamItem;
+import me.lowlauch.walo.teams.Teams;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

@@ -1,6 +1,6 @@
-package me.lowlauch.walo.EventListening.Events;
+package me.lowlauch.walo.eventlistening.events;
 
-import me.lowlauch.walo.Teams.TeamSettingsItems.TeamsInventoryItem;
+import me.lowlauch.walo.teams.teamsettingsitems.TeamsInventoryItem;
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

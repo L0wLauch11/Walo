@@ -1,11 +1,10 @@
-package me.lowlauch.walo.EventListening.Events;
+package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.callable_di_disabler.DisableDamageIndicator;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
-import me.lowlauch.walo.Teams.TeamSettingsItems.TeamsInventoryItem;
-import me.lowlauch.walo.Teams.Teams;
-import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.teams.teamsettingsitems.TeamsInventoryItem;
+import me.lowlauch.walo.teams.Teams;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.Bukkit;

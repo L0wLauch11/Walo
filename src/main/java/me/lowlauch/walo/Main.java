@@ -1,6 +1,6 @@
 package me.lowlauch.walo;
 
-import me.lowlauch.walo.EventListening.EventListenersManager;
+import me.lowlauch.walo.eventlistening.EventListenersManager;
 import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.Info;

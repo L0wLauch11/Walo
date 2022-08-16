@@ -1,10 +1,10 @@
-package me.lowlauch.walo.EventListening.Events;
+package me.lowlauch.walo.eventlistening.events;
 
-import me.lowlauch.walo.Teams.TeamItem;
-import me.lowlauch.walo.Teams.TeamSettingsItems.CreateTeamItem;
-import me.lowlauch.walo.Teams.TeamSettingsItems.InviteTeamMemberItem;
-import me.lowlauch.walo.Teams.TeamSettingsItems.LeaveTeamItem;
-import me.lowlauch.walo.Teams.TeamSettingsItems.RenameTeamItem;
+import me.lowlauch.walo.teams.TeamItem;
+import me.lowlauch.walo.teams.teamsettingsitems.CreateTeamItem;
+import me.lowlauch.walo.teams.teamsettingsitems.InviteTeamMemberItem;
+import me.lowlauch.walo.teams.teamsettingsitems.LeaveTeamItem;
+import me.lowlauch.walo.teams.teamsettingsitems.RenameTeamItem;
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
