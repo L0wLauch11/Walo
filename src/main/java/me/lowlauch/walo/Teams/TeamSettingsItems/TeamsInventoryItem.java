@@ -1,4 +1,4 @@
-package me.lowlauch.walo.Teams;
+package me.lowlauch.walo.Teams.TeamSettingsItems;
 
 import me.lowlauch.walo.misc.ItemUtils;
 import net.md_5.bungee.api.ChatColor;
@@ -13,10 +13,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class TeamsInventoryItem {
-    public static String displayName = ChatColor.BOLD + "Verwalte dein Team.";
-    public static String createTeamDisplayName = ChatColor.BOLD + "Erstelle ein Team.";
-    public static String renameTeamDisplayName = ChatColor.BOLD + "Benenne dein Team um.";
-    public static String inviteMemberDisplayName = ChatColor.BOLD + "Lade jemanden in dein Team ein.";
+    public static String displayName = ChatColor.BOLD + "Verwalte dein Team";
+    public static String createTeamDisplayName = ChatColor.BOLD + "Erstelle ein Team";
+    public static String renameTeamDisplayName = ChatColor.BOLD + "Benenne dein Team um";
+    public static String inviteMemberDisplayName = ChatColor.BOLD + "Lade jemanden in dein Team ein";
     public static String leaveTeamDisplayName = ChatColor.BOLD + "Verlasse das Team";
 
     public static void addItemToPlayerInventory(Player p) {
@@ -31,6 +31,9 @@ public class TeamsInventoryItem {
 
     public static void process(PlayerInteractEvent e) {
         Player p = e.getPlayer();
+
+        if (!p.getItemInHand().hasItemMeta())
+            return;
 
         if (!p.getItemInHand().getItemMeta().getDisplayName().equals(displayName))
             return;

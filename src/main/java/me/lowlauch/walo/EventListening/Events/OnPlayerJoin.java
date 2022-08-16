@@ -3,7 +3,8 @@ package me.lowlauch.walo.EventListening.Events;
 import me.lowlauch.callable_di_disabler.DisableDamageIndicator;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
-import me.lowlauch.walo.Teams.TeamsInventoryItem;
+import me.lowlauch.walo.Teams.TeamSettingsItems.TeamsInventoryItem;
+import me.lowlauch.walo.Teams.Teams;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.GlobalVariables;
@@ -28,15 +29,17 @@ public class OnPlayerJoin implements Listener {
 
         // Schedule damage indicator disable
         if (damageIndicatorDisabler) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> DisableDamageIndicator.sendDisable(p), 600L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> DisableDamageIndicator.sendDisable(p), 300L);
         }
 
         if (p.hasMetadata("no-scoreboard") && p.getScoreboard() != null)
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         // Change name
-        String customTag = WaloConfig.getPlayerTeamTag(p);
-        p.setDisplayName(customTag);
+        String playerTeamName = Teams.getTeamName(Teams.getTeamOfPlayer(p));
+        if (playerTeamName != null) {
+            p.setDisplayName(playerTeamName + "" + p.getName());
+        }
 
         // Set the player tab name to display name
         p.setPlayerListName(e.getPlayer().getDisplayName());
@@ -46,6 +49,7 @@ public class OnPlayerJoin implements Listener {
             p.getInventory().clear();
             TeamsInventoryItem.addItemToPlayerInventory(p);
         }
+
         // Set the player to the right gamemode
         if (!GlobalVariables.started)
             p.setGameMode(GameMode.ADVENTURE);
