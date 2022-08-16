@@ -2,6 +2,7 @@ package me.lowlauch.walo.Teams.TeamSettingsItems;
 
 import me.lowlauch.walo.Teams.TeamItem;
 import me.lowlauch.walo.Teams.Teams;
+import me.lowlauch.walo.WaloConfig;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -12,8 +13,9 @@ public class LeaveTeamItem implements TeamItem {
             return;
 
         Player p = (Player) e.getWhoClicked();
-
         Teams.leaveTeam(p);
+
+        WaloConfig.save();
     }
 
     @Override

@@ -2,6 +2,8 @@ package me.lowlauch.walo.EventListening.Events;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.Teams.Teams;
+import me.lowlauch.walo.WaloConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,6 +36,31 @@ public class OnPlayerChat implements Listener {
 
             if (removeThisPlayer != null)
                 Teams.playersWhoWantToRenameTheirTeam.remove(removeThisPlayer);
+        }
+
+        // Inviting players
+        if (!Teams.playersWhoWantToInviteSomeone.isEmpty()) {
+            UUID removeThisPlayer = null;
+            for (UUID playerUUID : Teams.playersWhoWantToInviteSomeone) {
+                if (p.getUniqueId().equals(playerUUID)) {
+                    removeThisPlayer = playerUUID;
+
+                    // Find player
+                    Player invitedPlayer = Bukkit.getPlayer(message);
+
+                    if (!Bukkit.getOnlinePlayers().contains(invitedPlayer)) {
+                        p.sendMessage(Main.prefix + ChatColor.DARK_RED + "Der Spieler " + ChatColor.GOLD + message + ChatColor.DARK_RED + " wurde nicht gefunden!");
+                        e.setCancelled(true);
+                        return;
+                    }
+
+                    Teams.invitePlayer(p, invitedPlayer);
+                    e.setCancelled(true);
+                }
+            }
+
+            if (removeThisPlayer != null)
+                Teams.playersWhoWantToInviteSomeone.remove(removeThisPlayer);
         }
 
         // Better chat formatting

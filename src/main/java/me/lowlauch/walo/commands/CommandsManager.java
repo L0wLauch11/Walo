@@ -16,7 +16,7 @@ public class CommandsManager implements CommandExecutor {
 
     public CommandsManager() {
         // Register all subcommands
-        subCommands.add(new AddMateCommand());
+        subCommands.add(new AcceptInviteCommand());
         subCommands.add(new BroadcastCommand());
         subCommands.add(new DisableStatsCommand());
         subCommands.add(helpCommand);

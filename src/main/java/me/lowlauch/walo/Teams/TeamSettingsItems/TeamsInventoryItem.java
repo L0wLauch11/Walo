@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
@@ -39,15 +40,30 @@ public class TeamsInventoryItem {
             return;
 
         ItemStack createTeamItem = ItemUtils.createItemDisplayName(createTeamDisplayName, Material.WOOL, 1, DyeColor.GREEN.getData());
+        ItemMeta itemMeta = createTeamItem.getItemMeta();
+        itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
+        createTeamItem.setItemMeta(itemMeta);
+
         ItemStack leaveTeamItem = ItemUtils.createItemDisplayName(leaveTeamDisplayName, Material.WOOL, 1, DyeColor.RED.getData());
+        itemMeta = leaveTeamItem.getItemMeta();
+        itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
+        leaveTeamItem.setItemMeta(itemMeta);
+
         ItemStack inviteMemberItem = ItemUtils.createItemDisplayName(inviteMemberDisplayName, Material.WOOL, 1, DyeColor.BLUE.getData());
+        itemMeta = inviteMemberItem.getItemMeta();
+        itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
+        inviteMemberItem.setItemMeta(itemMeta);
+
         ItemStack renameTeamItem = ItemUtils.createItemDisplayName(renameTeamDisplayName, Material.WOOL, 1, DyeColor.YELLOW.getData());
+        itemMeta = renameTeamItem.getItemMeta();
+        itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
+        renameTeamItem.setItemMeta(itemMeta);
 
         Inventory teamsInventory = Bukkit.createInventory(null, 9, "Team Einstellungen");
-        teamsInventory.addItem(createTeamItem);
-        teamsInventory.addItem(inviteMemberItem);
-        teamsInventory.addItem(renameTeamItem);
-        teamsInventory.addItem(leaveTeamItem);
+        teamsInventory.setItem(1, createTeamItem);
+        teamsInventory.setItem(3, inviteMemberItem);
+        teamsInventory.setItem(5, renameTeamItem);
+        teamsInventory.setItem(7, leaveTeamItem);
         p.openInventory(teamsInventory);
     }
 }
