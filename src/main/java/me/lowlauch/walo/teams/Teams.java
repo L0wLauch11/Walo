@@ -47,6 +47,7 @@ public class Teams {
 
         WaloConfig.addTeamInConfig(p);
         playersWhoWantToRenameTheirTeam.add(p.getUniqueId());
+        p.sendMessage(Main.prefix + "§1F§2a§3r§4b§5e§6n§7codes: §f&f §0&0 §1&1 §2&2 §3&3 §4&4 §5&5 §6&6 §7&7 §8&8 §9&9 §f§l&l§r §m&m§r §n&n§r §o&o§r §r&r");
         p.sendMessage(Main.prefix + ChatColor.BOLD + "Bitte gib einen Team-Namen ein:");
     }
 

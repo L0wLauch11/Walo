@@ -39,6 +39,11 @@ public class StatsCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return "(Spieler): §7Zeigt die Statistiken eines Spielers an.";
+    }
+
+    @Override
     public boolean requiresOp() {
         return false;
     }

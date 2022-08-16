@@ -35,6 +35,11 @@ public class StopCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return ": §7Stoppt ein Walo (instabil, nur im Notfall zu gebrauchen)";
+    }
+
+    @Override
     public int requiredArguments() {
         return 0;
     }

@@ -35,8 +35,10 @@ public class OnPlayerDamageByEntity implements Listener {
         // Stop team mates from damaging each other
         Player victim = (Player) e.getEntity();
         Player damager = (Player) e.getDamager();
+        String victimTeam = Teams.getTeamOfPlayer(victim);
+        String damagerTeam = Teams.getTeamOfPlayer(damager);
 
-        if (Objects.equals(Teams.getTeamOfPlayer(victim), Teams.getTeamOfPlayer(damager))) {
+        if (Objects.equals(victimTeam, damagerTeam) && victimTeam != null) {
             e.setCancelled(true);
         }
     }

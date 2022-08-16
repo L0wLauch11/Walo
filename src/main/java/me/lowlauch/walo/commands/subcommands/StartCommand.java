@@ -173,6 +173,11 @@ public class StartCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return ": §7Startet das Spiel. Leitet auch einige wichtige Prozesse ein, wie das verkleinern der Border etc...";
+    }
+
+    @Override
     public boolean requiresOp() {
         return true;
     }

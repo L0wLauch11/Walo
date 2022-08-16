@@ -22,6 +22,11 @@ public class SetupBorderCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return ": §7Setzt die Border bei 0, 0 auf 25. Nützlich vor dem Spielstart.";
+    }
+
+    @Override
     public boolean requiresOp() {
         return true;
     }

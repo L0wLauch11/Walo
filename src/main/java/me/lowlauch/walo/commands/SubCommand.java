@@ -7,6 +7,8 @@ public interface SubCommand {
 
     String getName();
 
+    String getHelp();
+
     boolean requiresOp();
 
     boolean requiresPlayer();

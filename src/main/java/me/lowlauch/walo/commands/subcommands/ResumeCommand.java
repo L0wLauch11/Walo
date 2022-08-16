@@ -41,6 +41,11 @@ public class ResumeCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return ": §7Führt ein Walo fort, z. B. nach einem Serverneustart (instabil, nur im Notfall zu gebrauchen)";
+    }
+
+    @Override
     public boolean requiresOp() {
         return true;
     }

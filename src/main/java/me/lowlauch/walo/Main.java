@@ -16,21 +16,24 @@ import java.util.Objects;
 public class Main extends JavaPlugin {
     public static String prefix = "§f[§6Walo§f]§7 ";
     private static Main instance;
+    private static CommandsManager commandsManager;
 
     public static Main getInstance() {
         return instance;
     }
 
+    public static CommandsManager getCommandsManager() {
+        return commandsManager;
+    }
+
     public void onEnable() {
         instance = this;
-
-        CommandsManager commandsManager = new CommandsManager();
+        commandsManager = new CommandsManager();
 
         // Add all the commands
         Objects.requireNonNull(getCommand("walo")).setExecutor(commandsManager);
 
         // Set the difficulty to peaceful until game starts
-        //Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "difficulty peaceful");
         for (World w : Bukkit.getServer().getWorlds()) {
             w.setDifficulty(Difficulty.PEACEFUL);
         }

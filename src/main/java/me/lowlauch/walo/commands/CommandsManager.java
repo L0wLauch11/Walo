@@ -12,6 +12,10 @@ import java.util.ArrayList;
 public class CommandsManager implements CommandExecutor {
     private final ArrayList<SubCommand> subCommands = new ArrayList<>();
 
+    public ArrayList<SubCommand> getSubCommands() {
+        return subCommands;
+    }
+
     HelpCommand helpCommand = new HelpCommand();
 
     public CommandsManager() {

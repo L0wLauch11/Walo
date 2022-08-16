@@ -44,6 +44,11 @@ public class ProtectionCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return "(true/false): §7Aktiviert bzw. deaktiviert die Schutzzeit manuell.";
+    }
+
+    @Override
     public boolean requiresOp() {
         return true;
     }

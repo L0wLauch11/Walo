@@ -20,6 +20,11 @@ public class DisableStatsCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return ": §7Deaktiviert die Stats für ein Game";
+    }
+
+    @Override
     public boolean requiresOp() {
         return true;
     }

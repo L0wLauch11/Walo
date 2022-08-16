@@ -23,6 +23,11 @@ public class BroadcastCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return "<Nachricht>: §7Schickt eine Nachricht an alle Spieler.";
+    }
+
+    @Override
     public boolean requiresOp() {
         return true;
     }

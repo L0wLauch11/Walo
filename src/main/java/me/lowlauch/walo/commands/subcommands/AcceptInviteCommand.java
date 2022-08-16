@@ -32,6 +32,11 @@ public class AcceptInviteCommand implements SubCommand {
     }
 
     @Override
+    public String getHelp() {
+        return "<Spieler>: §7nimm eine Einladung zu einem Team an.";
+    }
+
+    @Override
     public boolean requiresOp() {
         return false;
     }

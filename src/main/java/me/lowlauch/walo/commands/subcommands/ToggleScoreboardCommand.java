@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 
 public class ToggleScoreboardCommand implements SubCommand {
-
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         Player p = (Player) commandSender;
@@ -28,6 +27,11 @@ public class ToggleScoreboardCommand implements SubCommand {
     @Override
     public String getName() {
         return "scoreboard";
+    }
+
+    @Override
+    public String getHelp() {
+        return ": §7Deaktivert, bzw. Aktiviert das Scoreboard";
     }
 
     @Override
