@@ -37,4 +37,11 @@ public class WaloDatabase {
 
         DatabaseRequest.request("secret=" + securityString + "&operation=addplaycount&uuid=" + playerUUID + "&name=" + playerName);
     }
+
+    public static void addPlayerWin(Player p) {
+        String playerUUID = p.getUniqueId().toString();
+        String playerName = p.getName();
+
+        DatabaseRequest.request("secret=" + securityString + "&operation=addwin&uuid=" + playerUUID + "&name=" + playerName);
+    }
 }
