@@ -2,6 +2,7 @@ package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.database.WaloDatabase;
+import me.lowlauch.walo.discord.webhook.DiscordWebHook;
 import me.lowlauch.walo.misc.GlobalVariables;
 import me.lowlauch.walo.misc.StringUtils;
 import me.lowlauch.walo.teams.Teams;
@@ -83,6 +84,7 @@ public class OnPlayerDie implements Listener {
             onlinePlayersString = onlinePlayersString.replaceAll("#", ChatColor.GRAY + " und");
             String finalMessage = ChatColor.GREEN + onlinePlayersString + ChatColor.GOLD + ChatColor.BOLD + " hat das Walo gewonnen!";
 
+            DiscordWebHook.sendText("@everyone\n" + onlinePlayersString + " hat das Walo gewonnen!");
             Bukkit.getServer().broadcastMessage(Main.prefix + finalMessage);
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {

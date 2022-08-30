@@ -49,6 +49,9 @@ public class WaloConfig {
         return mainConfig.getString("web-database-api.security-string");
     }
 
+    public static String getDiscordWebhookURL() {
+        return mainConfig.getString("discord-webhook-url");
+    }
     public static void addTeamInConfig(Player p) {
         String playerUUID = p.getUniqueId().toString();
 

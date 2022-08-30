@@ -1,3 +1,5 @@
+discord-webhook-url: yeahyeahyeah # Instert your discord webhook string here
+
 web-database-api:
   # The Web Address of the API that will be used to access the database
   # You will need to host this on a webserver yourself
@@ -18,5 +20,3 @@ worldborder:
 
   # How long it will take to shrink to the shrinksize after the shrinkdelay in seconds
   shrinkduration: 400
-
-mates:
