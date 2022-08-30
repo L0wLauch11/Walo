@@ -47,7 +47,7 @@ public class DiscordWebHook {
 
         connection.setDoOutput(true);
 
-        String webRequestJSON = "{\"content\":\"" + text + "\"}";
+        String webRequestJSON = "{\"content\":\"" + text + "\", \"allowed_mentions\": { \"parse\": [\"everyone\"] }}";
 
         try(OutputStream os = connection.getOutputStream()) {
             byte[] input = webRequestJSON.getBytes("utf-8");

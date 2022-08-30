@@ -35,7 +35,7 @@ public class TestCommand implements SubCommand {
         }
         */
 
-        DiscordWebHook.sendText("@everyone\nIrgendein team hat Walo gewonnen!");
+        DiscordWebHook.sendText("@everyone Irgendein team hat Walo gewonnen!");
     }
 
     @Override
