@@ -84,7 +84,11 @@ public class OnPlayerDie implements Listener {
             onlinePlayersString = onlinePlayersString.replaceAll("#", ChatColor.GRAY + " und");
             String finalMessage = ChatColor.GREEN + onlinePlayersString + ChatColor.GOLD + ChatColor.BOLD + " hat das Walo gewonnen!";
 
-            DiscordWebHook.sendText("@everyone " + onlinePlayersString + " hat das Walo gewonnen!");
+            String onlinePlayersWithoutDecoration = onlinePlayersString // junk method
+                    .replaceAll("§7", "")
+                    .replaceAll("§a", "");
+
+            DiscordWebHook.sendText("@everyone " + onlinePlayersWithoutDecoration + " hat das Walo gewonnen!");
             Bukkit.getServer().broadcastMessage(Main.prefix + finalMessage);
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
