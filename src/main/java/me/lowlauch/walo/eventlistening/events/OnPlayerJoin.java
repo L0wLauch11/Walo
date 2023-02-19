@@ -8,11 +8,14 @@ import me.lowlauch.walo.teams.Teams;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import static me.lowlauch.walo.misc.GlobalVariables.damageIndicatorDisabler;
 
@@ -43,17 +46,30 @@ public class OnPlayerJoin implements Listener {
         // Set the player tab name to display name
         p.setPlayerListName(e.getPlayer().getDisplayName());
 
-        // Add Walo Panel Item to inventory
         if (!GlobalVariables.started) {
+            // Set the player to the right gamemode
+            p.setGameMode(GameMode.ADVENTURE);
+
+            // Add Walo Panel Item to inventory
             p.getInventory().clear();
             TeamsInventoryItem.addItemToPlayerInventory(p);
+
+        } else if (p.getGameMode().equals(GameMode.ADVENTURE)) {
+            p.setGameMode(GameMode.SURVIVAL);
         }
 
-        // Set the player to the right gamemode
-        if (!GlobalVariables.started)
-            p.setGameMode(GameMode.ADVENTURE);
-        else if (p.getGameMode().equals(GameMode.ADVENTURE))
-            p.setGameMode(GameMode.SURVIVAL);
+        // Slowness and blindness on join
+        if (GlobalVariables.started) {
+            int seconds = 10;
+
+            p.sendMessage(Main.prefix + ChatColor.RED + "Du bekommst nach dem einloggen " + seconds + " Sekunden lang einen Debuff!");
+
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, seconds * 20, 1));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, seconds * 20, 5));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, seconds * 20, 1));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, seconds * 20, 2));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, seconds * 20, 2));
+        }
 
         // Death message
         if (p.isBanned())

@@ -73,8 +73,8 @@ public class OnPlayerDie implements Listener {
         if (aliveTeams.size() <= 1) {
             String onlinePlayersString = "";
             String stylizedComma = ChatColor.GRAY + ", " + ChatColor.GREEN;
-            for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                onlinePlayersString += onlinePlayer.getName() + stylizedComma;
+            for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
+                onlinePlayersString += offlinePlayer.getName() + stylizedComma;
             }
 
             onlinePlayersString = onlinePlayersString.substring(0, onlinePlayersString.length()-stylizedComma.length());
