@@ -1,7 +1,6 @@
 package me.lowlauch.walo.discord.webhook;
 
 import me.lowlauch.walo.WaloConfig;
-import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
 import java.io.IOException;

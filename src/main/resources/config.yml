@@ -1,4 +1,4 @@
-discord-webhook-url: yeahyeahyeah # Instert your discord webhook string here
+discord-webhook-url: yeahyeahyeah # Insert your discord webhook string here
 
 web-database-api:
   # The Web Address of the API that will be used to access the database
@@ -6,7 +6,7 @@ web-database-api:
   url: https://walo.gay/database.php
 
   # Prevents unauthorized access
-  security-string: 43uJB2rX7O9kOwkz
+  access-token: 43uJB2rX7O9kOwkz
 
 worldborder:
   # Worldborder diameter

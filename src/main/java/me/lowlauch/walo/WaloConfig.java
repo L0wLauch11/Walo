@@ -31,7 +31,7 @@ public class WaloConfig {
         return mainConfig.getInt("worldborder.shrinksize");
     }
 
-    public static long getWorldBorderShinkDelay() // When the border starts to shrink
+    public static long getWorldBorderShrinkDelay() // When the border starts to shrink
     {
         return mainConfig.getLong("worldborder.shrinkdelay");
     }
@@ -46,7 +46,7 @@ public class WaloConfig {
     }
 
     public static String getDatabaseSecurityString() {
-        return mainConfig.getString("web-database-api.security-string");
+        return mainConfig.getString("web-database-api.access-token");
     }
 
     public static String getDiscordWebhookURL() {
