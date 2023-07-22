@@ -16,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class OnPlayerDie implements Listener {
     @EventHandler
@@ -71,10 +73,13 @@ public class OnPlayerDie implements Listener {
         }
 
         if (aliveTeams.size() <= 1) {
+            List<String> aliveTeam = Teams.getTeamMembers(aliveTeams.get(0));
+
             String onlinePlayersString = "";
             String stylizedComma = ChatColor.GRAY + ", " + ChatColor.GREEN;
-            for (OfflinePlayer offlinePlayer : Bukkit.getOfflinePlayers()) {
-                onlinePlayersString += offlinePlayer.getName() + stylizedComma;
+            for (String playerUUIDString : aliveTeam) {
+                UUID playerUUID = UUID.fromString(playerUUIDString);
+                onlinePlayersString += Bukkit.getOfflinePlayer(playerUUID).getName() + stylizedComma;
             }
 
             onlinePlayersString = onlinePlayersString.substring(0, onlinePlayersString.length()-stylizedComma.length());

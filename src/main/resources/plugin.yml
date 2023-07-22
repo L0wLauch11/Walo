@@ -1,6 +1,6 @@
 main: me.lowlauch.walo.Main
 name: Walo
-version: 2.2
+version: 2.3
 description: Varo clone but shorter rounds
 author: lowlauch
 commands:

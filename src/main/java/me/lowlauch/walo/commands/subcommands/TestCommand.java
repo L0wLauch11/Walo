@@ -1,14 +1,8 @@
 package me.lowlauch.walo.commands.subcommands;
 
-import me.lowlauch.walo.Main;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.discord.webhook.DiscordWebHook;
-import me.lowlauch.walo.misc.StringUtils;
-import me.lowlauch.walo.teams.Teams;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 public class TestCommand implements SubCommand {
     @Override
