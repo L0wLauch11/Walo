@@ -6,14 +6,10 @@ import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.database.WaloDatabase;
-import me.lowlauch.walo.misc.GlobalVariables;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 import static me.lowlauch.walo.misc.GlobalVariables.*;
 
@@ -32,138 +28,147 @@ public class StartCommand implements SubCommand {
         // Adds a routine that gets executed every second and stops until the timer exceeds the seconds
         // amount and then starts the game
         for (int i = 0; i <= seconds * 20; i += 20) {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), new Runnable() {
-                public void run() {
-                    timer++;
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                timer++;
 
-                    if (seconds - timer != 0) {
-                        for (Player p : Bukkit.getOnlinePlayers())
-                            p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
+                // Start countdown
+                if (seconds - timer != 0) {
+                    for (Player p : Bukkit.getOnlinePlayers())
+                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
 
-                        Bukkit.broadcastMessage(Main.prefix + "Walo startet in §6" + (seconds - timer) + "§7 Sekunden!");
-                    }
+                    Bukkit.broadcastMessage(Main.prefix + "Walo startet in §6" + (seconds - timer) + "§7 Sekunden!");
+                }
 
-                    if (timer >= seconds) {
-                        // we don't talk about this
-                        // Warn the player 1 seconds before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 1 Sekunde!"), 11980L);
+                // Start game
+                if (timer >= seconds) {
+                    addProtectionTimeWarnings(new int[]{1, 2, 3, 4, 5, 60, 60*5});
 
-                        // Warn the player 2 seconds before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 2 Sekunden!"), 11960L);
+                    // Toggle protection time off in 10 minutes
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                        // Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "walo protection false");
+                        new ProtectionCommand().execute(Bukkit.getServer().getConsoleSender(), new String[]{"protection", "false"});
+                    }, 11999L);
 
-                        // Warn the player 3 seconds before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 3 Sekunden!"), 11940L);
+                    //// DEACTIVATE NETHER AND SHRINK BORDER
+                    // Warn player about border shrink
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die Border wird in §45 Minuten§7 auf §4100 Blöcke§7 in jede richtung gesetzt!\n" +
+                            Main.prefix + "Der Nether wird in §45 Minuten§7 §4§ldeaktiviert!\n" +
+                            Main.prefix + "§4§lDIES IST DIE EINZIGE WARNUNG!!!"), WaloConfig.getWorldBorderShrinkDelay() - 6000L /*3 hours - 5 minutes 210000L*/);
 
-                        // Warn the player 4 seconds before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 4 Sekunden!"), 11920L);
-
-                        // Warn the player 5 seconds before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 5 Sekunden!"), 11900L);
-
-                        // Warn the player 60 seconds before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in einer Minute!"), 10800L);
-
-                        // Warn the player 5 minutes before the timer runs out
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die §6Schutzzeit§7 endet in 5 Minuten!"), 6000L);
-
-                        // Toggle protection time off in 10 minutes
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-                            // Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "walo protection false");
-                            new ProtectionCommand().execute(Bukkit.getServer().getConsoleSender(), new String[]{"protection", "false"});
-                        }, 11999L);
-
-                        //// DEACTIVATE NETHER AND SHRINK BORDER
-                        // Warn player about border shrink
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die Border wird in §45 Minuten§7 auf §4100 Blöcke§7 in jede richtung gesetzt!\n" +
-                                Main.prefix + "Der Nether wird in §45 Minuten§7 §4§ldeaktiviert!\n" +
-                                Main.prefix + "§4§lDIES IST DIE EINZIGE WARNUNG!!!"), WaloConfig.getWorldBorderShinkDelay() - 6000L /*3 hours - 5 minutes 210000L*/);
-
-                        // Shrink border
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-                            // Set worldborder in overworld
-                            World world = Bukkit.getWorld("world");
-                            WorldBorder worldBorder = world.getWorldBorder();
-                            worldBorder.setCenter(0, 0);
-                            worldBorder.setSize(WaloConfig.getWorldBorderShrinkSize(), WaloConfig.getWorldBorderShrinkDuration());
-
-                            // Set worldborder in nether
-                            World nether = Bukkit.getWorld("world_nether");
-                            WorldBorder netherBorder = nether.getWorldBorder();
-                            netherBorder.setCenter(0, 0);
-                            netherBorder.setSize(worldBorder.getSize());
-                            netherBorder.setSize(0, WaloConfig.getWorldBorderShrinkDuration());
-
-                            // set 0, 0 to lava
-                            for (int i1 = 0; i1 < 255; i1++) {
-                                Block block = nether.getBlockAt(0, i1, 0);
-                                if (block.getType() != Material.AIR)
-                                    block.setType(Material.LAVA);
-
-                                block = nether.getBlockAt(1, i1, 0);
-                                if (block.getType() != Material.AIR)
-                                    block.setType(Material.LAVA);
-
-                                block = nether.getBlockAt(-1, i1, -1);
-                                if (block.getType() == Material.AIR)
-                                    block.setType(Material.LAVA);
-
-                                block = nether.getBlockAt(0, i1, -1);
-                                if (block.getType() != Material.AIR)
-                                    block.setType(Material.LAVA);
-                            }
-
-                            Bukkit.getServer().broadcastMessage(Main.prefix + "Die Border wird auf §4" + WaloConfig.getWorldBorderShrinkSize() / 2 + " Blöcke§7 in jede Richtung gesetzt!" +
-                                    "\n" + Main.prefix + "Im Nether auf §40 Blöcke!");
-                        }, WaloConfig.getWorldBorderShinkDelay());
-
-                        // Start Walo
-                        // Loop through all players and heal them and all that other stuff
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.setHealth(20.0f);
-                            p.setSaturation(20.0f);
-                            p.setFoodLevel(20);
-                            p.setGameMode(GameMode.SURVIVAL);
-                            p.setWalkSpeed(0.2f);
-                            p.setLevel(0);
-                            p.setExp(0);
-                            p.getInventory().clear();
-                            p.updateInventory();
-
-                            p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
-
-                            // Database stuff
-                            if (!statsDisabled) {
-                                WaloDatabase.addPlayerPlaycount(p);
-                            }
-                        }
-
-                        Player playerComSender = (Player) commandSender;
-                        World world = playerComSender.getWorld();
-
-                        // Some properties change
-                        world.setThundering(false);
-                        world.setStorm(false);
-                        world.setDifficulty(Difficulty.NORMAL);
-                        world.setTime(0);
-
+                    // Shrink border
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+                        // Set worldborder in overworld
+                        World world = Bukkit.getWorld("world");
                         WorldBorder worldBorder = world.getWorldBorder();
                         worldBorder.setCenter(0, 0);
-                        worldBorder.setSize(WaloConfig.getWorldBorderSize(), 0);
+                        worldBorder.setSize(WaloConfig.getWorldBorderShrinkSize(), WaloConfig.getWorldBorderShrinkDuration());
 
-                        protection = true;
-                        started = true;
+                        // Set worldborder in nether
+                        World nether = Bukkit.getWorld("world_nether");
+                        WorldBorder netherBorder = nether.getWorldBorder();
+                        netherBorder.setCenter(0, 0);
+                        netherBorder.setSize(worldBorder.getSize());
+                        netherBorder.setSize(0, WaloConfig.getWorldBorderShrinkDuration());
 
-                        // Calculate border time
-                        long borderTimeInMinutes = WaloConfig.getWorldBorderShinkDelay() / 20 / 60;
-                        borderTime = Long.toString(borderTimeInMinutes);
+                        // set 0, 0 to lava
+                        for (int i1 = 0; i1 < 255; i1++) {
+                            Block block = nether.getBlockAt(0, i1, 0);
+                            if (block.getType() != Material.AIR)
+                                block.setType(Material.LAVA);
 
-                        // Scoreboard
-                        ScoreboardHandler.updateScoreboard();
+                            block = nether.getBlockAt(1, i1, 0);
+                            if (block.getType() != Material.AIR)
+                                block.setType(Material.LAVA);
 
-                        Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
+                            block = nether.getBlockAt(-1, i1, -1);
+                            if (block.getType() == Material.AIR)
+                                block.setType(Material.LAVA);
+
+                            block = nether.getBlockAt(0, i1, -1);
+                            if (block.getType() != Material.AIR)
+                                block.setType(Material.LAVA);
+                        }
+
+                        Bukkit.getServer().broadcastMessage(Main.prefix + "Die Border wird auf §4" + WaloConfig.getWorldBorderShrinkSize() / 2 + " Blöcke§7 in jede Richtung gesetzt!" +
+                                "\n" + Main.prefix + "Im Nether auf §40 Blöcke!");
+                    }, WaloConfig.getWorldBorderShrinkDelay());
+
+                    // Start Walo
+                    // Loop through all players and heal them and all that other stuff
+                    for (Player p : Bukkit.getOnlinePlayers()) {
+                        p.setHealth(20.0f);
+                        p.setSaturation(20.0f);
+                        p.setFoodLevel(20);
+                        p.setGameMode(GameMode.SURVIVAL);
+                        p.setWalkSpeed(0.2f);
+                        p.setLevel(0);
+                        p.setExp(0);
+                        p.getInventory().clear();
+                        p.updateInventory();
+
+                        p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
+
+                        // Database stuff
+                        if (!statsDisabled) {
+                            WaloDatabase.addPlayerPlaycount(p);
+                        }
                     }
+
+                    Player playerComSender = (Player) commandSender;
+                    World world = playerComSender.getWorld();
+
+                    // Some properties change
+                    world.setThundering(false);
+                    world.setStorm(false);
+                    world.setDifficulty(Difficulty.NORMAL);
+                    world.setTime(0);
+
+                    WorldBorder worldBorder = world.getWorldBorder();
+                    worldBorder.setCenter(0, 0);
+                    worldBorder.setSize(WaloConfig.getWorldBorderSize(), 0);
+
+                    protection = true;
+                    started = true;
+
+                    // Calculate border time
+                    long borderTimeInMinutes = WaloConfig.getWorldBorderShrinkDelay() / 20 / 60;
+                    borderTime = Long.toString(borderTimeInMinutes);
+
+                    // Scoreboard
+                    ScoreboardHandler.updateScoreboard();
+
+                    Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
                 }
             }, i);// 60 L == 3 sec, 20 ticks == 1 sec
+        }
+    }
+
+    public void addProtectionTimeWarnings(int[] seconds) {
+        long tenMinutesInTicks = 12000L;
+
+        for (int time : seconds) {
+            long secondInTicks = time * 20L;
+            String message;
+            String secondsOrMinutes = "Sekunden";
+            String secondOrMinute = "Sekunde";
+
+            // If time is minute
+            if (time % 60 == 0) {
+                secondsOrMinutes = "Minuten";
+                secondOrMinute = "Minute";
+
+                time /= 60;
+            }
+
+            if (time == 1) {
+                message = Main.prefix + "Die §6Schutzzeit§7 endet in " + time + " " + secondsOrMinutes + "!";
+            } else {
+                message = Main.prefix + "Die §6Schutzzeit§7 endet in " + time + " " + secondOrMinute + "!";
+            }
+
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(),
+                    () -> Bukkit.getServer().broadcastMessage(message),
+                    tenMinutesInTicks - secondInTicks);
         }
     }
 
