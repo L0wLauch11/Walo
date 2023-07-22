@@ -1,6 +1,5 @@
 package me.lowlauch.walo;
 
-import jdk.nashorn.internal.objects.Global;
 import me.lowlauch.walo.misc.GlobalVariables;
 import me.lowlauch.walo.misc.Lag;
 import me.lowlauch.walo.misc.Ping;
@@ -51,7 +50,7 @@ public class ScoreboardHandler {
 
         int borderSize = WaloConfig.getWorldBorderSize() / 2;
         if (GlobalVariables.started) {
-            long borderTimeInMinutes = WaloConfig.getWorldBorderShinkDelay() / 20 / 60;
+            long borderTimeInMinutes = WaloConfig.getWorldBorderShrinkDelay() / 20 / 60;
             GlobalVariables.borderTime = String.valueOf(borderTimeInMinutes - minutesTimer);
 
             String borderShrinkString = "in " + GlobalVariables.borderTime + " Minuten";
