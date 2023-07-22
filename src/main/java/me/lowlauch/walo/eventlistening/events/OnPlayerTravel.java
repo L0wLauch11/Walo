@@ -27,6 +27,12 @@ public class OnPlayerTravel implements Listener {
         if (!destinationIsNether || originIsNether || !(e.getPlayer().getGameMode().equals(GameMode.SURVIVAL)))
             return;
 
+        // Overwrite nether difficulty
+        e.getTo().getWorld().setDifficulty(Difficulty.NORMAL);
+
+        // Update nether portal location, useful for anti portal griefing
+        GlobalVariables.netherPortalLocation = e.getTo();
+
         // Spawn a protecting bedrock ring
         final double playerX = e.getTo().getX();
         final double playerY = e.getTo().getY();
