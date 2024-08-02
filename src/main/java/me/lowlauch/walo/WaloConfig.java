@@ -97,4 +97,8 @@ public class WaloConfig {
     public static int getAutostartRequiredPlayers() {
         return mainConfig.getInt("autostart.required-players");
     }
+
+    public static int getAutostartSeconds() {
+        return mainConfig.getInt("autostart.seconds");
+    }
 }

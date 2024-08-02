@@ -6,7 +6,7 @@
 
     <groupId>me.lowlauch.walo</groupId>
     <artifactId>Walo</artifactId>
-    <version>2.3</version>
+    <version>3.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -24,3 +24,6 @@ worldborder:
 autostart:
   # How many players the game needs until it starts itself
   required-players: 20
+
+  # When the game will start after enough players joined
+  seconds: 30
