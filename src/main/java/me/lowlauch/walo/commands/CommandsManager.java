@@ -34,6 +34,18 @@ public class CommandsManager implements CommandExecutor {
         subCommands.add(new TestCommand());
     }
 
+    public void executeSubcommand(CommandSender commandSender, String commandLabel, String[] args) {
+        for (SubCommand subCommand : subCommands) {
+            if (subCommand.getName().equalsIgnoreCase(commandLabel)) {
+                subCommand.execute(commandSender, args);
+            }
+        }
+    }
+
+    public void executeSubcommand(CommandSender commandSender, String commandLabel) {
+        executeSubcommand(commandSender, commandLabel, new String[]{});
+    }
+
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String commandLabel, String[] args) {
         if (commandLabel.equalsIgnoreCase("walo")) {

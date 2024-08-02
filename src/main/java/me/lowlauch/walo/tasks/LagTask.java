@@ -1,6 +1,6 @@
-package me.lowlauch.walo.misc;
+package me.lowlauch.walo.tasks;
 
-public class Lag implements Runnable {
+public class LagTask implements Runnable {
     public static int TICK_COUNT = 0;
     public static long[] TICKS = new long[600];
     public static long LAST_TICK = 0L;

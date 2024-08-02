@@ -48,12 +48,10 @@ public class OnPlayerTravel implements Listener {
 
                         // Replace unfair objects with nothing
                         Material[] unfairBlocks = {
-
-                                Material.LAVA,
-                                Material.STATIONARY_LAVA,
-                                Material.FIRE,
-                                Material.BED
-
+                            Material.LAVA,
+                            Material.STATIONARY_LAVA,
+                            Material.FIRE,
+                            Material.BED
                         };
 
                         for (Material unfairBlock : unfairBlocks) {

@@ -23,7 +23,6 @@ public class ResumeCommand implements SubCommand {
         }
 
         // Some properties change
-        // Bukkit.dispatchCommand(comSender, "difficulty normal");
         for (World w : Bukkit.getServer().getWorlds()) {
             w.setDifficulty(Difficulty.NORMAL);
         }

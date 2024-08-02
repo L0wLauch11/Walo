@@ -1,7 +1,7 @@
 package me.lowlauch.walo;
 
 import me.lowlauch.walo.misc.GlobalVariables;
-import me.lowlauch.walo.misc.Lag;
+import me.lowlauch.walo.tasks.LagTask;
 import me.lowlauch.walo.misc.Ping;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -63,7 +63,7 @@ public class ScoreboardHandler {
             int shrinkSize = WaloConfig.getWorldBorderShrinkSize() / 2;
             String[] scores = {
 
-                    "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(Lag.getTPS()), " ",
+                    "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(LagTask.getTPS()), " ",
                     GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
                     "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
                     borderShrinkString, "§aBorder verkleinert:", "    ",

@@ -3,8 +3,9 @@ package me.lowlauch.walo;
 import me.lowlauch.walo.eventlistening.EventListenersManager;
 import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.database.WaloDatabase;
-import me.lowlauch.walo.misc.Info;
-import me.lowlauch.walo.misc.Lag;
+import me.lowlauch.walo.tasks.AutostartTask;
+import me.lowlauch.walo.tasks.InfoTask;
+import me.lowlauch.walo.tasks.LagTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
 import org.bukkit.World;
@@ -46,10 +47,9 @@ public class Main extends JavaPlugin {
         // Add event listener
         EventListenersManager.registerEvents();
 
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new Lag(), 100L, 1L);
-
-        // Info
-        Info.runInfo();
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagTask(), 100L, 1L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new AutostartTask(), 20L, 1L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 2000L, 1L);
     }
 
     public void onDisable() {

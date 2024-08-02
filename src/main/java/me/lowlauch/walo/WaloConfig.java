@@ -93,4 +93,8 @@ public class WaloConfig {
         mainConfig.set("teams." + teamID + ".members", members);
         save();
     }
+
+    public static int getAutostartRequiredPlayers() {
+        return mainConfig.getInt("autostart.required-players");
+    }
 }
