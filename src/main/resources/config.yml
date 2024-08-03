@@ -32,5 +32,16 @@ protection-time:
   # Whether the 10 Minutes protection time is enabled
   enabled: 1
 
+
+joining:
+  # If players can join even if the game has started already and they haven't been here since the start
+  allow-subsequent: 0
+
+  # How long the player has time to rejoin in minutes
+  rejoin-timeout: 10
+
 teams:
   max-allowed-size: 2
+
+  # The teams will be saved here
+  player-teams:

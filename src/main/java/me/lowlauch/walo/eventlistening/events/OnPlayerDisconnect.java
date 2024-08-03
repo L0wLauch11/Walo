@@ -22,6 +22,9 @@ public class OnPlayerDisconnect implements Listener {
         Player p = e.getPlayer();
         EntityDamageEvent damageCause = p.getLastDamageCause();
 
+        // Save leave timestamp to ban player if he was offline too long
+        GlobalVariables.playerLeaveTimestamps.put(p.getUniqueId(), System.currentTimeMillis());
+
         // Combat logging protection
         if (p.getHealth() >= 10.0f || p.getHealth() == 0.0f || !GlobalVariables.started)
             return;
@@ -50,10 +53,10 @@ public class OnPlayerDisconnect implements Listener {
 
             if (!(killer instanceof Player)) {
                 // Ban Player
-                Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige leben hattest", null, "Tot");
+                Bukkit.getBanList(BanList.Type.NAME).addBan(e.getPlayer().getName(), Main.prefix + "Du hast gelefted wie du wenige Leben hattest", null, "Tot");
                 p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
 
-                deathMessage = Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige leben hatte! §cAusgeschieden§7!";
+                deathMessage = Main.prefix + "§6" + e.getPlayer().getName() + " §7hat geleftet wie dieser Spieler wenige Leben hatte! §cAusgeschieden§7!";
                 e.setQuitMessage(deathMessage);
 
                 return;

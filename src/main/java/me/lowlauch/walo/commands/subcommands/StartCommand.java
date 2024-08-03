@@ -108,6 +108,9 @@ public class StartCommand implements SubCommand {
 
                         p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
 
+                        // Only players who were here since the start can rejoin later
+                        startPlayersUUID.add(p.getUniqueId().toString());
+
                         // Database stuff
                         if (!statsDisabled) {
                             WaloDatabase.addPlayerPlaycount(p);

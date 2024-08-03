@@ -38,7 +38,6 @@ public class OnPlayerBlockPlace implements Listener {
         double x2 = location2.getX();
         double z2 = location2.getZ();
 
-        final double result = Math.sqrt((x2 - x1)*(x2 - x1) + (z2 - z1)*(z2 - z1));
-        return result;
+        return Math.sqrt((x2 - x1)*(x2 - x1) + (z2 - z1)*(z2 - z1));
     }
 }

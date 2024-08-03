@@ -5,6 +5,8 @@ import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.discord.webhook.DiscordWebHook;
 import me.lowlauch.walo.misc.GlobalVariables;
 import me.lowlauch.walo.misc.StringUtils;
+import me.lowlauch.walo.tasks.GameRestartTask;
+import me.lowlauch.walo.tasks.LagTask;
 import me.lowlauch.walo.teams.Teams;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
@@ -42,13 +44,6 @@ public class OnPlayerDie implements Listener {
             if (GlobalVariables.statsDisabled) {
                 killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
             } else {
-                /*  Old way of saving kills, without a database
-
-                    String path = "stats.kills." + e.getEntity().getKiller().getUniqueId().toString();
-                    Main.getInstance().getConfig().set(path, Main.getInstance().getConfig().getInt(path) + 1);
-
-                */
-
                 // Add kill to database
                 WaloDatabase.addPlayerKill(killer);
             }
@@ -89,7 +84,7 @@ public class OnPlayerDie implements Listener {
             onlinePlayersString = onlinePlayersString.replaceAll("#", ChatColor.GRAY + " und");
             String finalMessage = ChatColor.GREEN + onlinePlayersString + ChatColor.GOLD + ChatColor.BOLD + " hat das Walo gewonnen!";
 
-            String onlinePlayersWithoutDecoration = onlinePlayersString // junk method
+            String onlinePlayersWithoutDecoration = onlinePlayersString
                     .replaceAll("§7", "")
                     .replaceAll("§a", "");
 
@@ -101,9 +96,8 @@ public class OnPlayerDie implements Listener {
                 WaloDatabase.addPlayerWin(onlinePlayer);
             }
 
-            for(OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-                Bukkit.getBanList(BanList.Type.NAME).pardon(player.getName());
-            }
+            // Trigger post-game behaviour
+            Bukkit.getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new GameRestartTask(), 1L, 20L);
         }
     }
 }

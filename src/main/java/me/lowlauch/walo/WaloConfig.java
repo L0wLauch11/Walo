@@ -31,12 +31,12 @@ public class WaloConfig {
         return mainConfig.getInt("worldborder.shrinksize");
     }
 
-    public static long getWorldBorderShrinkDelay() // When the border starts to shrink
+    public static long getWorldBorderShrinkDelay()
     {
         return mainConfig.getLong("worldborder.shrinkdelay");
     }
 
-    public static long getWorldBorderShrinkDuration() // How long it takes to shrink to the shrink size
+    public static long getWorldBorderShrinkDuration()
     {
         return mainConfig.getLong("worldborder.shrinkduration");
     }
@@ -60,42 +60,47 @@ public class WaloConfig {
     }
 
     public static void setTeamName(String playerUUID, String newTeamName) {
-        mainConfig.set("teams." + playerUUID + ".name", newTeamName);
+        mainConfig.set("teams.player-teams." + playerUUID + ".name", newTeamName);
         save();
     }
 
     public static String getTeamName(String playerUUID) {
-        return mainConfig.getString("teams." + playerUUID + ".name");
+        return mainConfig.getString("teams.player-teams." + playerUUID + ".name");
     }
 
     public static Set<String> getTeams() {
-        if (mainConfig.contains("teams")) {
-            return mainConfig.getConfigurationSection("teams").getKeys(false);
+        if (mainConfig.contains("teams.player-teams")) {
+            return mainConfig.getConfigurationSection("teams.player-teams").getKeys(false);
         }
 
         return null;
     }
 
     public static List<String> getTeamMembers(String playerUUID) {
-        return mainConfig.getStringList("teams." + playerUUID + ".members");
+        return mainConfig.getStringList("teams.player-teams." + playerUUID + ".members");
     }
 
     public static void addTeamMember(String teamID, String playerUUID) {
-        List<String> members = mainConfig.getStringList("teams." + teamID + ".members");
+        List<String> members = mainConfig.getStringList("teams.player-teams." + teamID + ".members");
         members.add(playerUUID);
-        mainConfig.set("teams." + teamID + ".members", members);
+        mainConfig.set("teams.player-teams." + teamID + ".members", members);
         save();
     }
 
     public static void removeTeamMember(String teamID, String playerUUID) {
-        List<String> members = mainConfig.getStringList("teams." + teamID + ".members");
+        List<String> members = mainConfig.getStringList("teams.player-teams." + teamID + ".members");
         members.remove(playerUUID);
-        mainConfig.set("teams." + teamID + ".members", members);
+        mainConfig.set("teams.player-teams." + teamID + ".members", members);
+        save();
+    }
+
+    public static void resetTeams() {
+        mainConfig.set("teams.player_teams", null);
         save();
     }
 
     public static int getMaxTeamSize() {
-        return mainConfig.getInt("teams.max-allowed-size");
+        return mainConfig.getInt("teams.player-teams.max-allowed-size");
     }
 
     public static int getAutostartRequiredPlayers() {
@@ -108,5 +113,13 @@ public class WaloConfig {
 
     public static boolean getProtectionTimeEnabled() {
         return mainConfig.getBoolean("protection-time.enabled");
+    }
+
+    public static boolean getAllowSubsequentJoining() {
+        return mainConfig.getBoolean("joining.allow-subsequent");
+    }
+
+    public static int getRejoinTimeout() {
+        return mainConfig.getInt("joining.rejoin-timeout");
     }
 }
