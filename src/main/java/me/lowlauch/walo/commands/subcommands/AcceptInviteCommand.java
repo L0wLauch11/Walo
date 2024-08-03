@@ -1,6 +1,7 @@
 package me.lowlauch.walo.commands.subcommands;
 
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.teams.Teams;
 import me.lowlauch.walo.commands.SubCommand;
 import org.bukkit.Bukkit;
@@ -12,13 +13,23 @@ public class AcceptInviteCommand implements SubCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
         Player inviter = Bukkit.getPlayer(args[1]);
+        Player p = (Player) commandSender;
+
+        if (!p.hasMetadata("invited-by-" + inviter.getName())) {
+            commandSender.sendMessage(Main.prefix + "§cDu wurdest von " + inviter.getName() + " nicht eingeladen!");
+            return;
+        }
 
         if (!Bukkit.getOnlinePlayers().contains(inviter)) {
             commandSender.sendMessage(Main.prefix + args[1] + " ist nicht online.");
             return;
         }
 
-        Player p = (Player) commandSender;
+        if (WaloConfig.getTeamMembers(inviter.getUniqueId().toString()).size() >= WaloConfig.getMaxTeamSize()) {
+            commandSender.sendMessage(Main.prefix + "§cDieses Team ist bereits voll!");
+            return;
+        }
+
         String teamID = Teams.getTeamOfPlayer(inviter);
         Teams.joinTeam(teamID, p.getUniqueId().toString());
 

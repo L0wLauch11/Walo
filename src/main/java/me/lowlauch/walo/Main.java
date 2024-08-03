@@ -47,9 +47,9 @@ public class Main extends JavaPlugin {
         // Add event listener
         EventListenersManager.registerEvents();
 
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagTask(), 100L, 1L);
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new AutostartTask(), 20L, 1L);
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 2000L, 1L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagTask(), 1L, 100L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new AutostartTask(), 1L, 200L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 1L, 2000L);
     }
 
     public void onDisable() {

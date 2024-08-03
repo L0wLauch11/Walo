@@ -94,11 +94,19 @@ public class WaloConfig {
         save();
     }
 
+    public static int getMaxTeamSize() {
+        return mainConfig.getInt("teams.max-allowed-size");
+    }
+
     public static int getAutostartRequiredPlayers() {
         return mainConfig.getInt("autostart.required-players");
     }
 
     public static int getAutostartSeconds() {
         return mainConfig.getInt("autostart.seconds");
+    }
+
+    public static boolean getProtectionTimeEnabled() {
+        return mainConfig.getBoolean("protection-time.enabled");
     }
 }

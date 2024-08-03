@@ -1,5 +1,7 @@
 package me.lowlauch.walo.tasks;
 
+import org.bukkit.Bukkit;
+
 public class LagTask implements Runnable {
     public static int TICK_COUNT = 0;
     public static long[] TICKS = new long[600];
@@ -25,6 +27,7 @@ public class LagTask implements Runnable {
     }
 
     public void run() {
+        Bukkit.getLogger().info("LagTask ran");
         TICKS[(TICK_COUNT % TICKS.length)] = System.currentTimeMillis();
 
         TICK_COUNT += 1;

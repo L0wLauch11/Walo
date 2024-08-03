@@ -27,3 +27,10 @@ autostart:
 
   # When the game will start after enough players joined
   seconds: 30
+
+protection-time:
+  # Whether the 10 Minutes protection time is enabled
+  enabled: 1
+
+teams:
+  max-allowed-size: 2

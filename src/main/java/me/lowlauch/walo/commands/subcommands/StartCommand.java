@@ -127,7 +127,10 @@ public class StartCommand implements SubCommand {
                     worldBorder.setCenter(0, 0);
                     worldBorder.setSize(WaloConfig.getWorldBorderSize(), 0);
 
-                    protection = true;
+                    if (WaloConfig.getProtectionTimeEnabled()) {
+                        protection = true;
+                    }
+
                     started = true;
 
                     // Calculate border time
