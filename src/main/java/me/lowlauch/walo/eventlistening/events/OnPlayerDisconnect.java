@@ -22,21 +22,20 @@ public class OnPlayerDisconnect implements Listener {
         Player p = e.getPlayer();
         EntityDamageEvent damageCause = p.getLastDamageCause();
 
-        // Save leave timestamp to ban player if he was offline too long
+        // Save leave timestamp to ban player on rejoin if he was offline too long
         GlobalVariables.playerLeaveTimestamps.put(p.getUniqueId(), System.currentTimeMillis());
 
         // Combat logging protection
         if (p.getHealth() >= 10.0f || p.getHealth() == 0.0f || !GlobalVariables.started)
             return;
 
-        // Drop Inventory
+        // Drop Inventory & Armor Contents
         for (ItemStack itemStack : p.getInventory()) {
             if (itemStack != null && !itemStack.getType().equals(Material.AIR))
                 p.getWorld().dropItemNaturally(p.getLocation(), itemStack);
         }
         p.getInventory().clear();
 
-        // Drop Armor Contents
         ItemStack[] armorContents = p.getInventory().getArmorContents();
         for (ItemStack itemStack : armorContents) {
             if (itemStack != null && !itemStack.getType().equals(Material.AIR))
@@ -46,8 +45,7 @@ public class OnPlayerDisconnect implements Listener {
 
         // Count the kill towards the player that last damaged them
         if (damageCause instanceof EntityDamageByEntityEvent) {
-            // Ban the player if he dies and the game has started
-            // Change the message a bit
+            // Ban the player if he dies and the game has already started
             String deathMessage;
             Entity killer = ((EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager();
 
@@ -73,7 +71,6 @@ public class OnPlayerDisconnect implements Listener {
             if (GlobalVariables.statsDisabled) {
                 killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
             } else {
-                // Add kill to database
                 WaloDatabase.addPlayerKill((Player) killer);
             }
 

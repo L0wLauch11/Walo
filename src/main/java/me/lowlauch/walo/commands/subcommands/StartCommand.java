@@ -43,19 +43,17 @@ public class StartCommand implements SubCommand {
                 if (timer >= seconds) {
                     addProtectionTimeWarnings(new int[]{1, 2, 3, 4, 5, 60, 60*5});
 
-                    // Toggle protection time off in 10 minutes
+                    // Schedule: Toggle protection time off in 10 minutes
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
-                        // Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "walo protection false");
                         new ProtectionCommand().execute(Bukkit.getServer().getConsoleSender(), new String[]{"protection", "false"});
                     }, 11999L);
 
-                    //// DEACTIVATE NETHER AND SHRINK BORDER
-                    // Warn player about border shrink
+                    // Schedule: Warn player about nether border shrink
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> Bukkit.getServer().broadcastMessage(Main.prefix + "Die Border wird in §45 Minuten§7 auf §4100 Blöcke§7 in jede richtung gesetzt!\n" +
                             Main.prefix + "Der Nether wird in §45 Minuten§7 §4§ldeaktiviert!\n" +
-                            Main.prefix + "§4§lDIES IST DIE EINZIGE WARNUNG!!!"), WaloConfig.getWorldBorderShrinkDelay() - 6000L /*3 hours - 5 minutes 210000L*/);
+                            Main.prefix + "§4§lDies ist die einzige Warnung!"), WaloConfig.getWorldBorderShrinkDelay() - 6000L /* = 5 minutes*/);
 
-                    // Shrink border
+                    // Schedule: Shrink border
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
                         // Set worldborder in overworld
                         World world = Bukkit.getWorld("world");
@@ -73,19 +71,19 @@ public class StartCommand implements SubCommand {
                         // set 0, 0 to lava
                         for (int i1 = 0; i1 < 255; i1++) {
                             Block block = nether.getBlockAt(0, i1, 0);
-                            if (block.getType() != Material.AIR)
+                            if (block.getType() == Material.AIR || block.getType() == Material.NETHERRACK)
                                 block.setType(Material.LAVA);
 
                             block = nether.getBlockAt(1, i1, 0);
-                            if (block.getType() != Material.AIR)
+                            if (block.getType() == Material.AIR || block.getType() == Material.NETHERRACK)
                                 block.setType(Material.LAVA);
 
                             block = nether.getBlockAt(-1, i1, -1);
-                            if (block.getType() == Material.AIR)
+                            if (block.getType() == Material.AIR || block.getType() == Material.NETHERRACK)
                                 block.setType(Material.LAVA);
 
                             block = nether.getBlockAt(0, i1, -1);
-                            if (block.getType() != Material.AIR)
+                            if (block.getType() == Material.AIR || block.getType() == Material.NETHERRACK)
                                 block.setType(Material.LAVA);
                         }
 
@@ -93,7 +91,6 @@ public class StartCommand implements SubCommand {
                                 "\n" + Main.prefix + "Im Nether auf §40 Blöcke!");
                     }, WaloConfig.getWorldBorderShrinkDelay());
 
-                    // Start Walo
                     // Loop through all players and heal them and all that other stuff
                     for (Player p : Bukkit.getOnlinePlayers()) {
                         p.setHealth(20.0f);
@@ -134,16 +131,14 @@ public class StartCommand implements SubCommand {
                         protection = true;
                     }
 
-                    started = true;
-
                     // Calculate border time
                     long borderTimeInMinutes = WaloConfig.getWorldBorderShrinkDelay() / 20 / 60;
                     borderTime = Long.toString(borderTimeInMinutes);
 
-                    // Scoreboard
                     ScoreboardHandler.updateScoreboard();
 
                     Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
+                    started = true;
                 }
             }, i);// 60 L == 3 sec, 20 ticks == 1 sec
         }
@@ -158,7 +153,6 @@ public class StartCommand implements SubCommand {
             String secondsOrMinutes = "Sekunden";
             String secondOrMinute = "Sekunde";
 
-            // If time is minute
             if (time % 60 == 0) {
                 secondsOrMinutes = "Minuten";
                 secondOrMinute = "Minute";

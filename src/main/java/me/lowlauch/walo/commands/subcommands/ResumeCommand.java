@@ -11,7 +11,7 @@ import static me.lowlauch.walo.misc.GlobalVariables.started;
 public class ResumeCommand implements SubCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        // Loop through all players and heal them and all that other stuff
+        // Loop through all players and heal them, etc...
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.setHealth(20.0f);
             p.setSaturation(20.0f);
@@ -22,7 +22,6 @@ public class ResumeCommand implements SubCommand {
             p.playSound(p.getLocation(), Sound.NOTE_PLING, 10, 1);
         }
 
-        // Some properties change
         for (World w : Bukkit.getServer().getWorlds()) {
             w.setDifficulty(Difficulty.NORMAL);
         }

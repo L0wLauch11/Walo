@@ -64,7 +64,7 @@ public class OnPlayerJoin implements Listener {
         if (GlobalVariables.started) {
             // Handle logout timer ban
             long currentTime = System.currentTimeMillis();
-            long rejoinTimeout = WaloConfig.getRejoinTimeout() * 60000L;
+            long rejoinTimeout = WaloConfig.getRejoinTimeout() * 60000L; // convert to millis
             if (currentTime - GlobalVariables.playerLeaveTimestamps.get(p.getUniqueId()) >= rejoinTimeout) {
                 String banString = Main.prefix + "Du bist zu lange offline gewesen!";
                 Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), banString, null, "Tot");

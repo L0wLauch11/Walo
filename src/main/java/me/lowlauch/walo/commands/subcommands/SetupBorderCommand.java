@@ -13,14 +13,14 @@ public class SetupBorderCommand implements SubCommand {
 
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        // Set worldborder to lobby
+        // Set world border
         World world = Bukkit.getWorld("world");
         WorldBorder worldBorder = world.getWorldBorder();
 
         worldBorder.setCenter(0, 0);
         worldBorder.setSize(25, 0);
 
-        // Teleport player to 0, 0 and set the worldspawn there
+        // Teleport player to 0, 0 and set the world spawn there
         if (commandSender instanceof Player) {
             Player p = (Player) commandSender;
             p.teleport(new Location(world, 0, 80, 0));

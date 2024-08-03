@@ -25,8 +25,6 @@ public class StatsCommand implements SubCommand {
 
         if (checkStatsPlayer != null) {
             String kills = WaloDatabase.getPlayerKills(checkStatsPlayer);
-
-            // Send him the stats for this player
             commandSender.sendMessage(Main.prefix + "Stats für: §a" + checkStatsPlayer.getName()
                     + "\n§6Kills: §7" + kills);
         } else

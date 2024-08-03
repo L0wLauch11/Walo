@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 public class TestCommand implements SubCommand {
     @Override
     public void execute(CommandSender commandSender, String[] args) {
-        /* previous test, maybe will clean this later
+        /* previous test
 
         String onlinePlayersString = "";
         String stylizedComma = ChatColor.GRAY + ", " + ChatColor.GREEN;

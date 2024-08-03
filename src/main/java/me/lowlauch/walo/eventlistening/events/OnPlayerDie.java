@@ -32,11 +32,9 @@ public class OnPlayerDie implements Listener {
         String deathMessage;
         Player killer = p.getKiller();
 
-        // Player death
         if (killer != null) {
             deathMessage = Main.prefix + "§6" + p.getName() + "§4 wurde von §6" + killer.getName() + "§4 getötet.";
 
-            // Ban the player
             Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), Main.prefix + "Du bist gestorben", null, "Tot");
             p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
 
@@ -44,19 +42,16 @@ public class OnPlayerDie implements Listener {
             if (GlobalVariables.statsDisabled) {
                 killer.sendMessage(Main.prefix + "Du hast §4keinen Kill§7 in den Stats bekommen!");
             } else {
-                // Add kill to database
                 WaloDatabase.addPlayerKill(killer);
             }
         } else {
-            // Normal death
+            // Non-player kill death
             deathMessage = Main.prefix + "§6" + p.getName() + "§4 ist gestorben.";
 
             // Ban the player
             Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), Main.prefix + "Du bist gestorben", null, "Tot");
             p.kickPlayer(Main.prefix + "§cDu bist gestorben.");
         }
-
-        // Change death message
         e.setDeathMessage(deathMessage);
 
         // Detect wins

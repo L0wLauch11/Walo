@@ -13,7 +13,6 @@ import java.util.Objects;
 public class OnPlayerDamageByEntity implements Listener {
     @EventHandler
     public void onPlayerDamageByEntity(EntityDamageByEntityEvent e) {
-        // This only applies to players
         if (!(e.getEntity() instanceof Player) || !(e.getDamager() instanceof Player)) {
             return;
         }
@@ -32,7 +31,7 @@ public class OnPlayerDamageByEntity implements Listener {
             return;
         }
 
-        // Stop team mates from damaging each other
+        // Stop teammates from damaging each other
         Player victim = (Player) e.getEntity();
         Player damager = (Player) e.getDamager();
         String victimTeam = Teams.getTeamOfPlayer(victim);
