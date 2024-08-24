@@ -17,5 +17,5 @@ public class GlobalVariables {
 
     public static Location netherPortalLocation = new Location(Bukkit.getWorld("world_nether"), 0, 0, 0);
     public static ArrayList<String> startPlayersUUID = new ArrayList<>();
-    public static HashMap<UUID, Long> playerLeaveTimestamps;
+    public static HashMap<UUID, Long> playerLeaveTimestamps = new HashMap<>();
 }
