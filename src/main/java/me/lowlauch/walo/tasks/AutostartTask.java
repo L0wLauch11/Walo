@@ -10,8 +10,6 @@ public class AutostartTask implements Runnable {
 
     @Override
     public void run() {
-        Bukkit.getLogger().info("AutostartTask ran");
-
         if (GlobalVariables.started) {
             return;
         }

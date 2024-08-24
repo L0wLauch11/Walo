@@ -8,16 +8,15 @@ import me.lowlauch.walo.teams.teamsettingsitems.TeamsInventoryItem;
 import me.lowlauch.walo.teams.Teams;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.GlobalVariables;
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.Arrays;
 
 import static me.lowlauch.walo.misc.GlobalVariables.damageIndicatorDisabler;
 
@@ -45,11 +44,49 @@ public class OnPlayerJoin implements Listener {
             p.setDisplayName(playerTeamName + "" + p.getName());
         }
 
+        // Teleport player inside border
+        double blocksInset = 3;
+        double worldBorderSize = p.getWorld().getWorldBorder().getSize();
+        Location worldBorderCenter = p.getWorld().getWorldBorder().getCenter();
+
+        double newX = p.getLocation().getX();
+        double newY = p.getLocation().getY();
+        double newZ = p.getLocation().getZ();
+
+        double[] worldBorderBoundsX = new double[2];
+        double[] worldBorderBoundsZ = new double[2];
+        worldBorderBoundsX[0] = worldBorderCenter.getX() - worldBorderSize / 2;
+        worldBorderBoundsX[1] = worldBorderCenter.getX() + worldBorderSize / 2;
+        worldBorderBoundsZ[0] = worldBorderCenter.getZ() - worldBorderSize / 2;
+        worldBorderBoundsZ[1] = worldBorderCenter.getZ() + worldBorderSize / 2;
+
+        // X coordinate
+        if (p.getLocation().getX() < worldBorderBoundsX[0]) {
+            newX = worldBorderBoundsX[0] + blocksInset;
+        }
+
+        if (p.getLocation().getX() > worldBorderBoundsX[1]) {
+            newX = worldBorderBoundsX[1] - blocksInset;
+        }
+
+        // Z coordinate
+        if (p.getLocation().getZ() < worldBorderBoundsZ[0]) {
+            newZ = worldBorderBoundsZ[0] + blocksInset;
+        }
+
+        if (p.getLocation().getZ() > worldBorderBoundsZ[1]) {
+            newZ = worldBorderBoundsZ[1] - blocksInset;
+        }
+
+        // Y coordinate (y is up axis don't forget)
+        newY = GlobalVariables.started ? newY : 80;
+
+        p.teleport(new Location(p.getWorld(), newX, newY, newZ));
+
         // Set the player tab name to display name
         p.setPlayerListName(e.getPlayer().getDisplayName());
 
         if (!GlobalVariables.started) {
-            // Set the player to the right gamemode
             p.setGameMode(GameMode.ADVENTURE);
 
             // Add Walo Panel Item to inventory

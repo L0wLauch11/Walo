@@ -31,13 +31,11 @@ public class WaloConfig {
         return mainConfig.getInt("worldborder.shrinksize");
     }
 
-    public static long getWorldBorderShrinkDelay()
-    {
+    public static long getWorldBorderShrinkDelay() {
         return mainConfig.getLong("worldborder.shrinkdelay");
     }
 
-    public static long getWorldBorderShrinkDuration()
-    {
+    public static long getWorldBorderShrinkDuration() {
         return mainConfig.getLong("worldborder.shrinkduration");
     }
 
@@ -52,6 +50,7 @@ public class WaloConfig {
     public static String getDiscordWebhookURL() {
         return mainConfig.getString("discord-webhook-url");
     }
+
     public static void addTeamInConfig(Player p) {
         String playerUUID = p.getUniqueId().toString();
 

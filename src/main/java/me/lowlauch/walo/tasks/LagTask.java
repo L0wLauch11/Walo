@@ -27,7 +27,6 @@ public class LagTask implements Runnable {
     }
 
     public void run() {
-        Bukkit.getLogger().info("LagTask ran");
         TICKS[(TICK_COUNT % TICKS.length)] = System.currentTimeMillis();
 
         TICK_COUNT += 1;
