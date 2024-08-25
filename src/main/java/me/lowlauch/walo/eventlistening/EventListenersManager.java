@@ -25,6 +25,7 @@ public class EventListenersManager {
         events.add(new OnPlayerTravel());
         events.add(new OnInventoryClick());
         events.add(new OnPlayerBlockPlace());
+        events.add(new OnPlayerItemPickup());
 
         for (Listener event : events) {
             Bukkit.getServer().getPluginManager().registerEvents(event, Main.getInstance());

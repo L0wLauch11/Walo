@@ -4,6 +4,7 @@ import me.lowlauch.callable_di_disabler.DisableDamageIndicator;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.tasks.XpCountdownTask;
 import me.lowlauch.walo.teams.teamsettingsitems.TeamsInventoryItem;
 import me.lowlauch.walo.teams.Teams;
 import me.lowlauch.walo.database.WaloDatabase;
@@ -15,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 
@@ -88,11 +90,34 @@ public class OnPlayerJoin implements Listener {
 
         if (!GlobalVariables.started) {
             p.setGameMode(GameMode.ADVENTURE);
+            p.setTotalExperience(0);
+            p.setExp(0);
+
+            e.setJoinMessage(Main.prefix + p.getName() + " ist beigetreten! §7("
+                    + Bukkit.getServer().getOnlinePlayers().size()
+                    + "/" + WaloConfig.getAutostartRequiredPlayers() + ")");
 
             // Add Walo Panel Item to inventory
             p.getInventory().clear();
             TeamsInventoryItem.addItemToPlayerInventory(p);
 
+            // Autostart check
+            if (!GlobalVariables.autostartInitiated
+                    && Bukkit.getServer().getOnlinePlayers().size() >= WaloConfig.getAutostartRequiredPlayers()) {
+                Bukkit.getServer().broadcastMessage(Main.prefix + "Es sind genügend Spieler anwesend! Das Spiel startet in §6"
+                        + WaloConfig.getAutostartSeconds() + " §7Sekunden!");
+
+                XpCountdownTask.setCountdown(WaloConfig.getAutostartSeconds());
+
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        Main.getCommandsManager().executeSubcommand(Bukkit.getServer().getConsoleSender(), "start");
+                    }
+                }.runTaskLater(Main.getInstance(), 20L * WaloConfig.getAutostartSeconds());
+
+                GlobalVariables.autostartInitiated = true;
+            }
         } else if (p.getGameMode().equals(GameMode.ADVENTURE)) {
             p.setGameMode(GameMode.SURVIVAL);
         }

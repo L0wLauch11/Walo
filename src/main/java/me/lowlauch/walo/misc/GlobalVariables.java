@@ -9,6 +9,7 @@ public class GlobalVariables {
     public static boolean started = false;
     public static boolean protection = false;
     public static boolean statsDisabled = false;
+    public static boolean autostartInitiated = false;
     public static boolean damageIndicatorDisabler = (Bukkit.getServer().getPluginManager().getPlugin("callable_di_disabler") != null);
 
     public static int timer = -1;

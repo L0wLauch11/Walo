@@ -30,12 +30,12 @@ autostart:
 
 protection-time:
   # Whether the 10 Minutes protection time is enabled
-  enabled: 1
+  enabled: true
 
 
 joining:
-  # If players can join even if the game has started already and they haven't been here since the start
-  allow-subsequent: 0
+  # If players can join even if the game has started already, and they haven't been here since the start
+  allow-subsequent: false
 
   # How long the player has time to rejoin in minutes
   rejoin-timeout: 10

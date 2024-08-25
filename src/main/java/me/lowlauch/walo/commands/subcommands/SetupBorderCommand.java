@@ -1,11 +1,10 @@
 package me.lowlauch.walo.commands.subcommands;
 
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldBorder;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -17,8 +16,32 @@ public class SetupBorderCommand implements SubCommand {
         World world = Bukkit.getWorld("world");
         WorldBorder worldBorder = world.getWorldBorder();
 
-        worldBorder.setCenter(0, 0);
-        worldBorder.setSize(25, 0);
+        double centerX = 0;
+        double centerZ = 0;
+        double borderSize = 25;
+
+        // If the server crashed and restarted, we wouldn't want to reset the border.
+        if (worldBorder.getSize() > WaloConfig.getWorldBorderSize() + 1) {
+            worldBorder.setCenter(centerX, centerZ);
+            worldBorder.setSize(borderSize, 0);
+        }
+
+        // Replace floor of water with grass
+        for (int i = 255; i > 0; i--) {
+            Block block = world.getBlockAt(0, i, 0);
+
+            if (block.getType() == Material.STATIONARY_WATER) {
+                // -1 to get the blocks edging towards the border too
+                for (int j = -1; j <= borderSize; j++) {
+                    for (int k = -1; k <= borderSize; k++) {
+                        world.getBlockAt((int) (centerX - borderSize / 2 + j), i, (int) (centerZ - borderSize / 2 + k))
+                                .setType(Material.DIRT);
+                    }
+                }
+
+                break;
+            }
+        }
 
         // Teleport player to 0, 0 and set the world spawn there
         if (commandSender instanceof Player) {

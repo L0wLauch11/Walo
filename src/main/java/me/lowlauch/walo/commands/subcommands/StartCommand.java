@@ -114,8 +114,8 @@ public class StartCommand implements SubCommand {
                         }
                     }
 
-                    Player playerComSender = (Player) commandSender;
-                    World world = playerComSender.getWorld();
+                    //Player playerComSender = (Player) commandSender;
+                    World world = Bukkit.getServer().getWorld("world");
 
                     // Some properties change
                     world.setThundering(false);
