@@ -3,7 +3,6 @@ package me.lowlauch.walo;
 import me.lowlauch.walo.eventlistening.EventListenersManager;
 import me.lowlauch.walo.commands.CommandsManager;
 import me.lowlauch.walo.database.WaloDatabase;
-import me.lowlauch.walo.tasks.AutostartTask;
 import me.lowlauch.walo.tasks.InfoTask;
 import me.lowlauch.walo.tasks.LagTask;
 import me.lowlauch.walo.tasks.ServerStartTask;
@@ -49,7 +48,6 @@ public class Main extends JavaPlugin {
         EventListenersManager.registerEvents();
 
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagTask(), 1L, 100L);
-        //getServer().getScheduler().scheduleSyncRepeatingTask(this, new AutostartTask(), 1L, 200L);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 1L, 2000L);
         getServer().getScheduler().runTaskLater(this, new ServerStartTask(), 1L); // delay by a tick just to be safe
     }
