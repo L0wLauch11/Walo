@@ -1,6 +1,6 @@
 package me.lowlauch.walo.teams.teamsettingsitems;
 
-import me.lowlauch.walo.misc.ItemUtils;
+import me.lowlauch.walo.misc.ItemUtil;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -20,7 +20,7 @@ public class TeamsInventoryItem {
     public static String leaveTeamDisplayName = ChatColor.BOLD + "Verlasse das Team";
 
     public static void addItemToPlayerInventory(Player p) {
-        ItemStack teamsItem = ItemUtils.createItemDisplayName(displayName, Material.BOOK_AND_QUILL, 1);
+        ItemStack teamsItem = ItemUtil.createItemDisplayName(displayName, Material.BOOK_AND_QUILL, 1);
         ItemMeta itemMeta = teamsItem.getItemMeta();
         itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
         teamsItem.setItemMeta(itemMeta);
@@ -38,22 +38,22 @@ public class TeamsInventoryItem {
         if (!p.getItemInHand().getItemMeta().getDisplayName().equals(displayName))
             return;
 
-        ItemStack createTeamItem = ItemUtils.createItemDisplayName(createTeamDisplayName, Material.WOOL, 1, DyeColor.GREEN.getData());
+        ItemStack createTeamItem = ItemUtil.createItemDisplayName(createTeamDisplayName, Material.WOOL, 1, DyeColor.GREEN.getData());
         ItemMeta itemMeta = createTeamItem.getItemMeta();
         itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
         createTeamItem.setItemMeta(itemMeta);
 
-        ItemStack leaveTeamItem = ItemUtils.createItemDisplayName(leaveTeamDisplayName, Material.WOOL, 1, DyeColor.RED.getData());
+        ItemStack leaveTeamItem = ItemUtil.createItemDisplayName(leaveTeamDisplayName, Material.WOOL, 1, DyeColor.RED.getData());
         itemMeta = leaveTeamItem.getItemMeta();
         itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
         leaveTeamItem.setItemMeta(itemMeta);
 
-        ItemStack inviteMemberItem = ItemUtils.createItemDisplayName(inviteMemberDisplayName, Material.WOOL, 1, DyeColor.BLUE.getData());
+        ItemStack inviteMemberItem = ItemUtil.createItemDisplayName(inviteMemberDisplayName, Material.WOOL, 1, DyeColor.BLUE.getData());
         itemMeta = inviteMemberItem.getItemMeta();
         itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
         inviteMemberItem.setItemMeta(itemMeta);
 
-        ItemStack renameTeamItem = ItemUtils.createItemDisplayName(renameTeamDisplayName, Material.WOOL, 1, DyeColor.YELLOW.getData());
+        ItemStack renameTeamItem = ItemUtil.createItemDisplayName(renameTeamDisplayName, Material.WOOL, 1, DyeColor.YELLOW.getData());
         itemMeta = renameTeamItem.getItemMeta();
         itemMeta.addEnchant(Enchantment.DURABILITY, 69, true);
         renameTeamItem.setItemMeta(itemMeta);

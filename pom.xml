@@ -30,6 +30,7 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Being able to disable LabyMod damage indicator -->
         <dependency>
             <groupId>me.lowlauch.callable_di_disabler</groupId>
             <artifactId>callable_di_disabler</artifactId>

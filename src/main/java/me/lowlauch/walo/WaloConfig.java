@@ -16,13 +16,6 @@ public class WaloConfig {
         Main.getInstance().saveConfig();
     }
 
-    public static List<String> getPlayerMates(Player player) {
-        String path = "mates." + player.getUniqueId().toString();
-        List<String> mates = mainConfig.getStringList(path);
-
-        return mates;
-    }
-
     public static int getWorldBorderSize() {
         return mainConfig.getInt("worldborder.size");
     }

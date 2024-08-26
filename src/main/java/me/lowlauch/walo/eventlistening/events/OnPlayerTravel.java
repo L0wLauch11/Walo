@@ -43,10 +43,10 @@ public class OnPlayerTravel implements Listener {
         // Make a protecting bedrock circle under the player
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
             Material[] unfairBlocks = {
-                    Material.LAVA,
-                    Material.STATIONARY_LAVA,
-                    Material.FIRE,
-                    Material.BED
+                Material.LAVA,
+                Material.STATIONARY_LAVA,
+                Material.FIRE,
+                Material.BED
             };
 
             for (int i = -rad; i < rad; i++) {

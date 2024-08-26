@@ -4,21 +4,18 @@ import me.lowlauch.walo.Main;
 import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.discord.webhook.DiscordWebHook;
 import me.lowlauch.walo.misc.GlobalVariables;
-import me.lowlauch.walo.misc.StringUtils;
+import me.lowlauch.walo.misc.StringUtil;
 import me.lowlauch.walo.tasks.GameRestartTask;
-import me.lowlauch.walo.tasks.LagTask;
 import me.lowlauch.walo.teams.Teams;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -87,7 +84,7 @@ public class OnPlayerDie implements Listener {
             int posLastComma = onlinePlayersString.lastIndexOf(", ");
 
             if (posLastComma != -1) {
-                onlinePlayersString = StringUtils.replaceCharAt(onlinePlayersString, posLastComma, '#');
+                onlinePlayersString = StringUtil.replaceCharAt(onlinePlayersString, posLastComma, '#');
                 onlinePlayersString = onlinePlayersString.replaceAll("#", ChatColor.GRAY + " und");
             }
             String finalMessage = ChatColor.GREEN + onlinePlayersString + ChatColor.GOLD + ChatColor.BOLD + " hat das Walo gewonnen!";

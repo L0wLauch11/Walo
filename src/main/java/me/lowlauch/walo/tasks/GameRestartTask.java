@@ -2,9 +2,11 @@ package me.lowlauch.walo.tasks;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.misc.WorldUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.io.IOException;
 
 public class GameRestartTask implements Runnable {
@@ -27,17 +29,6 @@ public class GameRestartTask implements Runnable {
                 p.kickPlayer("Das Spiel startet neu!");
             }
 
-            // Delete all worlds, so that they will be regenerated
-            for (World world : Bukkit.getServer().getWorlds()) {
-                Bukkit.getServer().unloadWorld(world.getName(), false);
-
-                boolean deletionSuccess = world.getWorldFolder().delete();
-
-                if (deletionSuccess) {
-                    Bukkit.getLogger().info("Welt " + world.getName() + " erfolgreich gelöscht!");
-                }
-            }
-
             // Delete teams
             WaloConfig.resetTeams();
 
@@ -47,8 +38,29 @@ public class GameRestartTask implements Runnable {
                 banList.pardon(entry.getTarget());
             }
 
-            // dispatchCommand sucks, but I've yet to find a better method to restart the server
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "restart");
+            // Restart server and delete worlds
+            Bukkit.getServer().shutdown();
+
+            String workingDirectory = new File(".").getAbsolutePath();
+            String waloRestartCompanionPath = workingDirectory + "/WaloRestartCompanion.jar";
+            File waloRestartCompanion = new File(waloRestartCompanionPath);
+
+            if (!waloRestartCompanion.exists()) {
+                Bukkit.getLogger().info("WaloRestartCompanion.jar needs to be in root folder in order to successfully restart the server!");
+            } else {
+                String worlds = "";
+                for (World world : Bukkit.getWorlds()) {
+                    worlds += world.getWorldFolder() + " ";
+                }
+
+                Bukkit.getLogger().info(worlds);
+
+                try {
+                    Process process = Runtime.getRuntime().exec("java -jar " + waloRestartCompanionPath + " " + worlds + " --restart");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 }

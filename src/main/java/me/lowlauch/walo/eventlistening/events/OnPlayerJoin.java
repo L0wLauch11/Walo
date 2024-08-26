@@ -4,6 +4,7 @@ import me.lowlauch.callable_di_disabler.DisableDamageIndicator;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.misc.WorldUtil;
 import me.lowlauch.walo.tasks.XpCountdownTask;
 import me.lowlauch.walo.teams.teamsettingsitems.TeamsInventoryItem;
 import me.lowlauch.walo.teams.Teams;
@@ -81,7 +82,7 @@ public class OnPlayerJoin implements Listener {
         }
 
         // Y coordinate (y is up axis don't forget)
-        newY = GlobalVariables.started ? newY : 80;
+        newY = GlobalVariables.started ? newY : WorldUtil.calculateFloorY(60, p);
 
         p.teleport(new Location(p.getWorld(), newX, newY, newZ));
 

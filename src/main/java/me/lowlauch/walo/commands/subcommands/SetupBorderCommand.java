@@ -3,6 +3,7 @@ package me.lowlauch.walo.commands.subcommands;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
+import me.lowlauch.walo.misc.WorldUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -46,8 +47,10 @@ public class SetupBorderCommand implements SubCommand {
         // Teleport player to 0, 0 and set the world spawn there
         if (commandSender instanceof Player) {
             Player p = (Player) commandSender;
-            p.teleport(new Location(world, 0, 80, 0));
-            world.setSpawnLocation(0, 80, 0);
+
+            int floorY = WorldUtil.calculateFloorY(60, p);
+            p.teleport(new Location(world, 0, floorY, 0));
+            world.setSpawnLocation(0, floorY, 0);
 
             commandSender.sendMessage(Main.prefix + "Das Spiel wurde hergerichtet.");
         }
