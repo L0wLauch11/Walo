@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,21 +63,33 @@ public class OnPlayerDie implements Listener {
                 aliveTeams.add(teamOfPlayer);
         }
 
-        if (aliveTeams.size() <= 1) {
-            List<String> aliveTeam = Teams.getTeamMembers(aliveTeams.get(0));
-
+        boolean soloWin = Bukkit.getOnlinePlayers().size() == 1;
+        if (aliveTeams.size() <= 1 || soloWin) {
             String onlinePlayersString = "";
             String stylizedComma = ChatColor.GRAY + ", " + ChatColor.GREEN;
-            for (String playerUUIDString : aliveTeam) {
-                UUID playerUUID = UUID.fromString(playerUUIDString);
-                onlinePlayersString += Bukkit.getOfflinePlayer(playerUUID).getName() + stylizedComma;
+
+            if (soloWin) {
+                for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    onlinePlayersString += onlinePlayer.getName();
+                }
+            } else {
+                List<String> aliveTeam = Teams.getTeamMembers(aliveTeams.get(0));
+
+                for (String playerUUIDString : aliveTeam) {
+                    UUID playerUUID = UUID.fromString(playerUUIDString);
+                    onlinePlayersString += Bukkit.getOfflinePlayer(playerUUID).getName() + stylizedComma;
+                }
             }
 
-            onlinePlayersString = onlinePlayersString.substring(0, onlinePlayersString.length()-stylizedComma.length());
+            if (onlinePlayersString.contains(",")) {
+                onlinePlayersString = onlinePlayersString.substring(0, onlinePlayersString.length()-stylizedComma.length());
+            }
             int posLastComma = onlinePlayersString.lastIndexOf(", ");
 
-            onlinePlayersString = StringUtils.replaceCharAt(onlinePlayersString, posLastComma, '#');
-            onlinePlayersString = onlinePlayersString.replaceAll("#", ChatColor.GRAY + " und");
+            if (posLastComma != -1) {
+                onlinePlayersString = StringUtils.replaceCharAt(onlinePlayersString, posLastComma, '#');
+                onlinePlayersString = onlinePlayersString.replaceAll("#", ChatColor.GRAY + " und");
+            }
             String finalMessage = ChatColor.GREEN + onlinePlayersString + ChatColor.GOLD + ChatColor.BOLD + " hat das Walo gewonnen!";
 
             String onlinePlayersWithoutDecoration = onlinePlayersString
@@ -87,7 +100,12 @@ public class OnPlayerDie implements Listener {
             Bukkit.getServer().broadcastMessage(Main.prefix + finalMessage);
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                onlinePlayer.sendTitle("§c§kw§r§c " + Teams.getTeamName(aliveTeams.get(0)) + " §kw", "§6hat Walo gewonnen");
+                String winners = Teams.getTeamName(aliveTeams.get(0));
+                if (soloWin) {
+                    winners = onlinePlayer.getName();
+                }
+
+                onlinePlayer.sendTitle("§c§kw§r§c " + winners + " §kw", "§6hat Walo gewonnen");
                 WaloDatabase.addPlayerWin(onlinePlayer);
             }
 

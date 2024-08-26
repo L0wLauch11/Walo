@@ -93,7 +93,7 @@ public class Teams {
 
     public static String getTeamOfPlayer(Player p) {
         if (WaloConfig.getTeams() == null)
-            return null;
+            return p.getUniqueId().toString();
 
         for (String teamID : WaloConfig.getTeams()) {
             if (getTeamMembers(teamID).contains(p.getUniqueId().toString())) {
@@ -101,7 +101,7 @@ public class Teams {
             }
         }
 
-        return null;
+        return p.getUniqueId().toString();
     }
 
     public static void leaveTeam(Player p) {

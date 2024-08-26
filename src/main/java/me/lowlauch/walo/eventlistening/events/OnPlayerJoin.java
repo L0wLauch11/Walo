@@ -124,19 +124,20 @@ public class OnPlayerJoin implements Listener {
 
         // Slowness and blindness on join
         if (GlobalVariables.started) {
-            // Handle logout timer ban
-            long currentTime = System.currentTimeMillis();
-            long rejoinTimeout = WaloConfig.getRejoinTimeout() * 60000L; // convert to millis
-            if (currentTime - GlobalVariables.playerLeaveTimestamps.get(p.getUniqueId()) >= rejoinTimeout) {
-                String banString = Main.prefix + "Du bist zu lange offline gewesen!";
-                Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), banString, null, "Tot");
-                p.kickPlayer(banString);
-            }
-
             // Handle subsequent joining after game start
             if (!WaloConfig.getAllowSubsequentJoining()
                     && !GlobalVariables.startPlayersUUID.contains(p.getUniqueId().toString())) {
-                p.kickPlayer("Sorry, das Spiel ist gerade am laufen.");
+                p.kickPlayer(Main.prefix + "Sorry, das Spiel ist gerade am laufen.");
+            }
+
+            // Handle logout timer ban
+            long currentTime = System.currentTimeMillis();
+            long rejoinTimeout = WaloConfig.getRejoinTimeout() * 60000L; // convert to millis
+            if (GlobalVariables.playerLeaveTimestamps.get(p.getUniqueId()) != null
+                    && currentTime - GlobalVariables.playerLeaveTimestamps.get(p.getUniqueId()) >= rejoinTimeout) {
+                String banString = Main.prefix + "Leider bist du zu lange offline geblieben und deswegen AUSGESCHIEDEN!";
+                Bukkit.getBanList(BanList.Type.NAME).addBan(p.getName(), banString, null, "Tot");
+                p.kickPlayer(banString);
             }
 
             int seconds = 10;

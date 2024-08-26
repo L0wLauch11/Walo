@@ -19,11 +19,14 @@ public class OnPlayerBlockPlace implements Listener {
             }
         }
 
+        /* Why did I add this again? Seems dumb ...
+
         if (e.getPlayer().getWorld().getName().equals("world")) {
             if (locationDistance2D(playerLocation, Bukkit.getWorld("world").getSpawnLocation()) < protectionRadius) {
                 cancel(e);
             }
         }
+         */
     }
 
     private void cancel(BlockPlaceEvent e) {

@@ -1,6 +1,8 @@
 package me.lowlauch.walo.discord.webhook;
 
+import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
+import org.bukkit.Bukkit;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +20,11 @@ public class DiscordWebHook {
     public static void sendText(String text) {
         if (webHookURL.isEmpty())
             return;
+
+        if (!webHookURL.contains("https://")) {
+            Bukkit.getLogger().info(Main.prefix + "Discord Webhook URL invalid!");
+            return;
+        }
 
         URL url = null;
 
