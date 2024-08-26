@@ -39,20 +39,20 @@ public class OnPlayerTravel implements Listener {
         final double playerZ = e.getTo().getZ();
 
         final int rad = 15;
+
         // Make a protecting bedrock circle under the player
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
+            Material[] unfairBlocks = {
+                    Material.LAVA,
+                    Material.STATIONARY_LAVA,
+                    Material.FIRE,
+                    Material.BED
+            };
+
             for (int i = -rad; i < rad; i++) {
                 for (int j = -rad; j < rad; j++) {
                     for (int k = -rad; k < rad; k++) {
                         Block blockAtCurrentPos = e.getTo().getWorld().getBlockAt(new Location(e.getTo().getWorld(), playerX + i, playerY + j, playerZ + k));
-
-                        // Replace unfair objects with nothing
-                        Material[] unfairBlocks = {
-                            Material.LAVA,
-                            Material.STATIONARY_LAVA,
-                            Material.FIRE,
-                            Material.BED
-                        };
 
                         for (Material unfairBlock : unfairBlocks) {
                             if (blockAtCurrentPos.getType().equals(unfairBlock)) {
