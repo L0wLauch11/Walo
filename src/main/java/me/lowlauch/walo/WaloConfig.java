@@ -87,7 +87,7 @@ public class WaloConfig {
     }
 
     public static void resetTeams() {
-        mainConfig.set("teams.player_teams", null);
+        mainConfig.set("teams.player-teams", null);
         save();
     }
 

@@ -40,7 +40,7 @@ public class Teams {
     }
 
     public static void createTeamFor(Player p) {
-        if (getTeamOfPlayer(p) != null){
+        if (getTeamMembers(getTeamOfPlayer(p)).contains(p.getUniqueId().toString())) {
             p.sendMessage(Main.prefix + ChatColor.BOLD + "Du hast bereits ein Team!");
             return;
         }
