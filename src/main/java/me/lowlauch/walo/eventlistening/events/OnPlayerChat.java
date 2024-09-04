@@ -50,8 +50,6 @@ public class OnPlayerChat implements Listener {
                         continue;
                     }
 
-                    Bukkit.getLogger().info(line);
-
                     if (messageForChecking.contains(line.toLowerCase())) {
                         p.sendMessage(Main.prefix + "Kraftausdrücke werden nicht geduldet.");
                         e.setCancelled(true);

@@ -21,6 +21,8 @@ public class CheckWinTask implements Runnable {
         ArrayList<String> aliveTeams = Teams.getAliveTeams();
         boolean soloWin = Bukkit.getOnlinePlayers().size() == 1;
 
+        GlobalVariables.startPlayersUUID.clear(); // No one can join anymore
+
         if (GlobalVariables.started
                 && (aliveTeams.size() <= 1 || soloWin)) {
             String onlinePlayersString = "";
