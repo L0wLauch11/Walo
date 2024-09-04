@@ -2,9 +2,7 @@
 
 Spigot Plugin für 1.8.8\
 \
-Ein eigener Spin für das beliebe Minecraft Projekt Varo. Funktioniert nur auf Spigot 1.8,\
+Spieler sammeln Rohstoffe und bekämpfen sich gegenseitig, bis nur noch ein Team steht! Funktioniert nur auf Spigot 1.8,\
 wobei man mit wenig Aufwand es auch auf neuere Versionen bringen könnte.\
 \
-Commands: /walo help
-
-- Zeigt alle möglichen Commands an
+Mehr Informationen auf: [der Walo-Website](https://walo.mine.bz/)
