@@ -13,6 +13,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.*;
+import java.nio.file.Files;
 import java.util.Objects;
 
 public class Main extends JavaPlugin {
@@ -42,6 +44,7 @@ public class Main extends JavaPlugin {
 
         // Config stuff
         saveDefaultConfig();
+        saveDefaultBadWords();
 
         WaloDatabase.initWaloTable();
 
@@ -56,6 +59,34 @@ public class Main extends JavaPlugin {
     public void onDisable() {
         for (Player p : getServer().getOnlinePlayers()) {
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
+        }
+    }
+
+    public void saveDefaultBadWords() {
+        File file = new File(this.getDataFolder().getAbsolutePath() + "/badwords.txt");
+
+        if (file.exists()) {
+            return;
+        }
+
+        InputStream input = getClass().getResourceAsStream("/badwords.txt");
+        assert input != null;
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+
+        FileWriter output;
+        try {
+            output = new FileWriter(file.getPath());
+            BufferedWriter writer = new BufferedWriter(output);
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                writer.write(line + "\n");
+            }
+
+            writer.close();
+            reader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

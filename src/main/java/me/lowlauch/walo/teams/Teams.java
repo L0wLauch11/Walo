@@ -104,6 +104,17 @@ public class Teams {
         return p.getUniqueId().toString();
     }
 
+    public static ArrayList<String> getAliveTeams() {
+        ArrayList<String> aliveTeams = new ArrayList<>();
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers())  {
+            String teamOfPlayer = Teams.getTeamOfPlayer(onlinePlayer);
+            if (!aliveTeams.contains(teamOfPlayer))
+                aliveTeams.add(teamOfPlayer);
+        }
+
+        return aliveTeams;
+    }
+
     public static void leaveTeam(Player p) {
         String playerUUID = p.getUniqueId().toString();
         String playerTeam = getTeamOfPlayer(p);

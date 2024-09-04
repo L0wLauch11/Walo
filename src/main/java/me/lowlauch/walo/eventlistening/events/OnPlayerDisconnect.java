@@ -2,9 +2,15 @@ package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.database.WaloDatabase;
+import me.lowlauch.walo.discord.webhook.DiscordWebHook;
 import me.lowlauch.walo.misc.GlobalVariables;
+import me.lowlauch.walo.misc.StringUtil;
+import me.lowlauch.walo.tasks.CheckWinTask;
+import me.lowlauch.walo.tasks.GameRestartTask;
+import me.lowlauch.walo.teams.Teams;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -16,11 +22,26 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 public class OnPlayerDisconnect implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDisconnect(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         EntityDamageEvent damageCause = p.getLastDamageCause();
+
+        // Tell remaining Teams that no one should disconnect now!
+        // 3 because this event gets triggered BEFORE the recently disconnected player IS ACTUALLY DISCONNECTED
+        // thus, there are still technically 3 Teams online (the 3rd Team's player just needs to be disconnected, still)
+        if (Teams.getAliveTeams().size() == 3) {
+            Bukkit.getServer().broadcastMessage(Main.prefix + "§6Ihr seid die letzten beiden Teams!§7\n" +
+                    Main.prefix + "Jetzt darf kein Team mehr vollkommen disconnecten, sonst gewinnt das andere Team!");
+        }
+
+        // Detect wins
+        Bukkit.getServer().getScheduler().runTaskLater(Main.getInstance(), new CheckWinTask(), 20L);
 
         // Save leave timestamp to ban player on rejoin if he was offline too long
         GlobalVariables.playerLeaveTimestamps.put(p.getUniqueId(), System.currentTimeMillis());

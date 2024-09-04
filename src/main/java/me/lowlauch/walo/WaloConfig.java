@@ -111,6 +111,10 @@ public class WaloConfig {
         return mainConfig.getBoolean("joining.allow-subsequent");
     }
 
+    public static boolean getFilterBadWords() {
+        return mainConfig.getBoolean("misc.filter-bad-words");
+    }
+
     public static int getRejoinTimeout() {
         return mainConfig.getInt("joining.rejoin-timeout");
     }
