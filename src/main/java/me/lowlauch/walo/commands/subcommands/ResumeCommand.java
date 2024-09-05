@@ -3,6 +3,7 @@ package me.lowlauch.walo.commands.subcommands;
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.commands.SubCommand;
+import me.lowlauch.walo.tasks.LobbyScoreboardUpdaterTask;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -30,6 +31,7 @@ public class ResumeCommand implements SubCommand {
         Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6fortgesetzt§7.");
 
         // Update scoreboard
+        LobbyScoreboardUpdaterTask.cancel();
         ScoreboardHandler.updateScoreboard();
     }
 

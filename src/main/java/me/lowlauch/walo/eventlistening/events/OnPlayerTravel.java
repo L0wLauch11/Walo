@@ -2,6 +2,7 @@ package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.misc.GlobalVariables;
+import me.lowlauch.walo.misc.WorldUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -33,12 +34,12 @@ public class OnPlayerTravel implements Listener {
         // Update nether portal location, useful for anti portal griefing
         GlobalVariables.netherPortalLocation = e.getTo();
 
-        // Spawn a protecting bedrock ring
         final double playerX = e.getTo().getX();
         final double playerY = e.getTo().getY();
         final double playerZ = e.getTo().getZ();
 
         final int rad = 15;
+        final int obsidianCheckRad = 5; // is smaller because takes lots of performance
 
         // Make a protecting bedrock circle under the player
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.getInstance(), () -> {
@@ -49,6 +50,20 @@ public class OnPlayerTravel implements Listener {
                 Material.BED
             };
 
+            // Replace flying obsidian not attached to portals, avoid being blocked in by mean players
+            for (int i = -obsidianCheckRad; i < obsidianCheckRad; i++) {
+                for (int j = -obsidianCheckRad; j < obsidianCheckRad; j++) {
+                    for (int k = -obsidianCheckRad; k < obsidianCheckRad; k++) {
+                        Block blockAtCurrentPos = e.getTo().getWorld().getBlockAt(new Location(e.getTo().getWorld(), playerX + i, playerY + j, playerZ + k));
+
+                        if (!WorldUtil.blockIsAdjacentToMaterial(blockAtCurrentPos, Material.PORTAL)) {
+                            blockAtCurrentPos.setType(Material.AIR);
+                        }
+                    }
+                }
+            }
+
+            // Spawn a protecting bedrock ring
             for (int i = -rad; i < rad; i++) {
                 for (int j = -rad; j < rad; j++) {
                     for (int k = -rad; k < rad; k++) {

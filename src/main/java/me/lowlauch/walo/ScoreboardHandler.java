@@ -42,7 +42,7 @@ public class ScoreboardHandler {
                 if (!p.hasMetadata("no-scoreboard"))
                     updatePlayerScoreboard(p);
             }
-        }, 0, 1200);
+        }, 0, 1200L);
     }
 
     public static void updatePlayerScoreboard(Player p) {
@@ -58,32 +58,27 @@ public class ScoreboardHandler {
             if (Long.parseLong(GlobalVariables.borderTime) <= 0) {
                 borderShrinkString = "jetzt";
             }
-            
-            // Set scoreboard values
+
             int shrinkSize = WaloConfig.getWorldBorderShrinkSize() / 2;
             String[] scores = {
-
-                    "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(LagTask.getTPS()), " ",
-                    GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
-                    "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
-                    borderShrinkString, "§aBorder verkleinert:", "    ",
-                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ",
-                    "§aSpielzeit: §f" + playTime
-
-            };
+                "§aPing: §f" + Ping.getPing(p) + " ms§a TPS: §f" + (int) Math.ceil(LagTask.getTPS()), " ",
+                GlobalVariables.protection ? (minutesTimer < 10 ? (10 - minutesTimer) + " Minuten" : "an") : "§caus", "§aSchutzzeit: ", "  ",
+                "+" + shrinkSize + "; -" + shrinkSize, "§aVerkleinert auf:", "   ",
+                borderShrinkString, "§aBorder verkleinert:", "    ",
+                "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "     ", // <- as far as I can tell,
+                "§aSpielzeit: §f" + playTime                                      // there needs to be +1 space for every line;
+            };                                                                    // idk... I wrote this code a while ago
 
             int i = 0;
             for (String score : scores) {
                 objective.getScore(score).setScore(++i);
             }
 
-        } else {
-            // Set scoreboard values
+        } else { // Before game start
             String[] scores = {
-
                     "10 Minuten", "§aSchutzzeit: ", " ",
-                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:"
-
+                    "+" + borderSize + "; -" + borderSize, "§aBordergröße:", "  ",
+                    Bukkit.getServer().getOnlinePlayers().size() + "/" + WaloConfig.getAutostartRequiredPlayers(), "§aSpieler bis zum Start: "
             };
 
             int i = 0;

@@ -2,6 +2,7 @@ package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.misc.GlobalVariables;
+import me.lowlauch.walo.misc.WorldUtil;
 import org.bukkit.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,10 +14,12 @@ public class OnPlayerBlockPlace implements Listener {
         int protectionRadius = 10;
         Location playerLocation = e.getPlayer().getLocation();
 
-        if (e.getPlayer().getWorld().getEnvironment().equals(World.Environment.NETHER)) {
-            if (locationDistance2D(playerLocation, GlobalVariables.netherPortalLocation) < protectionRadius) {
-                cancel(e);
-            }
+        if (e.getPlayer().getWorld().getEnvironment().equals(World.Environment.NETHER)
+                // this potentially takes a lot of cpu cycles...
+                // but is important for fair play
+                && WorldUtil.blockIsAdjacentToMaterial(e.getBlock(), Material.PORTAL)) {
+            e.getPlayer().sendMessage(Main.prefix + "§cBitte bau keine Nether Portale zu!");
+            e.setCancelled(true);
         }
 
         /* Why did I add this again? Seems dumb ...
@@ -27,11 +30,6 @@ public class OnPlayerBlockPlace implements Listener {
             }
         }
          */
-    }
-
-    private void cancel(BlockPlaceEvent e) {
-        e.getPlayer().sendMessage(Main.prefix + ChatColor.RED + "Unterlasse dies bitte.");
-        e.setCancelled(true);
     }
 
     private double locationDistance2D(Location location1, Location location2) {

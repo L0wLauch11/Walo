@@ -6,6 +6,7 @@ import me.lowlauch.walo.database.WaloDatabase;
 import me.lowlauch.walo.misc.WorldUtil;
 import me.lowlauch.walo.tasks.InfoTask;
 import me.lowlauch.walo.tasks.LagTask;
+import me.lowlauch.walo.tasks.LobbyScoreboardUpdaterTask;
 import me.lowlauch.walo.tasks.ServerStartTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Difficulty;
@@ -54,6 +55,7 @@ public class Main extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagTask(), 1L, 100L);
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 1L, 2000L);
         getServer().getScheduler().runTaskLater(this, new ServerStartTask(), 1L); // delay by a tick just to be safe
+        LobbyScoreboardUpdaterTask.create();
     }
 
     public void onDisable() {

@@ -6,6 +6,7 @@ import me.lowlauch.walo.ScoreboardHandler;
 import me.lowlauch.walo.WaloConfig;
 import me.lowlauch.walo.commands.SubCommand;
 import me.lowlauch.walo.database.WaloDatabase;
+import me.lowlauch.walo.tasks.LobbyScoreboardUpdaterTask;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
@@ -146,6 +147,7 @@ public class StartCommand implements SubCommand {
                     long borderTimeInMinutes = WaloConfig.getWorldBorderShrinkDelay() / 20 / 60;
                     borderTime = Long.toString(borderTimeInMinutes);
 
+                    LobbyScoreboardUpdaterTask.cancel();
                     ScoreboardHandler.updateScoreboard();
 
                     Bukkit.broadcastMessage(Main.prefix + "Walo wurde §6gestartet§7.");
