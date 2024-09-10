@@ -32,12 +32,16 @@ public class WaloConfig {
         return mainConfig.getLong("worldborder.shrinkduration");
     }
 
-    public static String getDatabaseAPIUrl() {
-        return mainConfig.getString("web-database-api.url");
+    public static String getWebsiteUrl() {
+        return mainConfig.getString("website.url");
     }
 
-    public static String getDatabaseSecurityString() {
-        return mainConfig.getString("web-database-api.access-token");
+    public static String getDatabaseAPIUrl() {
+        return mainConfig.getString("website.database-api.url");
+    }
+
+    public static String getDatabaseAccessToken() {
+        return mainConfig.getString("website.database-api.access-token");
     }
 
     public static String getDiscordWebhookURL() {

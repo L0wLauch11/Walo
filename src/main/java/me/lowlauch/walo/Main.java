@@ -53,7 +53,7 @@ public class Main extends JavaPlugin {
         EventListenersManager.registerEvents();
 
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new LagTask(), 1L, 100L);
-        getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 1L, 2000L);
+        getServer().getScheduler().scheduleSyncRepeatingTask(this, new InfoTask(), 1L, 750L);
         getServer().getScheduler().runTaskLater(this, new ServerStartTask(), 1L); // delay by a tick just to be safe
         LobbyScoreboardUpdaterTask.create();
     }

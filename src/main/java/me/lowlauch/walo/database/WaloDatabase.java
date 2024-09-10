@@ -4,7 +4,7 @@ import me.lowlauch.walo.WaloConfig;
 import org.bukkit.entity.Player;
 
 public class WaloDatabase {
-    static String securityString = WaloConfig.getDatabaseSecurityString();
+    static String securityString = WaloConfig.getDatabaseAccessToken();
 
     public static void initWaloTable() {
         DatabaseRequest.request("secret=" + securityString + "&operation=inittable&uuid=foo&name=bar");

@@ -1,12 +1,15 @@
 discord-webhook-url: <your-discord-webhook-url> # Insert your discord webhook string here
 
-web-database-api:
-  # The Web Address of the API that will be used to access the database
-  # You will need to host this on a webserver yourself
-  url: https://<your-webserver>/database.php
+website:
+  url: https://<your-webserver>/
 
-  # Prevents unauthorized access
-  access-token: <database-access-token>
+  database-api:
+    # The Web Address of the API that will be used to access the database
+    # You will need to host this on a webserver yourself
+    url: https://<your-webserver>/database.php
+
+    # Prevents unauthorized access
+    access-token: <database-access-token>
 
 worldborder:
   # Worldborder diameter
