@@ -70,6 +70,9 @@ public class OnPlayerChat implements Listener {
                     removeThisPlayer = playerUUID;
 
                     String teamName = message.replace("&", "§");
+                    if (teamName.length() >= 16) {
+                        teamName = teamName.substring(0, 16);
+                    }
 
                     Teams.renameTeam(Teams.getTeamOfPlayer(p), teamName + " §r§f");
                     p.sendMessage(Main.prefix + ChatColor.BOLD + "Euer Teamname ist jetzt: §r§f" + teamName);

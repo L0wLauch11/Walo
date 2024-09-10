@@ -20,11 +20,10 @@ public class CheckWinTask implements Runnable {
     public void run() {
         ArrayList<String> aliveTeams = Teams.getAliveTeams();
         boolean soloWin = Bukkit.getOnlinePlayers().size() == 1;
-
-        GlobalVariables.startPlayersUUID.clear(); // No one can join anymore
-
         if (GlobalVariables.started
                 && (aliveTeams.size() <= 1 || soloWin)) {
+            GlobalVariables.startPlayersUUID.clear(); // No one can join anymore
+
             String onlinePlayersString = "";
             String stylizedComma = ChatColor.GRAY + ", " + ChatColor.GREEN;
 
