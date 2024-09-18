@@ -1,6 +1,8 @@
 package me.lowlauch.walo.teams.teamsettingsitems;
 
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.chatactions.ChatActionManager;
+import me.lowlauch.walo.chatactions.actions.ChatActionTeamInvite;
 import me.lowlauch.walo.teams.TeamItem;
 import me.lowlauch.walo.teams.Teams;
 import org.bukkit.ChatColor;
@@ -14,8 +16,8 @@ public class InviteTeamMemberItem implements TeamItem {
             return;
 
         Player p = (Player) e.getWhoClicked();
-        Teams.playersWhoWantToInviteSomeone.add(p.getUniqueId());
-        p.sendMessage(Main.prefix + ChatColor.BOLD + "Wen möchtest du einladen?:");
+        ChatActionManager.setChatAction(p, new ChatActionTeamInvite());
+        p.sendMessage(Main.prefix + ChatColor.BOLD + "Wen möchtest du einladen? (Chat):");
         p.closeInventory();
     }
 

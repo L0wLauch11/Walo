@@ -2,6 +2,8 @@ package me.lowlauch.walo.eventlistening.events;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.chatactions.ChatAction;
+import me.lowlauch.walo.chatactions.ChatActionManager;
 import me.lowlauch.walo.teams.Teams;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -62,51 +64,11 @@ public class OnPlayerChat implements Listener {
             }
         }
 
-        // Renaming teams
-        if (!Teams.playersWhoWantToRenameTheirTeam.isEmpty()) {
-            UUID removeThisPlayer = null;
-            for (UUID playerUUID : Teams.playersWhoWantToRenameTheirTeam) {
-                if (p.getUniqueId().equals(playerUUID)) {
-                    removeThisPlayer = playerUUID;
-
-                    String teamName = message.replace("&", "§");
-                    if (teamName.length() >= 16) {
-                        teamName = teamName.substring(0, 16);
-                    }
-
-                    Teams.renameTeam(Teams.getTeamOfPlayer(p), teamName + " §r§f");
-                    p.sendMessage(Main.prefix + ChatColor.BOLD + "Euer Teamname ist jetzt: §r§f" + teamName);
-                    e.setCancelled(true);
-                }
-            }
-
-            if (removeThisPlayer != null)
-                Teams.playersWhoWantToRenameTheirTeam.remove(removeThisPlayer);
-        }
-
-        // Inviting players
-        if (!Teams.playersWhoWantToInviteSomeone.isEmpty()) {
-            UUID removeThisPlayer = null;
-            for (UUID playerUUID : Teams.playersWhoWantToInviteSomeone) {
-                if (p.getUniqueId().equals(playerUUID)) {
-                    removeThisPlayer = playerUUID;
-
-                    // Find player
-                    Player invitedPlayer = Bukkit.getPlayer(message);
-
-                    if (!Bukkit.getOnlinePlayers().contains(invitedPlayer)) {
-                        p.sendMessage(Main.prefix + ChatColor.DARK_RED + "Der Spieler " + ChatColor.GOLD + message + ChatColor.DARK_RED + " wurde nicht gefunden!");
-                        e.setCancelled(true);
-                        return;
-                    }
-
-                    Teams.invitePlayer(p, invitedPlayer);
-                    e.setCancelled(true);
-                }
-            }
-
-            if (removeThisPlayer != null)
-                Teams.playersWhoWantToInviteSomeone.remove(removeThisPlayer);
+        // Handle current chat action of player
+        ChatAction currentChatAction = ChatActionManager.getChatAction(p);
+        if (currentChatAction != null) {
+            currentChatAction.behaviour(e);
+            ChatActionManager.setChatAction(p, null);
         }
 
         // Better chat formatting

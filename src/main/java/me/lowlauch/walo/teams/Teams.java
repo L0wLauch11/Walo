@@ -2,20 +2,20 @@ package me.lowlauch.walo.teams;
 
 import me.lowlauch.walo.Main;
 import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.chatactions.ChatActionManager;
+import me.lowlauch.walo.chatactions.actions.ChatActionTeamRename;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class Teams {
-    public static ArrayList<UUID> playersWhoWantToRenameTheirTeam = new ArrayList<>(); // long ass variable names
-    public static ArrayList<UUID> playersWhoWantToInviteSomeone = new ArrayList<>();
-
     public static void invitePlayer(Player teamOwner, Player invitedPlayer) {
         String playerTeam = getTeamOfPlayer(invitedPlayer);
         String ownerTeam = getTeamOfPlayer(teamOwner);
@@ -37,6 +37,9 @@ public class Teams {
         TextComponent component = new TextComponent(TextComponent.fromLegacyText(msg));
         component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/walo acceptinvite " + teamOwner.getName()));
         invitedPlayer.spigot().sendMessage(component);
+
+        String metadataValue = "invited-by-" + teamOwner.getName();
+        invitedPlayer.setMetadata(metadataValue, new FixedMetadataValue(Main.getInstance(), metadataValue));
     }
 
     public static void createTeamFor(Player p) {
@@ -46,9 +49,10 @@ public class Teams {
         }
 
         WaloConfig.addTeamInConfig(p);
-        playersWhoWantToRenameTheirTeam.add(p.getUniqueId());
+        ChatActionManager.setChatAction(p, new ChatActionTeamRename());
+
         p.sendMessage(Main.prefix + "§1F§2a§3r§4b§5e§6n§7codes: §f&f §0&0 §1&1 §2&2 §3&3 §4&4 §5&5 §6&6 §7&7 §8&8 §9&9 §f§l&l§r §m&m§r §n&n§r §o&o§r §r&r");
-        p.sendMessage(Main.prefix + ChatColor.BOLD + "Bitte gib einen Team-Namen ein:");
+        p.sendMessage(Main.prefix + ChatColor.BOLD + "Bitte gib einen Team-Namen ein (max. 16 Zeichen):");
     }
 
     public static void joinTeam(String teamID, String playerUUID) {
@@ -58,7 +62,7 @@ public class Teams {
         // Change name
         String playerTeamName = Teams.getTeamName(teamID);
         if (playerTeamName != null) {
-            p.setDisplayName(playerTeamName + "" + p.getName());
+            p.setDisplayName(playerTeamName + p.getName());
         }
 
         // Set the player tab name to display name
@@ -75,7 +79,7 @@ public class Teams {
             // Change name
             String playerTeamName = Teams.getTeamName(Teams.getTeamOfPlayer(p));
             if (playerTeamName != null) {
-                p.setDisplayName(playerTeamName + "" + p.getName());
+                p.setDisplayName(playerTeamName + p.getName());
             }
 
             // Set the player tab name to display name
@@ -119,14 +123,15 @@ public class Teams {
         String playerUUID = p.getUniqueId().toString();
         String playerTeam = getTeamOfPlayer(p);
 
-        if (getTeamMembers(playerTeam).contains(playerUUID)) {
-            WaloConfig.removeTeamMember(playerTeam, playerUUID);
-            p.setDisplayName(p.getName());
-            p.setPlayerListName(p.getDisplayName());
-
-            p.sendMessage(Main.prefix + "Du hast das Team erfolgreich verlassen.");
-        } else {
+        if (!getTeamMembers(playerTeam).contains(playerUUID)) {
             p.sendMessage(Main.prefix + "Du bist in keinem Team.");
+            return;
         }
+
+        WaloConfig.removeTeamMember(playerTeam, playerUUID);
+        p.setDisplayName(p.getName());
+        p.setPlayerListName(p.getDisplayName());
+
+        p.sendMessage(Main.prefix + "Du hast das Team erfolgreich verlassen.");
     }
 }

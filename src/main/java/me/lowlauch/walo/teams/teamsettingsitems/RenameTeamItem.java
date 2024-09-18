@@ -1,6 +1,9 @@
 package me.lowlauch.walo.teams.teamsettingsitems;
 
 import me.lowlauch.walo.Main;
+import me.lowlauch.walo.WaloConfig;
+import me.lowlauch.walo.chatactions.ChatActionManager;
+import me.lowlauch.walo.chatactions.actions.ChatActionTeamRename;
 import me.lowlauch.walo.teams.TeamItem;
 import me.lowlauch.walo.teams.Teams;
 import org.bukkit.ChatColor;
@@ -15,12 +18,13 @@ public class RenameTeamItem implements TeamItem {
 
         Player p = (Player) e.getWhoClicked();
 
-        if (Teams.getTeamOfPlayer(p) == null) {
+        if (!WaloConfig.getTeamMembers(Teams.getTeamOfPlayer(p)).contains(p.getUniqueId().toString())) {
             p.sendMessage(Main.prefix + ChatColor.BOLD + "Erstelle bitte vorher ein Team.");
             return;
         }
 
-        Teams.playersWhoWantToRenameTheirTeam.add(p.getUniqueId());
+        ChatActionManager.setChatAction(p, new ChatActionTeamRename());
+
         p.sendMessage(Main.prefix + "§1F§2a§3r§4b§5e§6n§7codes: §f&f §0&0 §1&1 §2&2 §3&3 §4&4 §5&5 §6&6 §7&7 §8&8 §9&9 §f§l&l§r §m&m§r §n&n§r §o&o§r §r&r");
         p.sendMessage(Main.prefix + ChatColor.BOLD + "Bitte gib einen Team-Namen ein (max. 16 Zeichen):");
         p.closeInventory();

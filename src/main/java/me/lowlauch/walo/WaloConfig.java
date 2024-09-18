@@ -52,7 +52,7 @@ public class WaloConfig {
         String playerUUID = p.getUniqueId().toString();
 
         addTeamMember(playerUUID, playerUUID);
-        setTeamName(playerUUID, "gommemode");
+        setTeamName(playerUUID, "");
     }
 
     public static void setTeamName(String playerUUID, String newTeamName) {
@@ -96,7 +96,7 @@ public class WaloConfig {
     }
 
     public static int getMaxTeamSize() {
-        return mainConfig.getInt("teams.player-teams.max-allowed-size");
+        return mainConfig.getInt("teams.max-allowed-size");
     }
 
     public static int getAutostartRequiredPlayers() {
