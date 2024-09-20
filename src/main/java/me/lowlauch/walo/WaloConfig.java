@@ -86,7 +86,12 @@ public class WaloConfig {
     public static void removeTeamMember(String teamID, String playerUUID) {
         List<String> members = mainConfig.getStringList("teams.player-teams." + teamID + ".members");
         members.remove(playerUUID);
-        mainConfig.set("teams.player-teams." + teamID + ".members", members);
+
+        if (members.isEmpty()) {
+            mainConfig.set("teams.player-teams." + teamID, null);
+        } else {
+            mainConfig.set("teams.player-teams." + teamID + ".members", members);
+        }
         save();
     }
 

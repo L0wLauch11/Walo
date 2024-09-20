@@ -42,9 +42,10 @@ public class OnPlayerJoin implements Listener {
             p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
         // Change name
-        String playerTeamName = Teams.getTeamName(Teams.getTeamOfPlayer(p));
-        if (playerTeamName != null) {
-            p.setDisplayName(playerTeamName + "" + p.getName());
+        String playerTeamId = Teams.getTeamOfPlayer(p);
+        String playerTeamName = Teams.getTeamName(playerTeamId);
+        if (Teams.getTeamMembers(playerTeamId).contains(p.getUniqueId().toString())) {
+            p.setDisplayName(playerTeamName + p.getName());
         }
 
         // Teleport player inside border
